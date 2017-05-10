@@ -62,6 +62,7 @@ ID: 部门ID ,name：部门名称
 “learning”:”XX”,”skill”:”xx”}
 
 jointime: 加入时间 learning：参加培训经历  skill：技能
+
 ## 个人信息修改
 * editStaffInformation
 * JSON  格式同上条

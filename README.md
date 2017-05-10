@@ -2,10 +2,20 @@
 
 主题为人事管理系统
 
+
 目录
 * document： 所有的文档
-* Project： 工程项目文件
+* web-project : 前端文件
 
-文件说明
+文档说明
 API约定列表： v1.0  2017-5-10新增
+
+
+前端运用的技术栈：
+* vue + vuex + vue-router
+* bootstrap
+* jquery
+
+
+
 
