@@ -139,9 +139,9 @@
         <option value="$PROJECT_DIR$/src/components/Hello.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/src/components/tmp.vue" />
         <option value="$PROJECT_DIR$/src/router/index.js" />
         <option value="$PROJECT_DIR$/src/components/Login.vue" />
+        <option value="$PROJECT_DIR$/src/components/tmp.vue" />
       </list>
     </option>
   </component>
@@ -370,12 +370,12 @@
       <option name="presentableId" value="Default" />
       <updated>1494430642407</updated>
       <workItem from="1494430701129" duration="6816000" />
-      <workItem from="1494513422333" duration="4378000" />
+      <workItem from="1494513422333" duration="4498000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11194000" />
+    <option name="totallyTimeSpent" value="11314000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />

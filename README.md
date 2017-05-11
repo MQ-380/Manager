@@ -13,8 +13,7 @@ API约定列表： v1.0  2017-5-10新增
 
 前端运用的技术栈：
 * vue + vuex + vue-router
-* bootstrap
-* jquery
+* iView
 
 
 
