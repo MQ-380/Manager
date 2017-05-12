@@ -1,5 +1,3 @@
-
-
 <template>
   <div id="login">
     <Modal v-model="loginActive">
@@ -40,6 +38,8 @@
 </template>
 
 <script>
+  import info from '../vuex/store'
+
   export default{
     name: 'login',
     data () {
@@ -84,13 +84,14 @@
         }
       }
     },
+    info,
     methods: {
       submit (item) {
         this.$refs[item].validate((valid) => {
           if (valid) {
             var fake = JSON.stringify(this.fakeAPI)
             if (this.formItem.type === '1') {
-              this.APIurl = ''
+              this.APIurl = 'https://reqres.in/api/users'
             } else {
               this.APIurl = ''
             }
@@ -100,6 +101,11 @@
                 if (info.status === '1') {
                   this.type = info.type
                   this.id = info.id
+                  var tmp = {
+                    type: this.type,
+                    id: this.id
+                  }
+                  this.$store.commit('LOGIN', tmp)
                   this.$router.push('/Admin')
                 } else {
                   this.loginActive = false
