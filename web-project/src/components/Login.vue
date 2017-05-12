@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <Modal v-model="loginActive">
+    <Modal v-model="loginActive" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#f60;text-align:center">
         <span>用户登录</span>
       </p>
@@ -22,7 +22,6 @@
       </div>
       <div slot="footer">
           <Button type="primary" @click="submit('formItem')">提交</Button>
-          <Button type="ghost" style="margin-left: 8px">取消</Button>
       </div>
     </Modal>
 
@@ -38,8 +37,6 @@
 </template>
 
 <script>
-  import info from '../vuex/store'
-
   export default{
     name: 'login',
     data () {
@@ -63,7 +60,7 @@
         msg: '',
         fakeAPI: {
           status: '1',
-          type: '1',
+          type: '2',
           id: '1'
         },
         ruleValidate: {
@@ -84,7 +81,6 @@
         }
       }
     },
-    info,
     methods: {
       submit (item) {
         this.$refs[item].validate((valid) => {
@@ -102,7 +98,7 @@
                   this.type = info.type
                   this.id = info.id
                   var tmp = {
-                    type: this.type,
+                    type: this.formItem.type,
                     id: this.id
                   }
                   this.$store.commit('LOGIN', tmp)

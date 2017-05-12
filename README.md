@@ -15,6 +15,10 @@ API约定列表： v1.0  2017-5-10新增
 * vue + vuex + vue-router
 * iView
 
+web部分使用方法：
+下载web-project并且安装npm后
+npm install 
+npm run dev
 
 
 
