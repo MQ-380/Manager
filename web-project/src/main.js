@@ -4,6 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './vuex/store'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
+import Vuex from 'vuex'
+import vueresource from 'vue-resource'
+
+Vue.use(iView)
+Vue.use(vueresource)
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 

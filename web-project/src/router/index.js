@@ -1,16 +1,10 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import Router from 'vue-router'
-import vueresource from 'vue-resource'
 import Login from '../components/Login.vue'
 import Admin from '../components/Admin.vue'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+import staffManage from '../components/StaffManage.vue'
 
 Vue.use(Router)
-Vue.use(iView)
-Vue.use(vueresource)
-Vue.use(Vuex)
 
 export default new Router({
   routes: [
@@ -22,6 +16,12 @@ export default new Router({
     {
       path: '/Admin',
       name: 'Admin',
+      children: [
+        {
+          path: '/Staff',
+          component: staffManage
+        }
+      ],
       component: Admin
     }
   ]

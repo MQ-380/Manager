@@ -33,6 +33,7 @@
         <span>{{msg}}</span>
       </div>
     </Modal>
+
   </div>
 </template>
 

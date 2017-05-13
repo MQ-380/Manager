@@ -42,7 +42,8 @@
     display: none;
   }
   .layout-header-right{
-    float: right;
+
+    text-align: right;
   }
   .layout-header-left{
     float: left;
@@ -63,7 +64,7 @@
           </Menu-item>
           <Menu-item name="LogOut">
             <Icon type="ios-information" :size="iconSize"></Icon>
-            <span class="layout-text">登出此账户</span>
+            <span class="layout-text">登出账户</span>
           </Menu-item>
         </Menu>
       </i-col>
@@ -78,7 +79,7 @@
         </div>
         <div class="layout-content">
           <div class="layout-content-main">
-
+            <router-view></router-view>
           </div>
         </div>
       </i-col>
@@ -96,7 +97,7 @@
       </div>
     </Modal>
 
-    <Modal v-model="notice" @on-ok="toLogin">
+    <Modal v-model="notice" @on-ok="LogoutAction">
       <p slot="header" style="color:#843534;text-align:left">
         <span>注意</span>
       </p>
@@ -108,6 +109,7 @@
   </div>
 </template>
 <script>
+  import Staff from './staffManage'
   export default {
     name: 'admin',
     data () {
@@ -130,6 +132,9 @@
         return this.$store.state.loginId
       }
     },
+    components: {
+      Staff
+    },
     methods: {
       toggleClick () {
         if (this.spanLeft === 5) {
@@ -143,9 +148,15 @@
       toLogin () {
         this.$router.push('/')
       },
+      LogoutAction () {
+        this.$store.commit('LOGOUT')
+        this.$router.push('/')
+      },
       logout (name) {
         if (name === 'LogOut') {
           this.notice = true
+        } else {
+          this.$router.push('/Staff')
         }
       }
     }
