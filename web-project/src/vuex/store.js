@@ -7,32 +7,52 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  isLogin: false,
-  loginId: '',
-  loginType: ''
+  LoginState: {
+    isLogin: false,
+    loginId: '',
+    loginType: ''
+  },
+  departState: {
+    departData: []
+  },
+  noticeState: {
+    infoName: '',
+    notice: false
+  }
 }
 
 const mutations = {
   GETLOGIN (state) {
-    state.isLogin = localStorage.getItem('isLogin')
-    state.loginId = localStorage.getItem('loginId')
-    state.loginType = localStorage.getItem('loginType')
+    state.LoginState.isLogin = localStorage.getItem('isLogin')
+    state.LoginState.loginId = localStorage.getItem('loginId')
+    state.LoginState.loginType = localStorage.getItem('loginType')
   },
   LOGIN (state, data) {
-    state.isLogin = true
-    state.loginId = data.id
-    state.loginType = data.type
-    localStorage.setItem('isLogin', state.isLogin)
-    localStorage.setItem('loginId', state.loginId)
-    localStorage.setItem('loginType', state.loginType)
+    state.LoginState.isLogin = true
+    state.LoginState.loginId = data.id
+    state.LoginState.loginType = data.type
+    localStorage.setItem('isLogin', state.LoginState.isLogin)
+    localStorage.setItem('loginId', state.LoginState.loginId)
+    localStorage.setItem('loginType', state.LoginState.loginType)
   },
   LOGOUT (state) {
-    state.isLogin = false
-    state.loginId = -1
-    state.loginType = -1
+    state.LoginState.isLogin = false
+    state.LoginState.loginId = -1
+    state.LoginState.loginType = -1
     localStorage.setItem('isLogin', false)
     localStorage.setItem('loginId', '')
     localStorage.setItem('loginType', '')
+  },
+  SETDEPARTDATA (state, data) {
+    state.departState.departData = data
+    localStorage.setItem('depart', state.departState.departData)
+  },
+  GETDEPARTDATA (state) {
+    state.departState.departData = localStorage.getItem('depart')
+  },
+  SETNOTICE (state, data) {
+    state.noticeState.infoName = data.name
+    state.noticeState.notice = data.show
   }
 }
 

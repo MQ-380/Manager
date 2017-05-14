@@ -1,5 +1,5 @@
 <style scoped>
-  .layout{
+  .layout {
     border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
@@ -9,7 +9,8 @@
     width: 100%;
     margin: 0;
   }
-  .layout-content{
+
+  .layout-content {
     min-height: 200px;
     margin: 15px;
     overflow: hidden;
@@ -17,38 +18,47 @@
     border-radius: 4px;
     height: 100%;
   }
-  .layout-content-main{
+
+  .layout-content-main {
     padding: 10px;
   }
-  .layout-menu-left{
+
+  .layout-menu-left {
     background: #464c5b;
   }
-  .layout-header{
+
+  .layout-header {
     height: 60px;
     background: #fff;
-    box-shadow: 0 1px 1px rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   }
-  .layout-logo-left{
+
+  .layout-logo-left {
     width: 90%;
     height: 30px;
     background: #5b6270;
     border-radius: 3px;
     margin: 15px auto;
   }
-  .layout-ceiling-main a{
+
+  .layout-ceiling-main a {
     color: #9ba7b5;
   }
-  .layout-hide-text .layout-text{
+
+  .layout-hide-text .layout-text {
     display: none;
   }
-  .layout-header-right{
+
+  .layout-header-right {
 
     text-align: right;
   }
-  .layout-header-left{
+
+  .layout-header-left {
     float: left;
   }
-  .layout-full{
+
+  .layout-full {
     height: 100%;
   }
 </style>
@@ -58,7 +68,11 @@
       <i-col :span="spanLeft" class="layout-menu-left layout-full">
         <Menu active-name="1" theme="dark" width="auto" @on-select="logout">
           <div class="layout-logo-left"></div>
-          <Menu-item name="1">
+          <Menu-item name="depart">
+            <Icon type="ios-people" :size="iconSize"></Icon>
+            <span class="layout-text">部门管理</span>
+          </Menu-item>
+          <Menu-item name="staff">
             <Icon type="ios-people" :size="iconSize"></Icon>
             <span class="layout-text">员工管理</span>
           </Menu-item>
@@ -85,7 +99,7 @@
       </i-col>
     </Row>
 
-    <Modal v-model="isLoginCorrect">
+    <Modal v-model="isLoginCorrect" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
         <span>请先登录</span>
       </p>
@@ -109,7 +123,9 @@
   </div>
 </template>
 <script>
-  import Staff from './staffManage'
+  import Depart from './DepartManage'
+  import Notice from './CheckNetworkNotice'
+  import Staff from './StaffManage'
   export default {
     name: 'admin',
     data () {
@@ -125,15 +141,17 @@
       },
       isLoginCorrect: function () {
         this.$store.commit('GETLOGIN')
-        return !(this.$store.state.isLogin && this.$store.state.loginType === '1')
+        return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType === '1')
       },
       adminId: function () {
         this.$store.commit('GETLOGIN')
-        return this.$store.state.loginId
+        return this.$store.state.LoginState.loginId
       }
     },
     components: {
-      Staff
+      Staff,
+      Notice,
+      Depart
     },
     methods: {
       toggleClick () {
@@ -155,7 +173,9 @@
       logout (name) {
         if (name === 'LogOut') {
           this.notice = true
-        } else {
+        } else if (name === 'depart') {
+          this.$router.push('/Depart')
+        } else if (name === 'staff') {
           this.$router.push('/Staff')
         }
       }
