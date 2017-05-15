@@ -19,4 +19,12 @@ public class DepartmentServiceImpl implements DepartmentService{
 	{
 		return departmentDAO.findByDeid(deid);
 	}
+	public List findAll()
+	{
+		return departmentDAO.findAll();
+	}
+	public void deleteDepartment(String[] departmentID)
+	{
+		departmentDAO.deleteDepartment(departmentID);
+	}
 }

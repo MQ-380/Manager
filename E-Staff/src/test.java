@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.action.addDepartment;
+import com.action.*;
 import com.model.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
@@ -42,19 +42,11 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-    	 addDepartment ser =  (addDepartment)ctx.getBean("addDepartment"); 
-	    	
-	    	Admin a=new Admin();
-	    	a.setAdid("123");
-	        ser.setAdmin(a);
-	    	
-			
-			Department department = new Department();
-	    	department.setName("œ˙ €≤ø");
-	    	ser.setDepartment(department);
-	    	
-	    	//String str=ser.test();
-	    	 
+    	 editDepartment ser =  (editDepartment)ctx.getBean("editDepartment"); 
+	    	   	
+	    	ser.setId("005");
+	    	ser.setName("aaaaaaaaaaa");
+	    	 ser.execute();
 	    }
 
 }

@@ -1,36 +1,35 @@
 package com.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.model.Admin;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.AdminService;
+import com.tool.JSONUtils;
 
 
 
 public class userLogin extends ActionSupport{
-private Admin admin;
-private String adid;
-public String getAdid() {
-	return adid;
+private String userName;
+
+private String password;
+
+public String getUserName() {
+	return userName;
 }
-public void setAdid(String adid) {
-	this.adid = adid;
+public void setUserName(String userName) {
+	this.userName = userName;
 }
-private String adpwd;
-public String getAdpwd() {
-	return adpwd;
+public String getPassword() {
+	return password;
 }
-public void setAdpwd(String adpwd) {
-	this.adpwd = adpwd;
-}
-public Admin getAdmin() {
-	return admin;
-}
-public void setAdmin(Admin admin) {
-	this.admin = admin;
+public void setPassword(String password) {
+	this.password = password;
 }
 private AdminService adminService;
 
@@ -42,18 +41,25 @@ public void setAdminService(AdminService adminService) {
 }
 @SuppressWarnings("unchecked")
 public String execute() throws Exception {
+	 Map<String, Object> map = new HashMap<String, Object>();
+	 String status="1";
 	 Admin a = new Admin(); 
-	// a.setAdid(admin.getAdid());
-	 //a.setAdpwd(admin.getAdpwd());
-	 a.setAdid(adid);
-	a.setAdpwd(adpwd);
+	 a.setAdid(userName);
+	 a.setAdpwd(password);
 	 List<Admin> adminList=adminService.findByExample(a);
 	 if (adminList.size()>0){
-		Map session = (Map)ActionContext.getContext().getSession();
-		session.put("admin", admin);
+		 Map session = (Map)ActionContext.getContext().getSession();
+		 session.put("userId",userName);session.put("userPro",adminList.get(0).getAdpro());
+		  map.put("status", status);
+		  map.put("type",adminList.get(0).getAdpro());
+		  map.put("id",userName);
+  	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		return SUCCESS;
 	}	else {
+		status="0";
+		map.put("status", status);
 		addFieldError("msg","用户名或密码错误");
+		 JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		return INPUT;
 	}
 }

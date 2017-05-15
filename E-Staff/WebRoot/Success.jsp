@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    	管理员<s:property value="admin.adid"/>登录成功，可以进行相关操作！
+    	管理员<s:property value="adid"/>登录成功，可以进行相关操作！
     	<form action="addDepartment.action" method="post">
 					<s:textfield name="department.name" label="部门名" size="20"></s:textfield>
 					<s:submit value="提交"></s:submit>

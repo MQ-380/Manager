@@ -28,8 +28,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<tr>
 				<td>
 				<form action="userLogin.action" method="post">
-					<s:textfield name="admin.adid" label="用户名" size="20"></s:textfield>
-					<s:textfield name="admin.adpwd" label="密　码" size="20"></s:textfield>
+					<s:textfield name="adid" label="用户名" size="20"></s:textfield>
+					<s:textfield name="adpwd" label="密　码" size="20"></s:textfield>
 					<s:submit value="提交"></s:submit>
 				</form>
 				</td>

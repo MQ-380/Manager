@@ -1,6 +1,7 @@
 package com.model;
 
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -48,7 +49,7 @@ public class DepartmentDAO {
 	public void save(Department transientInstance) {
 		log.debug("saving Department instance");
 		try {
-			getCurrentSession().save(transientInstance);
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -112,7 +113,12 @@ public class DepartmentDAO {
 	public List findByDeid(Object deid) {
 		return findByProperty(DEID, deid);
 	}
-
+	 public void deleteDepartment(String[] departmentID) {
+	        for (int i = 0; i < departmentID.length; i++) {
+	            Department dep = (Department) findByDeid(departmentID[i]).get(0);
+	            delete(dep);
+	        }
+	 }
 	public List findByName(Object name) {
 		return findByProperty(NAME, name);
 	}

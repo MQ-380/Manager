@@ -48,6 +48,7 @@
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut expression="bean(adminDAO)" id="myPointcut"/>
+		<aop:pointcut expression="bean(departmentDAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -67,6 +68,7 @@
 			<ref bean="adminService"/>
 		</property>
 	</bean>
+	
 	<bean id="departmentDAO" class="com.model.DepartmentDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
@@ -77,6 +79,21 @@
 			<ref bean="departmentDAO"/>
 		</property>
 </bean>
+	<bean id="deleteDepartment" class="com.action.deleteDepartment">
+		<property name="departmentService">
+			<ref bean="departmentService"/>
+		</property>
+	</bean>
+	<bean id="editDepartment" class="com.action.editDepartment">
+		<property name="departmentService">
+			<ref bean="departmentService"/>
+		</property>
+	</bean>
+	<bean id="consultDepartment" class="com.action.consultDepartment">
+		<property name="departmentService">
+			<ref bean="departmentService"/>
+		</property>
+	</bean>
 	<bean id="staffDAO" class="com.model.StaffDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
@@ -87,6 +104,11 @@
 			<ref bean="staffDAO"/>
 		</property>
 </bean>
+	<bean id="staffLogin" class="com.action.staffLogin">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
 <bean id="addDepartment" class="com.action.addDepartment">
 		<property name="departmentService">
 			<ref bean="departmentService"/>

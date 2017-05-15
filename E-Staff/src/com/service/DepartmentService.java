@@ -7,4 +7,6 @@ import com.model.*;
 public interface DepartmentService {
 	public void save(Department dep);
 	public List findByDeid(String deid);
+	public List findAll();
+	public void deleteDepartment(String[] departmentID);
 }

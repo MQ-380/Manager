@@ -17,7 +17,14 @@ public class addDepartment extends ActionSupport {
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
-	private Department department;
+	private String departmentname;
+	public String getDepartmentname() {
+		return departmentname;
+	}
+
+	public void setDepartmentname(String departmentname) {
+		this.departmentname = departmentname;
+	}
 	private DepartmentService departmentService;
 	private AdminService adminService;
     public AdminService getAdminService() {
@@ -35,20 +42,13 @@ public class addDepartment extends ActionSupport {
 		this.departmentService = departmentService;
 	}
 
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
 
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
-		 Department dep = new Department(); 
+		 Department dep = new Department();
+		  try {
 		 Map session = (Map)ActionContext.getContext().getSession();
-		 
-		 String adid=((Admin)session.get("admin")).getAdid();
+		 String adid=((String)session.get("userId"));
 		 
 		 Admin a=new Admin();
 		 a.setAdid(adid);
@@ -59,11 +59,16 @@ public class addDepartment extends ActionSupport {
 		 a.setDenum(denum);
 		 adminService.save(a);
 		 String id=String.format("%03d",denum);
-		 dep.setName(department.getName());
+		 dep.setName(departmentname);
 		 dep.setDeid(id);
 		 dep.setStanum(0);
 		 departmentService.save(dep);
-		 return SUCCESS;
+	       return "true";
+		 } catch (Exception e) {
+			 // TODO Auto-generated catch block
+         e.printStackTrace();	
+		 }
+		  return "false";
 		 }
 
 }
