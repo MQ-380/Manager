@@ -6,11 +6,11 @@
       </p>
       <div style="text-align:center">
         <Form ref="formItem" :model="formItem" :label-width="80" :rules="ruleValidate">
-          <Form-item label="用户名" prop="user">
-            <Input v-model="formItem.user" placeholder="请输入"/>
+          <Form-item label="用户名" prop="adid">
+            <Input v-model="formItem.adid" placeholder="请输入"/>
           </Form-item>
-          <Form-item label="密码" prop="password">
-            <Input type="password" v-model="formItem.password" placeholder="请输入"/>
+          <Form-item label="密码" prop="adpwd">
+            <Input type="password" v-model="formItem.adpwd" placeholder="请输入"/>
           </Form-item>
           <Form-item label="账户类别" prop="type">
             <Select v-model="formItem.type">
@@ -52,8 +52,8 @@
         loginActive: true,
         errorActive: false,
         formItem: {
-          user: '',
-          password: '',
+          adid: '',
+          adpwd: '',
           type: ''
         },
         type: '',
@@ -65,12 +65,12 @@
           id: '1'
         },
         ruleValidate: {
-          user: [{
+          adid: [{
             required: true,
             message: '用户名不能为空',
             trigger: 'blur'
           }],
-          password: [{
+          adpwd: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
@@ -86,13 +86,19 @@
       submit (item) {
         this.$refs[item].validate((valid) => {
           if (valid) {
-            var fake = JSON.stringify(this.fakeAPI)
             if (this.formItem.type === '1') {
-              this.APIurl = 'https://reqres.in/api/users'
+              this.APIurl = 'http://localhost:8081/userLogin.action'
             } else {
               this.APIurl = ''
             }
-            this.$http.post(this.APIurl, fake)
+            this.$http({
+              url: this.APIurl,
+              methods: 'POST',
+              data: this.formItem,
+              headers: {
+                Origin: 'http://localhost:8081'
+              }
+            })
               .then((response) => {
                 var info = response.body
                 if (info.status === '1') {
