@@ -12,6 +12,20 @@ import com.service.AdminService;
 
 public class userLogin extends ActionSupport{
 private Admin admin;
+private String adid;
+public String getAdid() {
+	return adid;
+}
+public void setAdid(String adid) {
+	this.adid = adid;
+}
+private String adpwd;
+public String getAdpwd() {
+	return adpwd;
+}
+public void setAdpwd(String adpwd) {
+	this.adpwd = adpwd;
+}
 public Admin getAdmin() {
 	return admin;
 }
@@ -29,9 +43,10 @@ public void setAdminService(AdminService adminService) {
 @SuppressWarnings("unchecked")
 public String execute() throws Exception {
 	 Admin a = new Admin(); 
-	 a.setAdid(admin.getAdid());
-	 a.setAdpwd(admin.getAdpwd());
-	 
+	// a.setAdid(admin.getAdid());
+	 //a.setAdpwd(admin.getAdpwd());
+	 a.setAdid(adid);
+	a.setAdpwd(adpwd);
 	 List<Admin> adminList=adminService.findByExample(a);
 	 if (adminList.size()>0){
 		Map session = (Map)ActionContext.getContext().getSession();

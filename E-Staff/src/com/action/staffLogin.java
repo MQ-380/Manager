@@ -42,8 +42,10 @@ public class staffLogin extends ActionSupport{
 		 
 		 List<Staff> staffList=staffService.findByExample(s);
 		 if (staffList.size()>0){
+			int pro=staffList.get(0).getRank();
 			Map session = (Map)ActionContext.getContext().getSession();
 			session.put("staff", staff);
+			session.put("userPro",pro);
 			return SUCCESS;
 		}	else {
 			addFieldError("msg","用户名或密码错误");
