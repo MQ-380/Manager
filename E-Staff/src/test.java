@@ -42,11 +42,9 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-    	 editDepartment ser =  (editDepartment)ctx.getBean("editDepartment"); 
-	    	   	
-	    	ser.setId("005");
-	    	ser.setName("aaaaaaaaaaa");
-	    	 ser.execute();
+    	 consultDepartment ser =  (consultDepartment)ctx.getBean("consultDepartment"); 
+	    
+	    	// ser.execute();
 	    }
 
 }

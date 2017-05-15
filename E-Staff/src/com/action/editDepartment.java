@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.model.Admin;
 import com.model.Department;
 import com.service.DepartmentService;
 import com.tool.JSONUtils;
@@ -21,7 +22,9 @@ public String execute() throws Exception {
 	         String status = null;
 	         try {
 	        	 Department dep=new Department();
-	        	 dep.setDeid(id);dep.setName(name);
+	        	 List<Department> depList=departmentService.findByDeid(id);
+	    		 dep=depList.get(0);
+	        	 dep.setName(name);
 	             departmentService.save(dep);
 	             return "true";
 	         } catch (Exception e) {

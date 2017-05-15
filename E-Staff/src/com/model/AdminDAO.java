@@ -56,7 +56,7 @@ public class AdminDAO {
 		}
 	}
 
-
+    
 	public void delete(Admin persistentInstance) {
 		log.debug("deleting Admin instance");
 		try {
