@@ -25,12 +25,15 @@
       </div>
     </Modal>
 
-    <Modal v-model="errorActive">
+    <Modal v-model="errorActive" >
       <p slot="header" style="color:#843534;text-align: center">
         <span>登录错误</span>
       </p>
       <div style="text-align: center">
         <span>{{msg}}</span>
+      </div>
+      <div slot="footer">
+        <Button type="primary" @click="toLogin()">确定</Button>
       </div>
     </Modal>
 
@@ -94,10 +97,7 @@
             this.$http({
               url: this.APIurl,
               methods: 'POST',
-              data: this.formItem,
-              headers: {
-                Origin: 'http://localhost:8081'
-              }
+              params: this.formItem
             })
               .then((response) => {
                 var info = response.body
@@ -116,11 +116,18 @@
                   this.errorActive = true
                 }
               }, (response) => {
+                this.loginActive = false
+                this.msg = '请检查网络'
+                this.errorActive = true
               })
           } else {
             this.$Message.error('表单验证失败!')
           }
         })
+      },
+      toLogin () {
+        this.errorActive = false
+        this.loginActive = true
       }
     }
   }
