@@ -1,9 +1,9 @@
 <template>
-  <div id="depart">
-    <router-view></router-view>
-    <br><br>
+  <div id="depart" class="canRoll">
+    <add v-if="showAdd" @closeAdd="closeAdd()"></add>
+    <notice v-if="showNotice" :infoName="查询部门信息" @closeModal="closeModal()"></notice>
     <div class='buttonCouple'>
-      <Button type="primary" size="default" @click="toAdd">新增部门</Button>
+      <Button type="primary"  @click="toAdd">新增部门</Button>
       <Button type="error">删除部门</Button>
     </div>
     <div class="freshButton">
@@ -12,10 +12,10 @@
     </div>
     <br><br>
     <br><br>
-    <Table :data="data" :columns="column1" stripe border></Table>
-    <div style="margin: 10px;overflow: hidden">
+    <Table :data="data" :columns="column1" :height="523" stripe border></Table>
+    <div style="margin: 10px;overflow: scroll">
       <div style="float: right;">
-        <Page :total="3" :current="1" @on-change="changePage"></Page>
+        <Page :total="number" :current="nowDataPage" @on-change="changePage"></Page>
       </div>
     </div>
   </div>
@@ -28,15 +28,22 @@
   .freshButton {
     float: right
   }
+  .canRoll {
+    overflow: scroll;
+  }
 </style>
 
 <script>
-  import Notice from './CheckNetworkNotice'
-  import Add from './AddInformation'
+  import notice from './CheckNetworkNotice'
+  import add from './AddDepartInformation'
   export default {
     data () {
       return {
-        data: this.getData(),
+        data: this.initForm(),
+        number: this.getDataSize(),
+        nowDataPage: 1,
+        showNotice: false,
+        showAdd: false,
         column1: [
           {
             type: 'selection',
@@ -46,7 +53,7 @@
           {
             title: '部门编号',
             width: 100,
-            key: 'ID',
+            key: 'deid',
             align: 'center'
           },
           {
@@ -79,48 +86,49 @@
       }
     },
     components: {
-      Notice,
-      Add
+      notice,
+      add
     },
     methods: {
       getData () {
-        var fakeData = {
-          department: [
-            {
-              ID: '001',
-              name: '人事部'
-            },
-            {
-              ID: '002',
-              name: '财务部'
-            },
-            {
-              ID: '003',
-              name: '人力资源部'
-            }
-          ]
-        }
-        this.$http.post('https://reqres.in/api/users', fakeData)
+        this.$http.post('http://localhost:8081/consultDepartment.action')
             .then((response) => {
+              console.log('response true')
               this.$store.commit('SETDEPARTDATA', response.body.department)
             },
             (response) => {
-              this.$store.commit('SETNOTICE', {
-                name: '部门',
-                show: true
-              })
-              this.$router.push('/Notice')
+              this.showNotice = true
             })
         return this.$store.state.departState.departData
       },
-      changePage () {
-        this.data = this.getData()
+      getDataSize () {
+        return this.$store.state.departState.departData.length
+      },
+      initForm () {
+        this.getData()
+        return this.getThisPageData(0)
+      },
+      getThisPageData (begin) {
+        return this.$store.state.departState.departData.slice(begin, begin + 10)
+      },
+      changePage (current) {
+        console.log(current)
+        this.data = this.getThisPageData(current * 10 - 10)
       },
       toAdd () {
-        this.$router.push('/Add')
+        this.showAdd = true
       },
       fresh () {
-        this.data = this.getData()
+        this.getData()
+        this.data = this.getThisPageData(0)
+        this.number = this.getDataSize()
+      },
+      closeModal () {
+        this.showError = false
+      },
+      closeAdd () {
+        this.fresh()
+        this.showAdd = false
       }
     }
   }

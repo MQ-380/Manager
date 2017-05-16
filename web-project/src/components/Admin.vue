@@ -1,42 +1,36 @@
 <style scoped>
   .layout {
-    border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
     border-radius: 4px;
-    overflow: hidden;
     height: 100%;
     width: 100%;
     margin: 0;
+    overflow: hidden;
   }
 
   .layout-content {
-    min-height: 200px;
-    margin: 15px;
-    overflow: hidden;
+    overflow: scroll;
     background: #fff;
     border-radius: 4px;
-    height: 100%;
+    padding-bottom: 32676px;
+    margin-bottom: -32676px;
   }
 
   .layout-content-main {
-    padding: 10px;
+    padding: 20px;
+    overflow: scroll;
   }
 
   .layout-menu-left {
-    background: #464c5b;
-  }
-
-  .layout-header {
-    height: 60px;
-    background: #fff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    background: #2e6da4;
+    height: 100%;
   }
 
   .layout-logo-left {
     width: 90%;
     height: 30px;
-    background: #5b6270;
+    background: #ffffff;
     border-radius: 3px;
     margin: 15px auto;
   }
@@ -49,15 +43,6 @@
     display: none;
   }
 
-  .layout-header-right {
-
-    text-align: right;
-  }
-
-  .layout-header-left {
-    float: left;
-  }
-
   .layout-full {
     height: 100%;
   }
@@ -66,8 +51,9 @@
   <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
     <Row type="flex" class="layout-full">
       <i-col :span="spanLeft" class="layout-menu-left layout-full">
-        <Menu active-name="1" theme="dark" width="auto" @on-select="logout">
-          <div class="layout-logo-left"></div>
+        <Menu active-name="1" theme="dark" width="auto" @on-select="logout" class="layout-menu-left layout-full">
+          <div class="layout-logo-left">
+          </div>
           <Menu-item name="depart">
             <Icon type="ios-people" :size="iconSize"></Icon>
             <span class="layout-text">部门管理</span>
@@ -83,16 +69,8 @@
         </Menu>
       </i-col>
       <i-col :span="spanRight">
-        <div class="layout-header">
-          <i-button type="text" @click="toggleClick" class="layout-header-left">
-            <Icon type="navicon" size="32"></Icon>
-          </i-button>
-          <div class="layout-header-right">
-            <span>当前登录账号：{{adminId}}</span>
-          </div>
-        </div>
         <div class="layout-content">
-          <div class="layout-content-main">
+          <div class="layout-content-main" >
             <router-view></router-view>
           </div>
         </div>
@@ -142,10 +120,6 @@
       isLoginCorrect: function () {
         this.$store.commit('GETLOGIN')
         return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType === '1')
-      },
-      adminId: function () {
-        this.$store.commit('GETLOGIN')
-        return this.$store.state.LoginState.loginId
       }
     },
     components: {
@@ -154,15 +128,6 @@
       Depart
     },
     methods: {
-      toggleClick () {
-        if (this.spanLeft === 5) {
-          this.spanLeft = 2
-          this.spanRight = 22
-        } else {
-          this.spanLeft = 5
-          this.spanRight = 19
-        }
-      },
       toLogin () {
         this.$router.push('/')
       },

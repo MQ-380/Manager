@@ -60,13 +60,8 @@
           type: ''
         },
         type: '',
-        APIurl: 'https://reqres.in/api/users',
+        APIurl: '',
         msg: '',
-        fakeAPI: {
-          status: '1',
-          type: '2',
-          id: '1'
-        },
         ruleValidate: {
           adid: [{
             required: true,

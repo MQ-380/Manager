@@ -1,11 +1,11 @@
 <template>
-  <div id="notice">
+  <div id="success">
     <Modal v-model="showNotice">
       <p slot="header" style="color:#843534;text-align:left">
-        <span>请检查您的网络情况</span>
+        <span>成功</span>
       </p>
       <div style="text-align:center">
-        <span>无法{{infoName}}，请检查您的网络状况</span>
+        <span>{{msg}}</span>
       </div>
       <div slot="footer">
         <Button type="primary" @click="cancel()">确定</Button>
@@ -16,13 +16,13 @@
 
 <script>
   export default {
-    name: 'notice',
+    name: 'success',
     data () {
       return {
         showNotice: true
       }
     },
-    props: ['infoName'],
+    props: ['msg'],
     methods: {
       cancel () {
         this.$emit('closeModal')
