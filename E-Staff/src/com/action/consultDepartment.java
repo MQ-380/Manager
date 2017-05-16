@@ -10,9 +10,10 @@ import com.tool.JSONUtils;
 import com.model.Admin;
 import com.model.Department;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import com.service.DepartmentService;
 
-public class consultDepartment {
+public class consultDepartment extends ActionSupport{
 	private DepartmentService departmentService;
 
 	public DepartmentService getDepartmentService() {
@@ -38,12 +39,12 @@ public class consultDepartment {
 		                 }
 		                 map.put("status", status);
 		         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
-		             return "true";
+		             return SUCCESS;
 		         } catch (Exception e) {
 		             // TODO Auto-generated catch block
 		             e.printStackTrace();
 		         }
-		        return "false";
+		        return ERROR;
 		
 	}
 }

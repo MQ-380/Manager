@@ -1,9 +1,10 @@
 package com.action;
 
 import com.model.Department;
+import com.opensymphony.xwork2.ActionSupport;
 import com.service.DepartmentService;
 
-public class deleteDepartment {
+public class deleteDepartment extends ActionSupport{
 	private String[] departmentID;
 	private DepartmentService departmentService;
 	@SuppressWarnings("unchecked")
@@ -11,12 +12,12 @@ public class deleteDepartment {
 		         try {
 		      
 		             departmentService.deleteDepartment(departmentID);
-		             return "true";
+		             return SUCCESS;
 		         } catch (Exception e) {
 		             // TODO Auto-generated catch block
 		             e.printStackTrace();
 		         }
-		        return "false";
+		        return ERROR;
 	}
 	public DepartmentService getDepartmentService() {
 		return departmentService;

@@ -8,10 +8,11 @@ import org.apache.struts2.ServletActionContext;
 
 import com.model.Admin;
 import com.model.Department;
+import com.opensymphony.xwork2.ActionSupport;
 import com.service.DepartmentService;
 import com.tool.JSONUtils;
 
-public class editDepartment {
+public class editDepartment extends ActionSupport{
 private String id;
 private String name;
 private DepartmentService departmentService;
@@ -26,12 +27,12 @@ public String execute() throws Exception {
 	    		 dep=depList.get(0);
 	        	 dep.setName(name);
 	             departmentService.save(dep);
-	             return "true";
+	             return SUCCESS;
 	         } catch (Exception e) {
 	             // TODO Auto-generated catch block
 	             e.printStackTrace();
 	         }
-	        return "false";
+	        return ERROR;
 	
 }
 

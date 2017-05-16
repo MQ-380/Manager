@@ -63,12 +63,12 @@ public class addDepartment extends ActionSupport {
 		 dep.setDeid(id);
 		 dep.setStanum(0);
 		 departmentService.save(dep);
-	       return "true";
+	       return SUCCESS;
 		 } catch (Exception e) {
 			 // TODO Auto-generated catch block
          e.printStackTrace();	
 		 }
-		  return "false";
+		  return ERROR;
 		 }
 
 }

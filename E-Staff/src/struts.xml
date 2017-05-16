@@ -5,10 +5,27 @@
 		<!-- 用户登录Action配置 -->
 		<action name="userLogin" class="com.action.userLogin">
 			<result name="success">/Success.jsp</result>
-			<result name="input">/index.jsp</result>
+			<result name="error">/index.jsp</result>
 		</action>	
+		<action name="staffLogin" class="com.action.staffLogin">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 		<action name="addDepartment" class="com.action.addDepartment">
 			<result name="success">/Success.jsp</result>
+			<result name="error">/Success.jsp</result>
+		</action>
+		<action name="consultDepartment" class="com.action.consultDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
 		</action>	
+		<action name="deleteDepartment" class="com.action.deleteDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editDepartment" class="com.action.editDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    

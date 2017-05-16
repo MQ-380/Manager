@@ -60,7 +60,7 @@ public String execute() throws Exception {
 		map.put("status", status);
 		addFieldError("msg","用户名或密码错误");
 		 JSONUtils.toJson(ServletActionContext.getResponse(), map);
-		return INPUT;
+		return ERROR;
 	}
 }
 }
