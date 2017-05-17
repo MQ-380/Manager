@@ -37,12 +37,14 @@ public class consultDepartment extends ActionSupport{
 		                 } else {
 		                     status = "null";
 		                 }
-		                 map.put("status", status);
+		                 map.put("status", true);
 		         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		             return SUCCESS;
 		         } catch (Exception e) {
 		             // TODO Auto-generated catch block
 		             e.printStackTrace();
+		             map.put("status", false);
+	         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		         }
 		        return ERROR;
 		

@@ -47,7 +47,7 @@ public class staffLogin extends ActionSupport{
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
 		 Map<String, Object> map = new HashMap<String, Object>();
-		 String status="1";
+	
 		 Staff s = new Staff(); 
 		 s.setStaid(userName);
 		 s.setPassword(password);
@@ -57,14 +57,13 @@ public class staffLogin extends ActionSupport{
 			 Map session = (Map)ActionContext.getContext().getSession();
 			 session.put("userId",userName);session.put("userPro",staffList.get(0).getRank());
 			 
-			  map.put("status", status);
+			  map.put("status", true);
 			  map.put("type",staffList.get(0).getRank());
 			  map.put("id",userName);
 	  	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 			return SUCCESS;
 		}	else {
-			status="0";
-			map.put("status", status);
+			map.put("status", false);
 			addFieldError("msg","用户名或密码错误");
 			JSONUtils.toJson(ServletActionContext.getResponse(), map);
 			return ERROR;

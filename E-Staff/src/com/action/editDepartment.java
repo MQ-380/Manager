@@ -19,7 +19,7 @@ private DepartmentService departmentService;
 
 @SuppressWarnings("unchecked")
 public String execute() throws Exception {
-	 
+	 Map<String, Object> map = new HashMap<String, Object>();
 	         String status = null;
 	         try {
 	        	 Department dep=new Department();
@@ -27,10 +27,14 @@ public String execute() throws Exception {
 	    		 dep=depList.get(0);
 	        	 dep.setName(name);
 	             departmentService.save(dep);
+	             map.put("status", true);
+		   		  JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	             return SUCCESS;
 	         } catch (Exception e) {
 	             // TODO Auto-generated catch block
 	             e.printStackTrace();
+	             map.put("status", false);
+	    	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	             return ERROR;
 	         }
 }

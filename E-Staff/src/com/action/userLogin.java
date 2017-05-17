@@ -42,7 +42,7 @@ public void setAdminService(AdminService adminService) {
 @SuppressWarnings("unchecked")
 public String execute() throws Exception {
 	 Map<String, Object> map = new HashMap<String, Object>();
-	 String status="1";
+
 	 Admin a = new Admin(); 
 	 a.setAdid(userName);
 	 a.setAdpwd(password);
@@ -50,14 +50,13 @@ public String execute() throws Exception {
 	 if (adminList.size()>0){
 		 Map session = (Map)ActionContext.getContext().getSession();
 		 session.put("userId",userName);session.put("userPro",adminList.get(0).getAdpro());
-		  map.put("status", status);
+		  map.put("status", true);
 		  map.put("type",adminList.get(0).getAdpro());
 		  map.put("id",userName);
   	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		return SUCCESS;
 	}	else {
-		status="0";
-		map.put("status", status);
+		map.put("status", false);
 		addFieldError("msg","用户名或密码错误");
 		 JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		return ERROR;

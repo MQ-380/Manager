@@ -42,13 +42,13 @@ public String execute() throws Exception{
 	staff.setLeavenum(0);
 	staff.setState(1);
 	staffService.save(staff);
-	 map.put("status", "1");
+	 map.put("status", true);
 	  JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	return SUCCESS;
 	  }  catch (Exception e) {
 			 // TODO Auto-generated catch block
 	         e.printStackTrace();	
-	         map.put("status", "0");
+	         map.put("status",false);
 			  JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	         return ERROR;
 	}
