@@ -31,9 +31,8 @@ public String execute() throws Exception {
 	         } catch (Exception e) {
 	             // TODO Auto-generated catch block
 	             e.printStackTrace();
+	             return ERROR;
 	         }
-	        return ERROR;
-	
 }
 
 public String getId() {

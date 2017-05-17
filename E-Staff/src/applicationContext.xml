@@ -117,4 +117,12 @@
 			<ref bean="adminService"/>
 		</property>
 	</bean>
+	<bean id="addStaff" class="com.action.addStaff">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+			<property name="departmentService">
+			<ref bean="departmentService"/>
+		</property>
+	</bean>
 	</beans>

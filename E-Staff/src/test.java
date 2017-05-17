@@ -1,5 +1,7 @@
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,9 +44,17 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-    	 consultDepartment ser =  (consultDepartment)ctx.getBean("consultDepartment"); 
-	    
-	    	// ser.execute();
+    	 addStaff ser =  (addStaff)ctx.getBean("addStaff"); 
+	     Staff sta=new Staff();
+	     String str="2017-01-23";
+	     SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+	     Date date=format.parse(str);
+	     sta.setTime(date);
+	     sta.setDeid("001");
+	     sta.setRank(1);
+	     sta.setName("zzzzzzzz");
+	     ser.setStaff(sta);
+	     ser.execute();
 	    }
 
 }

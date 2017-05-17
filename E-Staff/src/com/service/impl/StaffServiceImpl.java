@@ -14,6 +14,10 @@ public class StaffServiceImpl implements StaffService{
 	public void setStaffDAO(StaffDAO staffDAO) {
 		this.staffDAO = staffDAO;
 	}
+	public void save(Staff staff)
+	{
+		staffDAO.save(staff);
+	}
 public List findByExample(Staff staff){
 		
 		return staffDAO.findByExample(staff);

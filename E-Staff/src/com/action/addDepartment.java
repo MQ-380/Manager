@@ -1,12 +1,16 @@
 package com.action;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.model.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.*;
+import com.tool.JSONUtils;
 
 public class addDepartment extends ActionSupport {
 	private Admin admin;
@@ -46,6 +50,8 @@ public class addDepartment extends ActionSupport {
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
 		 Department dep = new Department();
+
+		 Map<String, Object> map = new HashMap<String, Object>();
 		  try {
 		 Map session = (Map)ActionContext.getContext().getSession();
 		 String adid=((String)session.get("userId"));
@@ -63,12 +69,16 @@ public class addDepartment extends ActionSupport {
 		 dep.setDeid(id);
 		 dep.setStanum(0);
 		 departmentService.save(dep);
+		  map.put("status", "1");
+		  JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	       return SUCCESS;
 		 } catch (Exception e) {
 			 // TODO Auto-generated catch block
-         e.printStackTrace();	
+         e.printStackTrace();
+   	     map.put("status", "0");
+	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
+         return ERROR;
 		 }
-		  return ERROR;
 		 }
 
 }

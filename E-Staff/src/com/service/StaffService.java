@@ -6,4 +6,5 @@ import com.model.Staff;
 
 public interface StaffService {
 	public List findByExample(Staff staff);
+	public void save(Staff staff);
 }

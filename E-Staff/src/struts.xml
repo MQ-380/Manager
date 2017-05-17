@@ -27,5 +27,9 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+			<action name="addStaff" class="com.action.addStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    
