@@ -101,8 +101,8 @@
   </div>
 </template>
 <script>
-  import Depart from './DepartManage'
-  import Notice from './CheckNetworkNotice'
+  import Depart from './DepartmentManage'
+  import Notice from './Notice'
   import Staff from './StaffManage'
   export default {
     name: 'admin',

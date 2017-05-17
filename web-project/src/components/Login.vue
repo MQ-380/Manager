@@ -6,11 +6,11 @@
       </p>
       <div style="text-align:center">
         <Form ref="formItem" :model="formItem" :label-width="80" :rules="ruleValidate">
-          <Form-item label="用户名" prop="adid">
-            <Input v-model="formItem.adid" placeholder="请输入"/>
+          <Form-item label="用户名" prop="userName">
+            <Input v-model="formItem.userName" placeholder="请输入"/>
           </Form-item>
-          <Form-item label="密码" prop="adpwd">
-            <Input type="password" v-model="formItem.adpwd" placeholder="请输入"/>
+          <Form-item label="密码" prop="password">
+            <Input type="password" v-model="formItem.password" placeholder="请输入"/>
           </Form-item>
           <Form-item label="账户类别" prop="type">
             <Select v-model="formItem.type">
@@ -55,20 +55,20 @@
         loginActive: true,
         errorActive: false,
         formItem: {
-          adid: '',
-          adpwd: '',
+          userName: '',
+          password: '',
           type: ''
         },
         type: '',
         APIurl: '',
         msg: '',
         ruleValidate: {
-          adid: [{
+          userName: [{
             required: true,
             message: '用户名不能为空',
             trigger: 'blur'
           }],
-          adpwd: [{
+          password: [{
             required: true,
             message: '密码不能为空',
             trigger: 'blur'
@@ -92,11 +92,14 @@
             this.$http({
               url: this.APIurl,
               methods: 'POST',
-              params: this.formItem
+              params: {
+                userName: this.formItem.userName,
+                password: this.formItem.password
+              }
             })
               .then((response) => {
                 var info = response.body
-                if (info.status === '1') {
+                if (info.status) {
                   this.type = info.type
                   this.id = info.id
                   var tmp = {

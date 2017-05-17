@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login.vue'
 import Admin from '../components/Admin.vue'
-import DepartManage from '../components/DepartManage.vue'
+import DepartManage from '../components/DepartmentManage.vue'
 import StaffManage from '../components/StaffManage.vue'
 
 Vue.use(Router)

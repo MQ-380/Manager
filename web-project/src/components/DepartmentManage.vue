@@ -1,10 +1,12 @@
 <template>
   <div id="depart" class="canRoll">
-    <add v-if="showAdd" @closeAdd="closeAdd()"></add>
-    <notice v-if="showNotice" :infoName="查询部门信息" @closeModal="closeModal()"></notice>
+    <edit v-if="showEdit" :department="editInfo"  @closeModal="closeAndFresh()"></edit>
+    <add v-if="showAdd" @closeAdd="closeAndFresh()"></add>
+    <delDepart v-if="showDelete" :deleteItem="deleteItem" @closeDelete="closeAndFresh()"></delDepart>
+    <notice v-if="showNotice" infoname=“无法查询部门信息，请检查网络情况” @closeModal="closeModal()"></notice>
     <div class='buttonCouple'>
       <Button type="primary"  @click="toAdd">新增部门</Button>
-      <Button type="error">删除部门</Button>
+      <Button type="error" @click="toDelete">删除部门</Button>
     </div>
     <div class="freshButton">
       <Button type="primary" shape="circle" @click="fresh" icon="ios-refresh">
@@ -12,7 +14,7 @@
     </div>
     <br><br>
     <br><br>
-    <Table :data="data" :columns="column1" :height="523" stripe border></Table>
+    <Table :data="data" :columns="column1" :height="523" @on-select="addDeleteItem" stripe border></Table>
     <div style="margin: 10px;overflow: scroll">
       <div style="float: right;">
         <Page :total="number" :current="nowDataPage" @on-change="changePage"></Page>
@@ -34,16 +36,24 @@
 </style>
 
 <script>
-  import notice from './CheckNetworkNotice'
-  import add from './AddDepartInformation'
+  import notice from './Notice'
+  import add from './DepartmentAdd'
+  import edit from './DepartmentEdit'
+  import delDepart from './DepartmentDelete'
+
   export default {
     data () {
       return {
         data: this.initForm(),
         number: this.getDataSize(),
         nowDataPage: 1,
+        currentPage: 1,
         showNotice: false,
         showAdd: false,
+        showEdit: false,
+        showDelete: false,
+        editInfo: {},
+        deleteItem: [],
         column1: [
           {
             type: 'selection',
@@ -75,7 +85,8 @@
                   },
                   on: {
                     click: () => {
-                      this.show(params.index)
+                      this.editInfo = this.$store.state.departState.departData[this.currentPage * 10 - 10 + params.index]
+                      this.showEdit = true
                     }
                   }
                 }, '更新信息')
@@ -87,7 +98,9 @@
     },
     components: {
       notice,
-      add
+      add,
+      edit,
+      delDepart
     },
     methods: {
       getData () {
@@ -113,22 +126,37 @@
       },
       changePage (current) {
         console.log(current)
+        this.currentPage = current
         this.data = this.getThisPageData(current * 10 - 10)
       },
       toAdd () {
         this.showAdd = true
       },
+      toDelete () {
+        this.showDelete = true
+      },
+      addDeleteItem (selected) {
+        let items = []
+        selected.forEach(function (item, array) {
+          items.push(item)
+        })
+        this.deleteItem = items
+      },
       fresh () {
         this.getData()
-        this.data = this.getThisPageData(0)
+        this.data = this.getThisPageData(this.currentPage * 10 - 10)
         this.number = this.getDataSize()
       },
       closeModal () {
         this.showError = false
-      },
-      closeAdd () {
-        this.fresh()
         this.showAdd = false
+        this.showEdit = false
+        this.showDelete = false
+      },
+      closeAndFresh () {
+        this.getData()
+        this.data = this.getThisPageData(this.currentPage * 10 - 10)
+        this.closeModal()
       }
     }
   }

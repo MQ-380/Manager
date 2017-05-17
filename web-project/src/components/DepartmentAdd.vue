@@ -1,8 +1,8 @@
 <template>
   <div id="add">
-    <notice infoName="新增部门" v-if="showError" @closeModal="closeModal()"></notice>
+    <notice infoname="无法新增部门，请检查您的网络状况" v-if="showError" @closeModal="closeModal()"></notice>
     <success msg="成功添加部门" v-if="showSuccess" @closeModal="closeSuccess()"></success>
-    <Modal v-model="showAdd">
+    <Modal v-model="showAdd" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
         <span>新增部门</span>
       </p>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import notice from './CheckNetworkNotice'
+  import notice from './Notice'
   import success from './Success'
 
   export default {
