@@ -6,13 +6,13 @@
       <p slot="header" style="color:#843534;text-align:left">
         <span>删除部门</span>
       </p>
-      <div style="text-align:center" v-if="!isEmpty">
-        <span>您将要删除以下几个部门</span>
-        <ul>
+      <div style="text-align:left" v-if="!isEmpty">
+        <span><h4 style="color:#ff0325">您将要删除{{deleteItem.length}}个部门，请确认:</h4></span>
+        <ol>
           <li v-for="(item, index) in deleteItem">
-            部门Id为{{item.deid}},部门名称为{{item.name}}
+            {{index+1}}:部门Id为{{item.deid}},部门名称为{{item.name}}
           </li>
-        </ul>
+        </ol>
       </div>
       <div v-else>
         <span>您没有选中任何需要删除的部门。</span>
@@ -44,12 +44,15 @@
       isEmpty: function () {
         return this.deleteItem.length === 0
       },
-      deleteID: function () {
-        var id = []
-        this.deleteItem.forEach(function (item, array) {
-          id.push(item)
+      getUrl: function () {
+        var id = '?'
+        this.deleteItem.forEach(function (item) {
+          if (id !== '?') {
+            id += '&'
+          }
+          id = id + 'departmentID=' + item.deid
         })
-        return id
+        return 'http://localhost:8081/deleteDepartment' + id
       }
     },
     components: {
@@ -59,13 +62,10 @@
     methods: {
       confirmToDelete () {
         this.$http({
-          url: 'http://localhost:8081/deleteDepartment',
-          method: 'POST',
-          data: {
-            departmentID: this.deleteID
-          }
+          url: this.getUrl,
+          method: 'POST'
         }).then((response) => {
-          if (response.status) {
+          if (response.body.status) {
             this.showSuccess = true
           } else {
             this.msg = '删除部门错误，请刷新表格后重试'
@@ -77,7 +77,7 @@
         })
       },
       confirmToCancel () {
-        this.$emit('closeDelete')
+        this.$emit('cancel')
       },
       closeSuccess () {
         this.showSuccess = false
@@ -85,6 +85,7 @@
       },
       closeModal () {
         this.showError = false
+        this.$emit('closeDelete')
       }
     }
   }

@@ -81,7 +81,7 @@
                 name: this.departmentName.name
               }
             }).then((response) => {
-              if (response.status) {
+              if (response.body.status) {
                 this.successShow = true
               } else {
                 this.msg = '无法修改部门名称'
@@ -107,7 +107,7 @@
         this.$emit('closeModal')
       },
       cancel () {
-        this.$emit('closeModal')
+        this.$emit('cancel')
       }
     }
   }

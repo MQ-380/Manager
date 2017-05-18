@@ -57,7 +57,7 @@
               url: 'http://localhost:8081/addDepartment.action'
             })
               .then((response) => {
-                if (response.status) {
+                if (response.body.status) {
                   this.showSuccess = true
                 }
               },
@@ -70,7 +70,7 @@
         })
       },
       confirmToCancel () {
-        this.$emit('closeAdd')
+        this.$emit('cancel')
       },
       closeModal () {
         this.showError = false

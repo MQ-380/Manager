@@ -1,11 +1,12 @@
 <template>
   <div id="depart" class="canRoll">
-    <edit v-if="showEdit" :department="editInfo"  @closeModal="closeAndFresh()"></edit>
-    <add v-if="showAdd" @closeAdd="closeAndFresh()"></add>
-    <delDepart v-if="showDelete" :deleteItem="deleteItem" @closeDelete="closeAndFresh()"></delDepart>
-    <notice v-if="showNotice" infoname=“无法查询部门信息，请检查网络情况” @closeModal="closeModal()"></notice>
+    <edit v-if="showEdit" :department="editInfo" @closeModal="closeAndFresh()" @cancel="closeModal()"></edit>
+    <add v-if="showAdd" @closeAdd="closeAndFresh()" @cancel="closeModal()"></add>
+    <delDepart v-if="showDelete" :deleteItem="deleteItem" @closeDelete="closeAndFresh()"
+               @cancel="closeModal()"></delDepart>
+    <notice v-if="showNotice" infoname=“无法查询部门信息，请检查网络情况”  @closeModal="closeModal()"></notice>
     <div class='buttonCouple'>
-      <Button type="primary"  @click="toAdd">新增部门</Button>
+      <Button type="primary" @click="toAdd">新增部门</Button>
       <Button type="error" @click="toDelete">删除部门</Button>
     </div>
     <div class="freshButton">
@@ -14,7 +15,8 @@
     </div>
     <br><br>
     <br><br>
-    <Table :data="data" :columns="column1" :height="523" @on-select="addDeleteItem" stripe border></Table>
+    <Table :data="data" :columns="column1" :height="523" @on-select="addDeleteItem" @on-select-all="addDeleteItem"
+           stripe border></Table>
     <div style="margin: 10px;overflow: scroll">
       <div style="float: right;">
         <Page :total="number" :current="nowDataPage" @on-change="changePage"></Page>
@@ -27,9 +29,11 @@
   .buttonCouple {
     float: left
   }
+
   .freshButton {
     float: right
   }
+
   .canRoll {
     overflow: scroll;
   }
@@ -154,8 +158,16 @@
         this.showDelete = false
       },
       closeAndFresh () {
-        this.getData()
-        this.data = this.getThisPageData(this.currentPage * 10 - 10)
+        this.$http.post('http://localhost:8081/consultDepartment.action')
+            .then((response) => {
+              console.log('response true')
+              this.$store.commit('SETDEPARTDATA', response.body.department)
+              this.data = this.getThisPageData(this.currentPage * 10 - 10)
+            },
+            (response) => {
+              this.showNotice = true
+            })
+        this.deleteItem = []
         this.closeModal()
       }
     }
