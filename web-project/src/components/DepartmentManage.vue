@@ -97,7 +97,7 @@
                   },
                   on: {
                     click: () => {
-                      this.editInfo = this.$store.state.departState.departData[this.currentPage * 10 - 10 + params.index]
+                      this.editInfo = this.data[params.index]
                       this.showEdit = true
                     }
                   }
