@@ -87,7 +87,7 @@
             if (this.formItem.type === '1') {
               this.APIurl = 'http://localhost:8081/userLogin.action'
             } else {
-              this.APIurl = ''
+              this.APIurl = 'http://localhost:8081/staffLogin.action'
             }
             this.$http({
               url: this.APIurl,

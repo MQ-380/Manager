@@ -14,6 +14,8 @@
       </Button>
     </div>
     <br><br>
+    <Input v-model="searchKeyword"  :style="searchWidth" :icon="iconType" class="freshButton" @on-focus="startSearch()"
+    @on-click="endSearch()" @on-change="startSearch()" :placeholder="holder"/>
     <br><br>
     <Table :data="data" :columns="column1" :height="523" @on-select="addDeleteItem" @on-select-all="addDeleteItem"
            stripe border></Table>
@@ -58,6 +60,12 @@
         showDelete: false,
         editInfo: {},
         deleteItem: [],
+        searchKeyword: '',
+        searchResult: [],
+        searchWidth: 'width: 50px',
+        inSearch: false,
+        iconType: 'ios-search-strong',
+        holder: '',
         column1: [
           {
             type: 'selection',
@@ -126,7 +134,11 @@
         return this.getThisPageData(0)
       },
       getThisPageData (begin) {
-        return this.$store.state.departState.departData.slice(begin, begin + 10)
+        if (!this.inSearch) {
+          return this.$store.state.departState.departData.slice(begin, begin + 10)
+        } else {
+          return this.searchResult.slice(begin, begin + 10)
+        }
       },
       changePage (current) {
         console.log(current)
@@ -169,6 +181,37 @@
             })
         this.deleteItem = []
         this.closeModal()
+      },
+      startSearch () {
+        this.searchWidth = 'width: 200px'
+        this.iconType = 'ios-close-empty'
+        this.holder = '根据名称搜索部门'
+        this.nowDataPage = 1
+        const allData = this.$store.state.departState.departData
+        const keyword = this.searchKeyword
+        let result = []
+        allData.forEach(function (item) {
+          if (item.name.search(keyword) !== -1) {
+            result.push(item)
+          }
+        })
+        this.searchResult = result
+        this.nowDataPage = 1
+        this.data = this.getThisPageSearchResult(0)
+        this.number = this.searchResult.length
+        this.inSearch = true
+      },
+      getThisPageSearchResult (page) {
+        return this.searchResult.slice(page * 10, page * 10 + 10)
+      },
+      endSearch () {
+        this.searchKeyword = ''
+        this.holder = ''
+        this.iconType = 'ios-search-strong'
+        this.inSearch = false
+        this.data = this.getThisPageData(this.nowDataPage * 10 - 10)
+        this.number = this.getDataSize()
+        this.searchWidth = 'width: 50px'
       }
     }
   }
