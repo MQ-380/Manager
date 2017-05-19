@@ -11,15 +11,15 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.StaffService;
 import com.tool.JSONUtils;
 
-public class consultStaffInformation  extends ActionSupport{
+public class consultPersonalInformation extends ActionSupport{
 	private StaffService staffService;
 	private String id;
 public String execute() throws Exception {
 	 Map<String, Object> map = new HashMap<String, Object>();
 	   try {
            List<Staff> list = staffService.findByStaid(id);
-        //  for(int i=0;i<list.size();i++)
-       		// System.out.println(list.get(i).getName());
+         for(int i=0;i<list.size();i++)
+       	 System.out.println(list.get(i).getName());
         
               map.put("staff", (Staff)list.get(0));
             map.put("status", true);

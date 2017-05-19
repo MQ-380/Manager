@@ -5,6 +5,8 @@ import java.util.List;
 
 
 
+
+
 import com.model.Staff;
 import com.model.StaffDAO;
 import com.service.*;
@@ -22,4 +24,14 @@ public List findByExample(Staff staff){
 		
 		return staffDAO.findByExample(staff);
 	}
+public List findAll()
+{
+	return staffDAO.findAll();}
+public List findByStaid(String staid)
+{
+	return staffDAO.findByStaid(staid);}
+public void deleteStaff(String[] staffID)
+{
+	staffDAO.deleteStaff(staffID);
+}
 }

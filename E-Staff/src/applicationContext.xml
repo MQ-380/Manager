@@ -48,6 +48,7 @@
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut expression="bean(adminDAO)" id="myPointcut"/>
+		<aop:pointcut expression="bean(staffDAO)" id="myPointcut"/>
 		<aop:pointcut expression="bean(departmentDAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
@@ -123,6 +124,41 @@
 		</property>
 			<property name="departmentService">
 			<ref bean="departmentService"/>
+		</property>
+	</bean>
+	<bean id="consultAllStaff" class="com.action.consultAllStaff">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+	<bean id="consultStaffInformation" class="com.action.consultStaffInformation">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+	<bean id="editStaffInformation" class="com.action.editStaffInformation">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+		<bean id="deleteStaff" class="com.action.deleteStaff">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+	<bean id="consultPersonalInformation" class="com.action.consultPersonalInformation">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+	<bean id="editPersonalInformation" class="com.action.editPersonalInformation">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
+		<bean id="editPassword" class="com.action.editPassword">
+		<property name="staffService">
+			<ref bean="staffService"/>
 		</property>
 	</bean>
 	</beans>

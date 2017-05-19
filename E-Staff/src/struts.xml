@@ -31,5 +31,33 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+		<action name="consultAllStaff" class="com.action.consultAllStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultStaffInformation" class="com.action.consultStaffInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="editStaffInformation" class="com.action.editStaffInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="deleteStaff" class="com.action.deleteStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultPersonalInformation" class="com.action.consultPersonalInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editPersonalInformation" class="com.action.editPersonalInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editPassword" class="com.action.editPassword">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    

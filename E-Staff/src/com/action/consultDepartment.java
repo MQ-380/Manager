@@ -26,17 +26,12 @@ public class consultDepartment extends ActionSupport{
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
 		 Map<String, Object> map = new HashMap<String, Object>();
-		         String status = null;
 		         try {
 		                 List<Department> list = departmentService.findAll();
-		                 if (list.size() > 0) {
 		                	 //for(int i=0;i<list.size();i++)
 		                		// System.out.println(list.get(i).getDeid()+" "+list.get(i).getName());
-		                     status = "1";
+		                 
 		                     map.put("department", list);
-		                 } else {
-		                     status = "null";
-		                 }
 		                 map.put("status", true);
 		         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		             return SUCCESS;
@@ -45,8 +40,9 @@ public class consultDepartment extends ActionSupport{
 		             e.printStackTrace();
 		             map.put("status", false);
 	         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
+	         	    return ERROR;
 		         }
-		        return ERROR;
+		      
 		
 	}
 }

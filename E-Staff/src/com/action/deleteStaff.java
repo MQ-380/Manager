@@ -5,22 +5,20 @@ import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.model.Department;
 import com.opensymphony.xwork2.ActionSupport;
-import com.service.DepartmentService;
+import com.service.StaffService;
 import com.tool.JSONUtils;
 
-public class deleteDepartment extends ActionSupport{
-	private String[] departmentID;
-	private DepartmentService departmentService;
+public class deleteStaff extends ActionSupport{
+	private String[] staffID;
+	private StaffService staffService;
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {	
 		 Map<String, Object> map = new HashMap<String, Object>();
 		         try {
-		      
-		             departmentService.deleteDepartment(departmentID);
+		        	 staffService.deleteStaff(staffID);
 		             map.put("status", true);
-		   		  JSONUtils.toJson(ServletActionContext.getResponse(), map);
+		   		    JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		             return SUCCESS;
 		         } catch (Exception e) {
 		             // TODO Auto-generated catch block
@@ -29,22 +27,17 @@ public class deleteDepartment extends ActionSupport{
 		    	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		    	     return ERROR;
 		         }
-		   
 	}
-	public DepartmentService getDepartmentService() {
-		return departmentService;
+	public String[] getStaffID() {
+		return staffID;
 	}
-
-	public void setDepartmentService(DepartmentService departmentService) {
-		this.departmentService = departmentService;
+	public void setStaffID(String[] staffID) {
+		this.staffID = staffID;
 	}
-
-	public String[] getDepartmentID() {
-		return departmentID;
+	public StaffService getStaffService() {
+		return staffService;
 	}
-
-	public void setDepartmentID(String[] departmentID) {
-		this.departmentID = departmentID;
+	public void setStaffService(StaffService staffService) {
+		this.staffService = staffService;
 	}
-
 }

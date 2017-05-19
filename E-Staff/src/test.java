@@ -20,7 +20,7 @@ public class test {
 	 @Test  
 	 /*
 	  * ≤‚ ‘DAO≤„
-	  */
+	  
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
 	    	AdminDAO dao =  (AdminDAO)ctx.getBean("adminDAO");
@@ -33,9 +33,9 @@ public class test {
 	  */
 	    public void testUserService() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	 	AdminService ser =  (AdminService)ctx.getBean("adminService");	    	 
-	    	 	  List<Admin> adminlist= ser.findByAdid("123"); 
-	    	 	 System.out.println("service"+adminlist.get(0).getAdid());
+	    	 	StaffService ser =  (StaffService)ctx.getBean("staffService");	    	 
+	    	 	  List<Staff> stafflist= ser.findByStaid("170010001"); 
+	    	 	 System.out.println("service"+stafflist.get(0).getStaid());
 	    }
 	 @Test  
 	 /*
@@ -44,17 +44,10 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-    	 addStaff ser =  (addStaff)ctx.getBean("addStaff"); 
-	     Staff sta=new Staff();
-	     String str="2017-01-23";
-	     SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-	     Date date=format.parse(str);
-	     sta.setTime(date);
-	     sta.setDeid("001");
-	     sta.setRank(1);
-	     sta.setName("zzzzzzzz");
-	     ser.setStaff(sta);
-	     ser.execute();
+		 editPassword ser = (editPassword)ctx.getBean("editPassword"); 
+        ser.setId("170010001");
+        ser.setPassword("123");
+	    ser.execute();
 	    }
 
 }

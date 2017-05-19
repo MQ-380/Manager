@@ -50,7 +50,7 @@ ID: 部门ID ,name：部门名称
 * String departmentId;
 * JSON
 {“staff”: [
- { “ID” : “XX”,“name” : “xx”},
+ { “staid” : “XX”,“name” : “xx”},
 …
  ] }
 
@@ -58,14 +58,13 @@ ID: 部门ID ,name：部门名称
 * consultStaffInformation
 * String id
 * JSON
-{“name”:”XX”, “sex”:”X”, “email”:”XXX”,”tele”:”XX”,”jointime”:”XX”,”degree”:”XX”,”department”:”XX”,
-“learning”:”XX”,”skill”:”xx”}
+{“staff”： { “staid” : “XX”,“name” : “xx”，...}}
 
-jointime: 加入时间 learning：参加培训经历  skill：技能
+
 
 ## 个人信息修改
 * editStaffInformation
-* JSON  格式同上条
+*{“staff”： { “staid” ，“name” : “xx”，...}}除了leavenum和password不能修改，其他信息都可以修改，并且需要全部传入
 * String rue ->  修改成功 false -> 修改失败
 
 ## 个人信息新增
@@ -82,12 +81,11 @@ jointime: 加入时间 learning：参加培训经历  skill：技能
 * consultPersonalInformation
 * String Id
 * JSON
-{“name”:”XX”, “sex”:”X”, “email”:”XXX”,”tele”:”XX”,
-“learning”:”XX”,”skill”:”xx”}
+{“staff”： { “staid” ，“sex”,“email” ，“phone”，“training”，“skill”}}员工修改自己信息的时候只能修改以上信息，并且需要全部传入
 
 ## 个人信息修改
 * editPersonalInformation
-* 格式同上
+*{“staff”： { “staid” : “XX”,“name” : “xx”，...}}
 * String rue ->  修改成功 false -> 修改失败
 
 ## 个人密码修改

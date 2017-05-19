@@ -1,7 +1,6 @@
 package com.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
@@ -11,7 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.StaffService;
 import com.tool.JSONUtils;
 
-public class editStaffInformation  extends ActionSupport{
+public class editPersonalInformation extends ActionSupport {
 	private StaffService staffService;
 	private Staff staff;
 	public String execute() throws Exception {
@@ -21,6 +20,10 @@ public class editStaffInformation  extends ActionSupport{
 			  Staff prestaff=(Staff)staffService.findByStaid(staid).get(0);
 			  staff.setId(prestaff.getId());
 			  staff.setPassword(prestaff.getPassword());
+			  staff.setTime(prestaff.getTime());
+			  staff.setDeid(prestaff.getDeid());
+			  staff.setRank(prestaff.getRank());
+			  staff.setState(prestaff.getState());
 			  staff.setLeavenum(prestaff.getLeavenum());
 	          staffService.save(staff);
 	          map.put("status", true);

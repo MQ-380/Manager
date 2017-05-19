@@ -2,6 +2,7 @@ package com.model;
 
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -57,14 +58,19 @@ public class StaffDAO {
 	public void save(Staff transientInstance) {
 		log.debug("saving Staff instance");
 		try {
-			getCurrentSession().save(transientInstance);
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
 		}
 	}
-
+	 public void deleteStaff(String[] staffID) {
+	        for (int i = 0; i < staffID.length; i++) {
+	            Staff staff = (Staff) findByStaid(staffID[i]).get(0);
+	            delete(staff);
+	        }
+	 }
 	public void delete(Staff persistentInstance) {
 		log.debug("deleting Staff instance");
 		try {

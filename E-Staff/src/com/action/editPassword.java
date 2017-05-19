@@ -1,7 +1,6 @@
 package com.action;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
@@ -11,18 +10,16 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.StaffService;
 import com.tool.JSONUtils;
 
-public class editStaffInformation  extends ActionSupport{
+public class editPassword  extends ActionSupport {
 	private StaffService staffService;
-	private Staff staff;
+	private String id;
+	private String password;
 	public String execute() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			  String staid=staff.getStaid();
-			  Staff prestaff=(Staff)staffService.findByStaid(staid).get(0);
-			  staff.setId(prestaff.getId());
-			  staff.setPassword(prestaff.getPassword());
-			  staff.setLeavenum(prestaff.getLeavenum());
-	          staffService.save(staff);
+			  Staff staff=(Staff) staffService.findByStaid(id).get(0);
+			  staff.setPassword(password);
+			  staffService.save(staff);
 	          map.put("status", true);
 	    	  JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	          return SUCCESS;
@@ -33,20 +30,24 @@ public class editStaffInformation  extends ActionSupport{
 		      JSONUtils.toJson(ServletActionContext.getResponse(), map);
 		      return ERROR;
 	    }
-}
-public Staff getStaff() {
-		return staff;
 	}
-
-	public void setStaff(Staff staff) {
-		this.staff = staff;
-	}
-
 	public StaffService getStaffService() {
 		return staffService;
 	}
-
 	public void setStaffService(StaffService staffService) {
 		this.staffService = staffService;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }
