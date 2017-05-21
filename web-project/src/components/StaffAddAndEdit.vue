@@ -1,10 +1,10 @@
 <template>
-  <div id="add">
-    <success v-if="showSuccess" msg="成功添加员工" @closeModal="closeSuccess"></success>
+  <div id="StaffAddEdit">
+    <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
     <notice v-if="showNotice" :infoname="noticeMsg" @closeModal="closeNotice"></notice>
     <Modal v-model="showAdd" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
-        <span>新增员工</span>
+        <span>{{headname}}</span>
       </p>
       <div style="text-align:center">
         <Form ref="staffFormItem" :model="staffFormItem" :label-width="80" :rules="staffValidate">
@@ -32,7 +32,7 @@
             </Select>
           </Form-item>
           <Form-item label="部门" prop="deid">
-            <Input v-model="departmentInfo.name" readonly/>
+            <Input v-model="departmentname" readonly/>
           </Form-item>
           <Form-item label="接受的培训" prop="training">
             <Input v-model="staffFormItem.training" type="textarea" :rows="4"/>
@@ -72,21 +72,24 @@
       }
 
       return {
+        headname: this.Info.headname,
         showAdd: true,
         showSuccess: false,
         showNotice: false,
         noticeMsg: '',
+        successMsg: '',
         staffFormItem: {
-          name: '',
-          sex: '',
-          email: '',
-          phone: '',
-          time: '',
-          rank: '',
-          deid: this.departmentInfo.deid,
-          training: '',
-          skill: ''
+          name: this.Info.name,
+          sex: this.Info.sex,
+          email: this.Info.email,
+          phone: this.Info.phone,
+          time: this.Info.time,
+          rank: this.Info.rank,
+          deid: this.Info.deid,
+          training: this.Info.training,
+          skill: this.Info.skill
         },
+        departmentname: this.Info.departmentname,
         staffValidate: {
           name: [
             {required: true, message: '请填写员工姓名', trigger: 'blur'}
@@ -101,8 +104,7 @@
             {max: 13, message: '最多只能填写13位数字', trigger: 'blur'}
           ],
           time: [
-            {required: true, validator: TimeValidate, trigger: 'blur'},
-            {type: 'date', message: '请填写正确的日期格式', trigger: 'blur'}
+            {required: true, validator: TimeValidate, trigger: 'blur'}
           ],
           rank: [
             {required: true, validator: RankValidate, trigger: 'blur'}
@@ -130,13 +132,14 @@
         ]
       }
     },
-    props: ['departmentInfo'],
+    props: ['Info'],
     components: {
       success,
       notice
     },
     methods: {
       confirmToAdd (item) {
+        let type = this.Info.type
         this.$refs[item].validate((valid) => {
           if (valid) {
             this.$http({
@@ -144,13 +147,22 @@
               method: 'POST'
             }).then((response) => {
               if (response.body.status) {
+                if (type === 'add') {
+                  this.successMsg = '成功添加员工'
+                } else {
+                  this.successMsg = '成功修改员工信息'
+                }
                 this.showSuccess = true
               } else {
-                this.noticeMsg = '添加员工失败，请检查提供的信息'
+                if (type === 'add') {
+                  this.noticeMsg = '添加员工失败，请检查提供的信息'
+                } else {
+                  this.noticeMsg = '修改员工信息失败，请检查提供的信息'
+                }
                 this.showNotice = true
               }
             }, (response) => {
-              this.noticeMsg = '无法添加员工，请检查网络连接'
+              this.noticeMsg = '无法添加员工或修改员工资料，请检查网络连接'
               this.showNotice = true
             })
           }
@@ -167,19 +179,36 @@
         this.showNotice = false
       },
       completeURL () {
-        let basicurl = 'http://localhost:8081/addStaff?'
+        let basicurl
         let info = this.staffFormItem
         let first = true
-        for (let prop in info) {
-          if (info[prop] !== '') {
-            if (!first) {
-              basicurl += '&'
+        if (this.Info.type === 'add') {
+          basicurl = 'http://localhost:8081/addStaff?'
+          for (let prop in info) {
+            if (info[prop] !== '') {
+              if (!first) {
+                basicurl += '&'
+              }
+              first = false
+              if (prop === 'time') {
+                basicurl = basicurl + 'staff.' + prop + '=' + info[prop].toLocaleDateString()
+              } else {
+                basicurl = basicurl + 'staff.' + prop + '=' + info[prop]
+              }
             }
-            first = false
+          }
+        } else {
+          basicurl = 'http://localhost:8081/editStaffInformation?staff.staid=' + this.Info.staid
+          for (let prop in info) {
+            basicurl += '&'
             if (prop === 'time') {
               basicurl = basicurl + 'staff.' + prop + '=' + info[prop].toLocaleDateString()
             } else {
-              basicurl = basicurl + 'staff.' + prop + '=' + info[prop]
+              if (info[prop] === undefined) {
+                basicurl = basicurl + 'staff.' + prop + '='
+              } else {
+                basicurl = basicurl + 'staff.' + prop + '=' + info[prop]
+              }
             }
           }
         }

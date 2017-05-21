@@ -1,9 +1,8 @@
 <template>
   <div id="staff">
     <notice v-if="showNotice" :infoname="noticeMsg" @closeModal="closeModal"></notice>
-    <add v-if="showAdd" :departmentInfo="nowSelectedDepartment" @closeModal="closeAndFresh" @cancel="closeModal"></add>
+    <add v-if="showAdd" :Info="staffInfo" @closeModal="closeAndFresh" @cancel="closeModal"></add>
     <delStaff v-if="showDelete" :deleteItem="deleteItem" @closeModal="closeAndFresh" @cancel="closeModal"></delStaff>
-    <edit v-if="showEdit" :editItem="staffInfo" @closeModal="closeAndFresh" @cancel="closeModal"></edit>
     <label class="left">请选择部门</label>
     <br><br>
     <Select v-model="department.selectDepartment" style="width:200px; float: left;">
@@ -42,9 +41,8 @@
 
 <script>
   import notice from './Notice'
-  import add from './StaffAdd'
+  import add from './StaffAddAndEdit'
   import delStaff from './StaffDelete'
-  import edit from './StaffEdit'
 
   export default {
     data () {
@@ -85,7 +83,11 @@
                   on: {
                     click: () => {
                       this.staffInfo = this.staffShowList[params.index]
-                      this.showEdit = true
+                      this.staffInfo.departmentname = this.getDepartmentName()
+                      this.staffInfo.time = new Date(this.staffInfo.time)
+                      this.staffInfo.headname = '修改员工信息'
+                      this.staffInfo.type = 'edit'
+                      this.showAdd = true
                     }
                   }
                 }, '更新信息')
@@ -100,7 +102,6 @@
         nowPage: 1,
         number: 0,
         staffInfo: {},
-        nowSelectedDepartment: {},
         showNotice: false,
         showStaff: false,
         showAdd: false,
@@ -113,8 +114,7 @@
     components: {
       notice,
       add,
-      delStaff,
-      edit
+      delStaff
     },
     methods: {
       getDepartmentList () {
@@ -180,7 +180,7 @@
       changePage () {
         this.staffShowList = this.getThisPageData(this.nowPage)
       },
-      toAdd () {
+      getDepartmentName () {
         let nowSelected = this.department.selectDepartment
         let selectedDepartment
         this.departmentList.forEach(function (item) {
@@ -188,7 +188,23 @@
             selectedDepartment = item
           }
         })
-        this.nowSelectedDepartment = selectedDepartment
+        return selectedDepartment.name
+      },
+      toAdd () {
+        this.staffInfo = {
+          headname: '新增员工',
+          name: '',
+          sex: '',
+          email: '',
+          phone: '',
+          time: '',
+          rank: '',
+          deid: this.department.selectDepartment,
+          departmentname: this.getDepartmentName(),
+          training: '',
+          skill: '',
+          type: 'add'
+        }
         this.showAdd = true
       },
       toDelete () {
@@ -217,6 +233,7 @@
           this.showNotice = true
         })
         this.closeModal()
+        this.getStaff()
       },
       closeModal () {
         this.showNotice = false
