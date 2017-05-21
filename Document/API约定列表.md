@@ -1,4 +1,4 @@
-# API约定列表
+﻿# API约定列表
 以前后端更好的合作为目的，特制订本文档，约定所有的交互API。
 
 V1.0 增加所有API
@@ -50,7 +50,7 @@ ID: 部门ID ,name：部门名称
 * String departmentId;
 * JSON
 {“staff”: [
- { “ID” : “XX”,“name” : “xx”},
+ { “staid” : “XX”,“name” : “xx”},
 …
  ] }
 
@@ -58,19 +58,18 @@ ID: 部门ID ,name：部门名称
 * consultStaffInformation
 * String id
 * JSON
-{“name”:”XX”, “sex”:”X”, “email”:”XXX”,”tele”:”XX”,”jointime”:”XX”,”degree”:”XX”,”department”:”XX”,
-“learning”:”XX”,”skill”:”xx”}
+{“staff”： { “staid” : “XX”,“name” : “xx”，...}}
 
-jointime: 加入时间 learning：参加培训经历  skill：技能
+
 
 ## 个人信息修改
 * editStaffInformation
-* JSON  格式同上条
+*{“staff”： { “staid” ，“name” : “xx”，...}}除了leavenum和password不能修改，其他信息都可以修改，并且需要全部传入
 * String rue ->  修改成功 false -> 修改失败
 
 ## 个人信息新增
 * addStaff
-* JSON格式同上
+* JSON格式同上 必填信息：姓名、进入公司年份、部门编号、级别      员工编号、登录密码不填
 * String  true ->  添加成功 false -> 添加失败
 
 ## 个人信息删除
@@ -82,12 +81,11 @@ jointime: 加入时间 learning：参加培训经历  skill：技能
 * consultPersonalInformation
 * String Id
 * JSON
-{“name”:”XX”, “sex”:”X”, “email”:”XXX”,”tele”:”XX”,
-“learning”:”XX”,”skill”:”xx”}
+{“staff”： { “staid” ，“sex”,“email” ，“phone”，“training”，“skill”}}员工修改自己信息的时候只能修改以上信息，并且需要全部传入
 
 ## 个人信息修改
 * editPersonalInformation
-* 格式同上
+*{“staff”： { “staid” : “XX”,“name” : “xx”，...}}
 * String rue ->  修改成功 false -> 修改失败
 
 ## 个人密码修改
@@ -96,12 +94,18 @@ jointime: 加入时间 learning：参加培训经历  skill：技能
 * String rue ->  修改成功 false -> 修改失败
 
 ## 签到状态查询
-* loginStatus 
+* isLogin 
 * String id
-* String :
-	  true: 只能签离，不能签到
-          false：只能签到，不能签离
-          all：不能签到，不能签离
+* in :
+	  true: 可以签到
+          false：不可以签到
+
+## 签离状态查询
+* isLogout
+* String id
+* out :
+	  true: 可以签离
+          false：不可以签离      
 
 ## 签到
 * Login
@@ -115,7 +119,7 @@ jointime: 加入时间 learning：参加培训经历  skill：技能
 
 ## 签到时间查询
 * consultLogData
-* JSON：{“id”: “xx”,  “start”: “XX”, “end”:”XX”}
+* String id ， Date st ，Date et
 * JSON:  
 {“data”:
 	[

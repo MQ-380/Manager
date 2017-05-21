@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="estaff" extends="struts-default" namespace="/">
+		<!-- 用户登录Action配置 -->
+		<action name="userLogin" class="com.action.userLogin">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>	
+		<action name="staffLogin" class="com.action.staffLogin">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="addDepartment" class="com.action.addDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/Success.jsp</result>
+		</action>
+		<action name="consultDepartment" class="com.action.consultDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>	
+		<action name="deleteDepartment" class="com.action.deleteDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editDepartment" class="com.action.editDepartment">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="addStaff" class="com.action.addStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultAllStaff" class="com.action.consultAllStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultStaffInformation" class="com.action.consultStaffInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="editStaffInformation" class="com.action.editStaffInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="deleteStaff" class="com.action.deleteStaff">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultPersonalInformation" class="com.action.consultPersonalInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editPersonalInformation" class="com.action.editPersonalInformation">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="editPassword" class="com.action.editPassword">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="isLogin" class="com.action.isLogin">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="isLogout" class="com.action.isLogout">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="login" class="com.action.Login">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="Logout" class="com.action.Logout">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultLogData" class="com.action.consultLogData">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+	</package>
+</struts>    
