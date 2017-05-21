@@ -1,13 +1,13 @@
 <template>
   <div id="staff">
     <notice v-if="showNotice" :infoname="noticeMsg" @closeModal="closeModal"></notice>
-    <add v-if="showAdd" @closeModal="closeAndFresh" @cancel="closeModal"></add>
+    <add v-if="showAdd" :departmentInfo="nowSelectedDepartment" @closeModal="closeAndFresh" @cancel="closeModal"></add>
     <delStaff v-if="showDelete" :deleteItem="deleteItem" @closeModal="closeAndFresh" @cancel="closeModal"></delStaff>
     <edit v-if="showEdit" :editItem="staffInfo" @closeModal="closeAndFresh" @cancel="closeModal"></edit>
     <label class="left">请选择部门</label>
     <br><br>
     <Select v-model="department.selectDepartment" style="width:200px; float: left;">
-      <Option v-for="item in departmentList" :value="item.deid">{{item.name}}</Option>
+      <Option v-for="item in departmentList" :value="item.deid" :key="item">{{item.name}}</Option>
     </Select>
     <div class="left">
     <Button type="primary" @click="getStaff()">获得员工列表</Button>
@@ -61,7 +61,7 @@
           },
           {
             title: '员工编号',
-            key: 'ID',
+            key: 'staid',
             align: 'center',
             width: 100
           },
@@ -100,8 +100,9 @@
         nowPage: 1,
         number: 0,
         staffInfo: {},
+        nowSelectedDepartment: {},
         showNotice: false,
-        showStaff: true,
+        showStaff: false,
         showAdd: false,
         showDelete: false,
         showEdit: false,
@@ -128,7 +129,6 @@
             })
       },
       getStaff () {
-        this.showStaff = true
         this.$http({
           url: 'http://localhost:8081/consultAllStaff',
           method: 'POST',
@@ -137,7 +137,11 @@
           }
         }).then((response) => {
           if (response.body.status) {
-            this.staffList = response.body.staff
+            this.staffList = this.staffInSelected(response.body.staff, this.department.selectDepartment)
+            this.staffShowList = this.getThisPageData(0)
+            this.number = this.getStaffSize()
+            this.nowPage = 1
+            this.showStaff = true
           } else {
             this.noticeMsg = '无法获得该部门的员工列表，请刷新部门列表后重新查询。'
             this.showNotice = true
@@ -146,9 +150,15 @@
           this.noticeMsg = '无法查询用户列表，请检查网络连接。'
           this.showNotice = true
         })
-        this.staffShowList = this.getThisPageData(0)
-        this.number = this.getStaffSize()
-        this.nowPage = 1
+      },
+      staffInSelected (allStaff, selectedDepartment) {
+        let staffInSelectedDepartment = []
+        allStaff.forEach(function (item) {
+          if (item.deid === selectedDepartment) {
+            staffInSelectedDepartment.push(item)
+          }
+        })
+        return staffInSelectedDepartment
       },
       getStaffSize () {
         return this.staffList.length
@@ -171,6 +181,14 @@
         this.staffShowList = this.getThisPageData(this.nowPage)
       },
       toAdd () {
+        let nowSelected = this.department.selectDepartment
+        let selectedDepartment
+        this.departmentList.forEach(function (item) {
+          if (item.deid === nowSelected) {
+            selectedDepartment = item
+          }
+        })
+        this.nowSelectedDepartment = selectedDepartment
         this.showAdd = true
       },
       toDelete () {
@@ -185,8 +203,11 @@
           }
         }).then((response) => {
           if (response.body.status) {
-            this.staffList = response.body.staff
+            this.staffList = this.staffInSelected(response.body.staff, this.department.selectDepartment)
             this.staffShowList = this.getThisPageData(this.nowPage)
+            this.number = this.getStaffSize()
+            this.nowPage = 1
+            this.showStaff = true
           } else {
             this.noticeMsg = '无法获得该部门的员工列表，请刷新部门列表后重新查询。'
             this.showNotice = true
@@ -195,6 +216,7 @@
           this.noticeMsg = '无法查询用户列表，请检查网络连接。'
           this.showNotice = true
         })
+        this.closeModal()
       },
       closeModal () {
         this.showNotice = false
