@@ -34,7 +34,8 @@
 			<list>
 				<value>com/model/Admin.hbm.xml</value>
 				<value>com/model/Department.hbm.xml</value>
-				<value>com/model/Staff.hbm.xml</value></list>
+				<value>com/model/Staff.hbm.xml</value>
+				<value>com/model/Sign.hbm.xml</value></list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -50,6 +51,7 @@
 		<aop:pointcut expression="bean(adminDAO)" id="myPointcut"/>
 		<aop:pointcut expression="bean(staffDAO)" id="myPointcut"/>
 		<aop:pointcut expression="bean(departmentDAO)" id="myPointcut"/>
+			<aop:pointcut expression="bean(mySignDAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -161,4 +163,49 @@
 			<ref bean="staffService"/>
 		</property>
 	</bean>
-	</beans>
+		<bean id="signDAO" class="com.model.SignDAO">
+			<property name="sessionFactory">
+				<ref bean="sessionFactory" />
+			</property>
+		</bean>
+		  <bean id="mySignDAO" class="com.mydao.impl.mySignDAOImpl">
+	 	<property name="sessionFactory">
+	 		<ref bean="sessionFactory" />
+	 	</property>
+	 </bean>
+			<bean id="signService" class="com.service.impl.SignServiceImpl">
+		<property name="signDAO">
+			<ref bean="signDAO"/>
+		</property>
+				<property name="mySignDAO">
+			<ref bean="mySignDAO"/>
+		</property>
+           </bean>
+           <bean id="isLogin" class="com.action.isLogin">
+		<property name="signService">
+			<ref bean="signService"/>
+		</property>
+	</bean>
+	 <bean id="isLogout" class="com.action.isLogout">
+		<property name="signService">
+			<ref bean="signService"/>
+		</property>
+	</bean>
+	 <bean id="login" class="com.action.Login">
+		<property name="signService">
+			<ref bean="signService"/>
+		</property>
+	</bean>
+	 <bean id="logout" class="com.action.Logout">
+		<property name="signService">
+			<ref bean="signService"/>
+		</property>
+	</bean>
+    <bean id="consultLogData" class="com.action.consultLogData">
+		<property name="signService">
+			<ref bean="signService"/>
+		</property>
+	</bean>
+	
+	 
+	 </beans>

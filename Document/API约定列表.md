@@ -94,12 +94,18 @@ ID: 部门ID ,name：部门名称
 * String rue ->  修改成功 false -> 修改失败
 
 ## 签到状态查询
-* loginStatus 
+* isLogin 
 * String id
-* String :
-	  true: 只能签离，不能签到
-          false：只能签到，不能签离
-          all：不能签到，不能签离
+* in :
+	  true: 可以签到
+          false：不可以签到
+
+## 签离状态查询
+* isLogout
+* String id
+* out :
+	  true: 可以签离
+          false：不可以签离      
 
 ## 签到
 * Login
@@ -113,7 +119,7 @@ ID: 部门ID ,name：部门名称
 
 ## 签到时间查询
 * consultLogData
-* JSON：{“id”: “xx”,  “start”: “XX”, “end”:”XX”}
+* String id ， Date st ，Date et
 * JSON:  
 {“data”:
 	[

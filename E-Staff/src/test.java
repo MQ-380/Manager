@@ -5,27 +5,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.action.*;
 import com.model.*;
+import com.mydao.mySignDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
+import com.tool.timeTool;
 
 
 
 
 public class test {
+	
+	
 	 @Test  
 	 /*
 	  * ≤‚ ‘DAO≤„
-	  
+	  */
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	AdminDAO dao =  (AdminDAO)ctx.getBean("adminDAO");
-	        List<Admin> adminlist= dao.findByAdid("123");   
-	    	 System.out.println("dao"+adminlist.get(0).getAdid());
+	    	mySignDAO dao =  (mySignDAO)ctx.getBean("mySignDAO");
+	    	Date st=timeTool.GetNowDate();
+	    	Date et=timeTool.GetNowDate();
+	        List<Sign>list=dao.consultLogData(st, et);
+	    	 System.out.println("dao"+list.get(0).getStaid());
 	    }
 	 @Test  
 	 /*
@@ -33,9 +40,11 @@ public class test {
 	  */
 	    public void testUserService() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	 	StaffService ser =  (StaffService)ctx.getBean("staffService");	    	 
-	    	 	  List<Staff> stafflist= ser.findByStaid("170010001"); 
-	    	 	 System.out.println("service"+stafflist.get(0).getStaid());
+	    	 	SignService ser =  (SignService)ctx.getBean("signService");	    	 
+	    	 	Date st=timeTool.GetNowDate();
+		    	Date et=timeTool.GetNowDate();
+		        List<Sign>list=ser.consultLogData(st, et);
+		    	 System.out.println("ser"+list.get(0).getStaid());
 	    }
 	 @Test  
 	 /*
@@ -44,10 +53,12 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 editPassword ser = (editPassword)ctx.getBean("editPassword"); 
-        ser.setId("170010001");
-        ser.setPassword("123");
-	    ser.execute();
+		 consultLogData ser = (consultLogData)ctx.getBean("consultLogData"); 
+         ser.setId("170010001");
+         ser.setSt(timeTool.GetNowDate());
+         ser.setEt(timeTool.GetNowDate());
+	   ser.execute();
 	    }
-
+	
+	 
 }

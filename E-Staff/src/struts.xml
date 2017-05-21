@@ -59,5 +59,25 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+		<action name="isLogin" class="com.action.isLogin">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="isLogout" class="com.action.isLogout">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="login" class="com.action.Login">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="Logout" class="com.action.Logout">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultLogData" class="com.action.consultLogData">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    
