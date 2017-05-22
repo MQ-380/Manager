@@ -194,7 +194,7 @@ bonus里
 ## 添加奖惩
 * addBounsPunish
 * JSON:
-{“id”:”XX”,”type”:”XXX”,”amount” :”XXX”,”reason”:”XXX”,operatorID:”XXX”}
+{“staid”:”XX”,”type”:”XXX”,”amount” :”XXX”,“date”：“xxxx-xx-xx”，”description”:”XXX”,operator:”XXX”}
 * String  true ->  添加成功 false -> 添加失败
 
 ## 查询外出申请（经理版）

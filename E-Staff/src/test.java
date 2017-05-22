@@ -52,10 +52,11 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 confirmApply ser = (confirmApply)ctx.getBean("confirmApply"); 
-         ser.setId("170010001");
-         ser.setLeaveid("1700100015");
-	     //ser.execute();
+		 addBounsPunish ser = (addBounsPunish)ctx.getBean("addBounsPunish"); 
+		 Rewardandpunish repun=new  Rewardandpunish();
+		 repun.setAmount(12.1);
+		ser.setRepun(repun);
+	     ser.execute();
 	    }
 	
 	 

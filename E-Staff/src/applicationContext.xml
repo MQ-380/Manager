@@ -37,7 +37,8 @@
 				<value>com/model/Staff.hbm.xml</value>
 				<value>com/model/Sign.hbm.xml</value>
 				<value>com/model/Leave.hbm.xml</value>
-				<value>com/model/Applyleave.hbm.xml</value></list>
+				<value>com/model/Applyleave.hbm.xml</value>
+				<value>com/model/Rewardandpunish.hbm.xml</value></list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -260,6 +261,22 @@
 	<bean id="confirmApply" class="com.action.confirmApply">
 		<property name="leaveService">
 			<ref bean="leaveService"/>
+		</property>
+	</bean>
+	<bean id="rewardandpunishDAO"
+		class="com.model.RewardandpunishDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+		<bean id="rePunService" class="com.service.impl.RePunServiceImpl">
+		<property name="rewardandpunishDAO">
+			<ref bean="rewardandpunishDAO"/>
+		</property>
+</bean>
+<bean id="addBounsPunish" class="com.action.addBounsPunish">
+		<property name="rePunService">
+			<ref bean="rePunService"/>
 		</property>
 	</bean>
 	</beans>
