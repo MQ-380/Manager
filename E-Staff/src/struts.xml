@@ -79,5 +79,29 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+			<action name="addNewLeavingApply" class="com.action.addNewLeavingApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="deleteApply" class="com.action.deleteApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultPersonalAllApplyByST" class="com.action.consultPersonalAllApplyByST">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultPersonalAllApplyByET" class="com.action.consultPersonalAllApplyByET">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultAllApply" class="com.action.consultAllApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="confirmApply" class="com.action.confirmApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    

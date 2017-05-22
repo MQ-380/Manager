@@ -1,4 +1,5 @@
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.action.*;
 import com.model.*;
+import com.mydao.myLeaveDAO;
 import com.mydao.mySignDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
@@ -28,23 +30,20 @@ public class test {
 	  */
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	mySignDAO dao =  (mySignDAO)ctx.getBean("mySignDAO");
-	    	Date st=timeTool.GetNowDate();
-	    	Date et=timeTool.GetNowDate();
-	        List<Sign>list=dao.consultLogData(st, et);
-	    	 System.out.println("dao"+list.get(0).getStaid());
+	    	myLeaveDAO dao =  (myLeaveDAO)ctx.getBean("myLeaveDAO");
+	    	
+	    	List<Applyleave>list=dao.consultAllApply("170010002", "002",3);
+	    	System.out.println("********"+list.size());
+	    	for(int i=0;i<list.size();i++)
+	    	System.out.println("********#####"+list.get(i).getLeaveid());
 	    }
 	 @Test  
 	 /*
 	  * ²âÊÔService²ã
 	  */
 	    public void testUserService() throws Exception{  
-	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	 	SignService ser =  (SignService)ctx.getBean("signService");	    	 
-	    	 	Date st=timeTool.GetNowDate();
-		    	Date et=timeTool.GetNowDate();
-		        List<Sign>list=ser.consultLogData(st, et);
-		    	 System.out.println("ser"+list.get(0).getStaid());
+	    	//ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+	    	// 	LeaveService ser =  (LeaveService)ctx.getBean("leaveService");	    	 
 	    }
 	 @Test  
 	 /*
@@ -53,11 +52,10 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 consultLogData ser = (consultLogData)ctx.getBean("consultLogData"); 
+		 confirmApply ser = (confirmApply)ctx.getBean("confirmApply"); 
          ser.setId("170010001");
-         ser.setSt(timeTool.GetNowDate());
-         ser.setEt(timeTool.GetNowDate());
-	   ser.execute();
+         ser.setLeaveid("1700100015");
+	     //ser.execute();
 	    }
 	
 	 

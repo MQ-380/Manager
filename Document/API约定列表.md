@@ -119,18 +119,35 @@ ID: 部门ID ,name：部门名称
 
 ## 签到时间查询
 * consultLogData
-* String id ， Date st ，Date et
+* String id ， Date st ，Date et   st和et格式为年月日
 * JSON:  
 {“data”:
 	[
-	 {“date”:”XXX”,”start”: “XXX”: “end”: “XXX”}
+	 {“date”:”XXX”,”signin”: “XXX”: “signout”: “XXX”}  signin和signout格式为时分秒
 	…. 
 	]
 }
 
-## 外出申请查询
-* consultAllApply
-*  JSON：{“id”: “xx”,  “start”: “XX”, “end”:”XX”}
+## 外出申请查询（按请假开始时间）
+* consultPersonalAllApplyByST
+*  String id
+   Date stime  格式年月日时
+   Date etime   格式年月日时
+*  JSON:  
+{“data”:
+	[
+	 {“status”:”XX”, “applyId”:”XX”, “start”:”XX”, ”end”:”XXX”, “type”:”XX“,
+	  “issue”: “xxx”, “operator”:”XXX”
+	},
+	…. 
+	]
+}
+
+## 外出申请查询（按请假结束时间）
+* consultPersonalAllApplyByET
+*  String id
+   Date stime  格式年月日时
+   Date etime   格式年月日时
 *  JSON:  
 {“data”:
 	[
@@ -143,13 +160,13 @@ ID: 部门ID ,name：部门名称
 
 ## 新建申请
 * addNewLeavingApply
-* JSON: {“id”:”XXX” “start”:”XX”, ”end”:”XXX”, “type”:”XX“,
-	  “issue”: “xxx”}
+* JSON: leave:{“id”:”XXX” “leaveid”:”XX”, “staid”:”XX”,”stime”:”XXX”,”etime”:”XXX”, “type”:”XX“,
+	 “description”：“xxx” “isconfirm”: “xxx” ,“operator”：“xxx”}    stime和etime格式为年月日时
 * String  true ->  添加成功 false -> 添加失败
 
 ## 撤销外出申请
 * deleteApply
-* JSON: {“StaffId”:”XXX”,”ApplyId”:”XXX”}
+* String leaveid
 * String  true ->  撤销成功 false -> 撤销失败
 
 ## 工资查询
@@ -182,7 +199,9 @@ bonus里
 
 ## 查询外出申请（经理版）
 * consultAllApply
-*  JSON：{“manageid”: “xx”,  “start”: “XX”, “end”:”XX”}
+*String id 
+String deid
+  String rank
 *  JSON:  
 {“data”:
 	[
@@ -195,7 +214,8 @@ bonus里
 
 ## 确认外出申请
 * confirmApply
-* JSON: {“managerId”:”XXX”,”ApplyId”:”XXX”}
+* String id；操作人编号
+String leaveid；申请单编号
 * String  true ->  确认成功 false -> 确认失败
 
 
