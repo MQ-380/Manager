@@ -22,6 +22,9 @@
         <Button type="primary" shape="circle" @click="getStaff()" icon="ios-refresh"></Button>
       </div>
       <br><br>
+      <Input v-model="searchKeyword"  :style="searchWidth" :icon="iconType" class="freshButton" @on-focus="startSearch()"
+             @on-click="endSearch()" @on-change="startSearch()" :placeholder="holder"/>
+      <br><br>
       <Table :data="staffShowList" :columns="staffColumn" :height="523" @on-select="addDeleteItem" @on-select-all="addDeleteItem"
              stripe border></Table>
       <div style="margin: 10px;overflow: scroll">
@@ -36,6 +39,10 @@
 <style>
   .left {
     float: left;
+  }
+
+  .freshButton {
+    float: right
   }
 </style>
 
@@ -108,7 +115,10 @@
         showDelete: false,
         showEdit: false,
         inSearch: false,
-        searchResult: []
+        searchResult: [],
+        searchWidth: 'width: 50px',
+        iconType: 'ios-search-strong',
+        holder: ''
       }
     },
     components: {
@@ -166,7 +176,7 @@
       addDeleteItem (selected) {
         let items = []
         selected.forEach(function (item) {
-          item.push(item)
+          items.push(item)
         })
         this.deleteItem = items
       },
@@ -234,12 +244,44 @@
         })
         this.closeModal()
         this.getStaff()
+        this.deleteItem = []
       },
       closeModal () {
         this.showNotice = false
         this.showDelete = false
         this.showEdit = false
         this.showAdd = false
+      },
+      startSearch () {
+        this.searchWidth = 'width: 200px'
+        this.iconType = 'ios-close-empty'
+        this.holder = '根据姓名搜索员工'
+        this.nowPage = 1
+        const allData = this.staffList
+        const keyword = this.searchKeyword
+        let result = []
+        allData.forEach(function (item) {
+          if (item.name.search(keyword) !== -1) {
+            result.push(item)
+          }
+        })
+        this.searchResult = result
+        this.nowPage = 1
+        this.staffShowList = this.getThisPageSearchResult(0)
+        this.number = this.searchResult.length
+        this.inSearch = true
+      },
+      getThisPageSearchResult (page) {
+        return this.searchResult.slice(page * 10, page * 10 + 10)
+      },
+      endSearch () {
+        this.searchKeyword = ''
+        this.holder = ''
+        this.iconType = 'ios-search-strong'
+        this.inSearch = false
+        this.searchWidth = 'width: 50px'
+        this.data = this.getThisPageData(this.nowDataPage * 10 - 10)
+        this.number = this.getDataSize()
       }
     }
   }

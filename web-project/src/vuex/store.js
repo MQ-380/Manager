@@ -14,6 +14,9 @@ const state = {
   },
   departState: {
     departData: []
+  },
+  employeeState: {
+    staffInfo: {}
   }
 }
 
@@ -45,6 +48,13 @@ const mutations = {
   },
   GETDEPARTDATA (state) {
     state.departState.departData = sessionStorage.getItem('depart')
+  },
+  SETSTAFFINFO (state, data) {
+    state.employeeState.staffInfo = data
+    sessionStorage.setItem('staff', state.employeeState.staffInfo)
+  },
+  GETSTAFFINFO (state, data) {
+    state.employeeState.staffInfo = sessionStorage.getItem('staff')
   }
 }
 

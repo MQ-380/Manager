@@ -4,6 +4,11 @@ import Login from '../components/Login.vue'
 import Admin from '../components/Admin.vue'
 import DepartManage from '../components/DepartmentManage.vue'
 import StaffManage from '../components/StaffManage.vue'
+import Employee from '../components/Employee.vue'
+import Setting from '../components/EmployeeSetting.vue'
+import Sign from '../components/EmployeeSignIn.vue'
+import Salary from '../components/EmployeeSalary.vue'
+import Apply from '../components/EmployeeApply.vue'
 
 Vue.use(Router)
 
@@ -28,6 +33,29 @@ export default new Router({
         }
       ],
       component: Admin
+    },
+    {
+      path: '/Employee',
+      name: 'employee',
+      component: Employee,
+      children: [
+        {
+          path: '/Setting',
+          component: Setting
+        },
+        {
+          path: '/Sign',
+          component: Sign
+        },
+        {
+          path: '/Apply',
+          component: Apply
+        },
+        {
+          path: '/Salary',
+          component: Salary
+        }
+      ]
     }
   ]
 })

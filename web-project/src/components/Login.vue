@@ -100,14 +100,25 @@
               .then((response) => {
                 var info = response.body
                 if (info.status) {
-                  this.type = info.type
-                  this.id = info.id
-                  var tmp = {
-                    type: this.formItem.type,
-                    id: this.id
+                  if (this.formItem.type === '1') {
+                    this.type = '0'
+                    this.id = info.id
+                    this.$store.commit('LOGIN', {
+                      type: this.type,
+                      id: this.id
+                    })
+                    this.$router.push('/Admin')
+                  } else {
+                    this.type = info.type
+                    this.id = info.id
+                    this.$store.commit('LOGIN', {
+                      type: this.type,
+                      id: this.id
+                    })
+                    if (this.type === 1) {
+                      this.$router.push('/Employee')
+                    }
                   }
-                  this.$store.commit('LOGIN', tmp)
-                  this.$router.push('/Admin')
                 } else {
                   this.loginActive = false
                   this.msg = info.msg

@@ -165,6 +165,8 @@
               this.noticeMsg = '无法添加员工或修改员工资料，请检查网络连接'
               this.showNotice = true
             })
+          } else {
+            this.$Message.error('表单验证不通过')
           }
         })
       },

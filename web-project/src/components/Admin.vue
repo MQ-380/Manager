@@ -49,6 +49,7 @@
 </style>
 <template>
   <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
+    <LogoutNotice v-if="showLogOut"></LogoutNotice>
     <Row type="flex" class="layout-full">
       <i-col :span="spanLeft" class="layout-menu-left layout-full">
         <Menu active-name="1" theme="dark" width="auto" @on-select="logout" class="layout-menu-left layout-full">
@@ -59,7 +60,7 @@
             <span class="layout-text">部门管理</span>
           </Menu-item>
           <Menu-item name="staff">
-            <Icon type="ios-people" :size="iconSize"></Icon>
+            <Icon type="ios-person" :size="iconSize"></Icon>
             <span class="layout-text">员工管理</span>
           </Menu-item>
           <Menu-item name="LogOut">
@@ -88,29 +89,22 @@
         <Button type="primary" @click="toLogin">登录页面</Button>
       </div>
     </Modal>
-
-    <Modal v-model="notice" @on-ok="LogoutAction">
-      <p slot="header" style="color:#843534;text-align:left">
-        <span>注意</span>
-      </p>
-      <div style="text-align:center">
-        <span>请确定是否要登出账户？</span>
-      </div>
-    </Modal>
-
   </div>
 </template>
+
 <script>
   import Depart from './DepartmentManage'
   import Notice from './Notice'
   import Staff from './StaffManage'
+  import LogoutNotice from './LogoutNotice'
   export default {
     name: 'admin',
     data () {
       return {
         notice: false,
         spanLeft: 5,
-        spanRight: 19
+        spanRight: 19,
+        showLogOut: false
       }
     },
     computed: {
@@ -119,25 +113,22 @@
       },
       isLoginCorrect: function () {
         this.$store.commit('GETLOGIN')
-        return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType === '1')
+        return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType === '0')
       }
     },
     components: {
       Staff,
       Notice,
-      Depart
+      Depart,
+      LogoutNotice
     },
     methods: {
       toLogin () {
         this.$router.push('/')
       },
-      LogoutAction () {
-        this.$store.commit('LOGOUT')
-        this.$router.push('/')
-      },
       logout (name) {
         if (name === 'LogOut') {
-          this.notice = true
+          this.showLogOut = true
         } else if (name === 'depart') {
           this.$router.push('/Depart')
         } else if (name === 'staff') {
