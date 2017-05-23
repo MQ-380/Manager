@@ -80,6 +80,9 @@
     created () {
       this.getStaffInformation()
     },
+    watch: {
+      '$route': 'CheckSignState'
+    },
     components: {
       notice,
       logout,

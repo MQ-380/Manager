@@ -182,13 +182,13 @@
       },
       getThisPageData (startData) {
         if (this.inSearch) {
-          return this.searchResult.slice(startData, startData + 10)
+          return this.searchResult.slice(startData * 10, (startData + 1) * 10)
         } else {
-          return this.staffList.slice(startData, startData + 10)
+          return this.staffList.slice(startData * 10, (startData + 1) * 10)
         }
       },
       changePage () {
-        this.staffShowList = this.getThisPageData(this.nowPage)
+        this.staffShowList = this.getThisPageData(this.nowPage - 1)
       },
       getDepartmentName () {
         let nowSelected = this.department.selectDepartment
