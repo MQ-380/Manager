@@ -11,12 +11,7 @@
           <Form-item label="姓名" prop="name">
             <Input v-model="staffFormItem.name" placeholder="请输入"/>
           </Form-item>
-          <Form-item label="性别" prop="sex">
-            <Radio-group v-model="staffFormItem.sex" style="float: left">
-              <Radio label="男"></Radio>
-              <Radio label="女"></Radio>
-            </Radio-group>
-          </Form-item>
+          c
           <Form-item label="e-mail" prop="email">
             <Input v-model="staffFormItem.email"/>
           </Form-item>

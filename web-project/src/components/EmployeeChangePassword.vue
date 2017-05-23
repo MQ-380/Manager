@@ -1,24 +1,24 @@
 <template>
   <div id="changePassword">
-  <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
-  <notice v-if="showError" :infoname="errorMsg" @closeModal="closeError"></notice>
-  <Modal v-model="showEdit">
-    <Form ref="passwordInfo" :model="passwordInfo" :label-width="80" :rules="passwordValidate">
+    <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
+    <notice v-if="showError" :infoname="errorMsg" @closeModal="closeError"></notice>
+    <Modal v-model="showEdit">
       <p slot="header" style="color:#843534;text-align:left">
         <span>修改密码</span>
       </p>
-      <Form-item label='新密码' prop="newPass">
-        <Input v-model="passwordInfo.newPass" type="password" />
-      </Form-item>
-      <Form-item label="确认新密码" prop="confirm">
-        <Input v-model="passwordInfo.confirm" type="password" />
-      </Form-item>
-    </Form>
-    <div slot="footer">
-      <Button type="primary" @click="confirmEdit('passwordInfo')">确定</Button>
-      <Button type="ghost" @click="cancel()">取消</Button>
-    </div>
-  </Modal>
+      <Form ref="passwordInfo" :model="passwordInfo" :label-width="80" :rules="passwordValidate">
+        <Form-item label='新密码' prop="newPass">
+          <Input v-model="passwordInfo.newPass" type="password"/>
+        </Form-item>
+        <Form-item label="确认新密码" prop="confirm">
+          <Input v-model="passwordInfo.confirm" type="password"/>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="primary" @click="confirmEdit('passwordInfo')">确定</Button>
+        <Button type="ghost" @click="cancel()">取消</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 
