@@ -171,7 +171,9 @@ ID: 部门ID ,name：部门名称
 
 ## 工资查询
 * consultSalary
-* JSON: {“id”: “xx”,  “start”: “XX”, “end”:”XX”}
+* String:id
+Date: st  年月格式
+Date: et  年月格式
 * JSON:
 { “data”:[
 {“date”:”XXX”, “total”:”xx“, “basic”: “XX”, 

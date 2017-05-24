@@ -42,7 +42,9 @@
 				<value>com/model/Department.hbm.xml</value>
 				<value>com/model/Rewardandpunish.hbm.xml</value>
 				<value>com/model/Sign.hbm.xml</value>
-				<value>com/model/Staff.hbm.xml</value></list>
+				<value>com/model/Staff.hbm.xml</value>
+				<value>com/model/Salary.hbm.xml</value>
+				<value>com/model/Punishbysign.hbm.xml</value></list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -294,4 +296,23 @@
 			<ref bean="rePunService"/>
 		</property>
 	</bean>
-    </beans>
+	<bean id="salaryDAO" class="com.model.SalaryDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="punishbysignDAO" class="com.model.PunishbysignDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="salaryService" class="com.service.impl.SalaryServiceImpl">
+		<property name="salaryDAO">
+			<ref bean="salaryDAO"/>
+		</property>
+</bean>
+	<bean id="SignDAO" class="com.model.SignDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean></beans>
