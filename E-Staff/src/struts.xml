@@ -107,6 +107,10 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+				<action name="consultSalary" class="com.action.consultSalary">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    
    

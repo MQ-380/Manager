@@ -16,11 +16,8 @@
         <property name="total" type="java.lang.Double">
             <column name="total" precision="10" />
         </property>
-        <property name="year" type="java.lang.Integer">
-            <column name="year" />
-        </property>
-        <property name="month" type="java.lang.Integer">
-            <column name="month" />
+        <property name="date" type="java.util.Date">
+            <column name="date" length="10" />
         </property>
         <property name="punish" type="java.lang.Double">
             <column name="punish" precision="10" />

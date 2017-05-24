@@ -15,6 +15,7 @@ import com.action.*;
 import com.model.*;
 import com.mydao.myLeaveDAO;
 import com.mydao.myLoginDAO;
+import com.mydao.mySalaryDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
 import com.tool.DateStringConvert;
@@ -27,10 +28,10 @@ public class test {
 	  */
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	myLoginDAO dao =  (myLoginDAO)ctx.getBean("myLoginDAO");
+	    	mySalaryDAO dao =  (mySalaryDAO)ctx.getBean("mySalaryDAO");
 	    	Date st=DateStringConvert.convertStringToDate("2017-05-01");
 	    	Date et=DateStringConvert.convertStringToDate("2017-05-31");
-	    	List<Sign>list=dao.consultLogData("170010001",st,et);
+	    	List<Salary>list=dao.consultSalary("170010001",st,et);
 	    	System.out.println("********"+list.size());
 	    	for(int i=0;i<list.size();i++)
 	    	System.out.println("********#####"+list.get(i).getStaid());
@@ -50,10 +51,10 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 consultLogData ser = (consultLogData)ctx.getBean("consultLogData"); 
+		 consultSalary ser = (consultSalary)ctx.getBean("consultSalary"); 
 		ser.setId("170010001");
-		ser.setSt("2017-05-01");
-		ser.setEt("2017-05-30");
+		ser.setSt("2017-05");
+		ser.setEt("2017-06");
 	     ser.execute();
 	     
 	    }

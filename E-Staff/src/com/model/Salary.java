@@ -1,5 +1,7 @@
 package com.model;
 
+import java.util.Date;
+
 /**
  * Salary entity. @author MyEclipse Persistence Tools
  */
@@ -11,8 +13,7 @@ public class Salary implements java.io.Serializable {
 	private Integer id;
 	private String staid;
 	private Double total;
-	private Integer year;
-	private Integer month;
+	private Date date;
 	private Double punish;
 	private Double reward;
 
@@ -23,12 +24,11 @@ public class Salary implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Salary(String staid, Double total, Integer year, Integer month,
-			Double punish, Double reward) {
+	public Salary(String staid, Double total, Date date, Double punish,
+			Double reward) {
 		this.staid = staid;
 		this.total = total;
-		this.year = year;
-		this.month = month;
+		this.date = date;
 		this.punish = punish;
 		this.reward = reward;
 	}
@@ -59,20 +59,12 @@ public class Salary implements java.io.Serializable {
 		this.total = total;
 	}
 
-	public Integer getYear() {
-		return this.year;
+	public Date getDate() {
+		return this.date;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
-
-	public Integer getMonth() {
-		return this.month;
-	}
-
-	public void setMonth(Integer month) {
-		this.month = month;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Double getPunish() {

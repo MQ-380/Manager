@@ -7,9 +7,12 @@ import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.model.Rewardandpunish;
+import com.model.Salary;
 import com.model.Staff;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.SalaryService;
+import com.tool.DateStringConvert;
 import com.tool.JSONUtils;
 
 public class consultSalary extends ActionSupport{
@@ -26,27 +29,54 @@ public String getId() {
 public void setId(String id) {
 	this.id = id;
 }
-public Date getSt() {
+
+private String id;
+private String st;
+private String et;
+public String getSt() {
 	return st;
 }
-public void setSt(Date st) {
+public void setSt(String st) {
 	this.st = st;
 }
-public Date getEt() {
+public String getEt() {
 	return et;
 }
-public void setEt(Date et) {
+public void setEt(String et) {
 	this.et = et;
 }
-private String id;
-private Date st;
-private Date et;
 public String execute() throws Exception {
 	 Map<String, Object> map = new HashMap<String, Object>();
 	   try {
-       
+		   if(st==et)
+		   {
+			   int m=Integer.parseInt(et.substring(5, 7))%12+1;
+			   String y=et.substring(0,4);
+			   et=y+"-"+String.format("%02d",m);
+		   }
+		   st+="-01";
+		   et+="-01";
+		//  System.out.println("st="+st+"   "+"et="+et);
+		  Date sst=DateStringConvert.convertStringToDate(st);
+		  Date eet=DateStringConvert.convertStringToDate(et);
+		  
+          List<Salary> totalSalary=salaryService.consultSalary(id,sst,eet);
+         //  for(int i=0;i<totalSalary.size();i++)
+          // System.out.println("totalSalary****"+totalSalary.get(i).getStaid());
+           
+           List<Rewardandpunish> rePunSalary=salaryService.consultRePunSalary(id,sst,eet);
+          // for(int i=0;i<totalSalary.size();i++)
+          // System.out.println("rePunSalary****"+rePunSalary.get(i).getStaid());
+           
+           int rank=salaryService.findByStaid(id).get(0).getRank();
+           double fundamental=salaryService.findByRank(rank).get(0).getAmount();
+          // System.out.println("fundamental****"+fundamental);
+           
+           map.put("fundamental",fundamental);
+           map.put("totalSalary",totalSalary);
+           map.put("rePunSalary",rePunSalary);
            map.put("status", true);
-   	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
+   	       JSONUtils.toJson(ServletActionContext.getResponse(), map);
        return SUCCESS;
    } catch (Exception e) {
        // TODO Auto-generated catch block
