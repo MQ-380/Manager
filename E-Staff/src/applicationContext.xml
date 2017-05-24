@@ -55,13 +55,10 @@
 		</tx:attributes>
 	</tx:advice>
 <aop:config>
-			<aop:pointcut expression="bean(myLeaveDAO)" id="myPointcut"/>
+			<aop:pointcut expression="bean(my*DAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
-	<aop:config>
-	<aop:pointcut expression="bean(myLoginDAO)" id="myPointcut"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
-	</aop:config>
+
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<task:annotation-driven /> <!-- 定时器开关-->  
 
