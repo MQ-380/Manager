@@ -1,5 +1,6 @@
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,11 +59,9 @@ public class test {
 	    }
 	
 	 @Test
-	 public void test() throws InterruptedException
+	 public void test() throws InterruptedException, ParseException
 	 {
-		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	      System.out.println("开始执行了...");
-	        Thread.sleep(6000);
-	        System.out.println("结束执行了...");
+		 Date st=DateStringConvert.convertStringToDate("2017-05-01");
+		 System.out.println("年月格式"+st);
 	 }
 }

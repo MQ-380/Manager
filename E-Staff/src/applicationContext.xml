@@ -115,6 +115,16 @@
     		<ref bean="sessionFactory" />
     	</property>
     </bean>
+    <bean id="salaryDAO" class="com.model.SalaryDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="mySalaryDAO" class="com.mydao.impl.mySalaryDAOImpl">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
     <bean id="adminService" class="com.service.impl.AdminServiceImpl">
 		<property name="adminDAO">
 			<ref bean="adminDAO"/>
@@ -292,4 +302,4 @@
 			<ref bean="rePunService"/>
 		</property>
 	</bean>
-    </beans>
+	</beans>

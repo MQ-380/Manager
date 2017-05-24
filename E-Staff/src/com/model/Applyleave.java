@@ -1,6 +1,6 @@
 package com.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Applyleave entity. @author MyEclipse Persistence Tools
@@ -14,8 +14,8 @@ public class Applyleave implements java.io.Serializable {
 	private String leaveid;
 	private String staid;
 	private Integer type;
-	private Timestamp stime;
-	private Timestamp etime;
+	private Date stime;
+	private Date etime;
 	private String description;
 	private Integer isconfirm;
 	private String operator;
@@ -27,9 +27,8 @@ public class Applyleave implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Applyleave(String leaveid, String staid, Integer type,
-			Timestamp stime, Timestamp etime, String description,
-			Integer isconfirm, String operator) {
+	public Applyleave(String leaveid, String staid, Integer type, Date stime,
+			Date etime, String description, Integer isconfirm, String operator) {
 		this.leaveid = leaveid;
 		this.staid = staid;
 		this.type = type;
@@ -74,19 +73,19 @@ public class Applyleave implements java.io.Serializable {
 		this.type = type;
 	}
 
-	public Timestamp getStime() {
+	public Date getStime() {
 		return this.stime;
 	}
 
-	public void setStime(Timestamp stime) {
+	public void setStime(Date stime) {
 		this.stime = stime;
 	}
 
-	public Timestamp getEtime() {
+	public Date getEtime() {
 		return this.etime;
 	}
 
-	public void setEtime(Timestamp etime) {
+	public void setEtime(Date etime) {
 		this.etime = etime;
 	}
 

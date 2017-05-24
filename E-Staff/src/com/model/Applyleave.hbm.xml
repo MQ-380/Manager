@@ -19,11 +19,11 @@
         <property name="type" type="java.lang.Integer">
             <column name="type" />
         </property>
-        <property name="stime" type="java.sql.Timestamp">
-            <column name="stime" length="19" />
+        <property name="stime" type="java.util.Date">
+            <column name="stime" length="10" />
         </property>
-        <property name="etime" type="java.sql.Timestamp">
-            <column name="etime" length="19" />
+        <property name="etime" type="java.util.Date">
+            <column name="etime" length="10" />
         </property>
         <property name="description" type="java.lang.String">
             <column name="description" length="1000" />
