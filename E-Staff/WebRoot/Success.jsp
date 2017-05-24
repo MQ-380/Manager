@@ -1,5 +1,4 @@
-<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -24,10 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    	管理员<s:property value="adid"/>登录成功，可以进行相关操作！
-    	<form action="addDepartment.action" method="post">
-					<s:textfield name="department.name" label="部门名" size="20"></s:textfield>
-					<s:submit value="提交"></s:submit>
-				</form>
+    This is my JSP page. <br>
   </body>
 </html>

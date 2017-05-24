@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.struts2.ServletActionContext;
 
 import com.model.Applyleave;
-import com.model.Leave;
 import com.model.Staff;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.LeaveService;

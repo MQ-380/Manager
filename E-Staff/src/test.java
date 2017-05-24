@@ -18,12 +18,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
 import com.tool.timeTool;
 
-
-
-
 public class test {
-	
-	
 	 @Test  
 	 /*
 	  * 测试DAO层
@@ -47,7 +42,7 @@ public class test {
 	    }
 	 @Test  
 	 /*
-	  * 测试action
+	  * 测action
 	  */
 	    public void testUserAction() throws Exception{  
 		
@@ -57,7 +52,15 @@ public class test {
 		 repun.setAmount(12.1);
 		ser.setRepun(repun);
 	     ser.execute();
+	     
 	    }
 	
-	 
+	 @Test
+	 public void test() throws InterruptedException
+	 {
+		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+	      System.out.println("开始执行了...");
+	        Thread.sleep(6000);
+	        System.out.println("结束执行了...");
+	 }
 }

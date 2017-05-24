@@ -33,7 +33,7 @@ public String execute() throws Exception {
 	               for(int i=0;i<list.size();i++)
                 		 System.out.println(list.get(i).getLeaveid());
                  
-	                   map.put("staff", list);
+	                   map.put("data", list);
 	                 map.put("status", true);
 	         	     JSONUtils.toJson(ServletActionContext.getResponse(), map);
 	             return SUCCESS;

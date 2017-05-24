@@ -3,16 +3,21 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop
-	                    http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
-	                     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+	                     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	                     http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+	                     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+	                     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd" 
+	xmlns:tx="http://www.springframework.org/schema/tx">
 
 
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="url"
-			value="jdbc:mysql://localhost:3306/staffdb?useUnicode=true&amp;characterEncoding=UTF-8">
+			value="jdbc:mysql://localhost:3306/staffdb?useUnicode=true">
 		</property>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="username" value="root"></property>
@@ -33,12 +38,11 @@
 		<property name="mappingResources">
 			<list>
 				<value>com/model/Admin.hbm.xml</value>
-				<value>com/model/Department.hbm.xml</value>
-				<value>com/model/Staff.hbm.xml</value>
-				<value>com/model/Sign.hbm.xml</value>
-				<value>com/model/Leave.hbm.xml</value>
 				<value>com/model/Applyleave.hbm.xml</value>
-				<value>com/model/Rewardandpunish.hbm.xml</value></list>
+				<value>com/model/Department.hbm.xml</value>
+				<value>com/model/Rewardandpunish.hbm.xml</value>
+				<value>com/model/Sign.hbm.xml</value>
+				<value>com/model/Staff.hbm.xml</value></list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -54,39 +58,109 @@
 			<aop:pointcut expression="bean(mySignDAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
-	<aop:config>
+<aop:config>
 			<aop:pointcut expression="bean(myLeaveDAO)" id="myPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
 	</aop:config>
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<bean id="adminDAO" class="com.model.AdminDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-</bean>
+	<task:annotation-driven /> <!-- 定时器开关-->  
 
-<bean id="adminService" class="com.service.impl.AdminServiceImpl">
+    <bean id="myTask" class="com.task.MyTask"></bean>  
+
+    <task:scheduled-tasks>  
+        <!-- 这里表示的是每隔五秒执行一次 -->  
+        <task:scheduled ref="myTask" method="show" cron="*/5 * * * * ?" />  
+        <task:scheduled ref="myTask" method="print" cron="*/10 * * * * ?"/>  
+    </task:scheduled-tasks>  
+
+    <!-- 自动扫描的包名 -->
+    <context:component-scan base-package="com.task" />
+
+    <bean id="adminDAO" class="com.model.AdminDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="applyleaveDAO" class="com.model.ApplyleaveDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+     <bean id="myLeaveDAO" class="com.mydao.impl.myLeaveDAOImpl">
+	 	<property name="sessionFactory">
+	 		<ref bean="sessionFactory" />
+	 	</property>
+	 </bean>
+    <bean id="departmentDAO" class="com.model.DepartmentDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="rewardandpunishDAO"
+    	class="com.model.RewardandpunishDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="signDAO" class="com.model.SignDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+     <bean id="mySignDAO" class="com.mydao.impl.mySignDAOImpl">
+	 	<property name="sessionFactory">
+	 		<ref bean="sessionFactory" />
+	 	</property>
+	 </bean>
+    <bean id="staffDAO" class="com.model.StaffDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="adminService" class="com.service.impl.AdminServiceImpl">
 		<property name="adminDAO">
 			<ref bean="adminDAO"/>
 		</property>
 </bean>
-	<bean id="userLogin" class="com.action.userLogin">
-		<property name="adminService">
-			<ref bean="adminService"/>
+<bean id="staffService" class="com.service.impl.StaffServiceImpl">
+		<property name="staffDAO">
+			<ref bean="staffDAO"/>
 		</property>
-	</bean>
-	
-	<bean id="departmentDAO" class="com.model.DepartmentDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
+</bean>
+<bean id="signService" class="com.service.impl.SignServiceImpl">
+		<property name="signDAO">
+			<ref bean="signDAO"/>
 		</property>
-	</bean>
-	<bean id="departmentService" class="com.service.impl.DepartmentServiceImpl">
+				<property name="mySignDAO">
+			<ref bean="mySignDAO"/>
+		</property>
+           </bean>
+           <bean id="leaveService" class="com.service.impl.LeaveServiceImpl">
+		<property name="applyleaveDAO">
+			<ref bean="applyleaveDAO"/>
+		</property>
+		<property name="myLeaveDAO">
+			<ref bean="myLeaveDAO"/>
+		</property>
+</bean>
+<bean id="rePunService" class="com.service.impl.RePunServiceImpl">
+		<property name="rewardandpunishDAO">
+			<ref bean="rewardandpunishDAO"/>
+		</property>
+</bean>
+<bean id="departmentService" class="com.service.impl.DepartmentServiceImpl">
 		<property name="departmentDAO">
 			<ref bean="departmentDAO"/>
 		</property>
 </bean>
-	<bean id="deleteDepartment" class="com.action.deleteDepartment">
+
+
+<bean id="userLogin" class="com.action.userLogin">
+		<property name="adminService">
+			<ref bean="adminService"/>
+		</property>
+	</bean>
+<bean id="deleteDepartment" class="com.action.deleteDepartment">
 		<property name="departmentService">
 			<ref bean="departmentService"/>
 		</property>
@@ -101,17 +175,7 @@
 			<ref bean="departmentService"/>
 		</property>
 	</bean>
-	<bean id="staffDAO" class="com.model.StaffDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-	<bean id="staffService" class="com.service.impl.StaffServiceImpl">
-		<property name="staffDAO">
-			<ref bean="staffDAO"/>
-		</property>
-</bean>
-	<bean id="staffLogin" class="com.action.staffLogin">
+<bean id="staffLogin" class="com.action.staffLogin">
 		<property name="staffService">
 			<ref bean="staffService"/>
 		</property>
@@ -167,25 +231,7 @@
 			<ref bean="staffService"/>
 		</property>
 	</bean>
-		<bean id="signDAO" class="com.model.SignDAO">
-			<property name="sessionFactory">
-				<ref bean="sessionFactory" />
-			</property>
-		</bean>
-		  <bean id="mySignDAO" class="com.mydao.impl.mySignDAOImpl">
-	 	<property name="sessionFactory">
-	 		<ref bean="sessionFactory" />
-	 	</property>
-	 </bean>
-			<bean id="signService" class="com.service.impl.SignServiceImpl">
-		<property name="signDAO">
-			<ref bean="signDAO"/>
-		</property>
-				<property name="mySignDAO">
-			<ref bean="mySignDAO"/>
-		</property>
-           </bean>
-           <bean id="isLogin" class="com.action.isLogin">
+	<bean id="isLogin" class="com.action.isLogin">
 		<property name="signService">
 			<ref bean="signService"/>
 		</property>
@@ -210,27 +256,7 @@
 			<ref bean="signService"/>
 		</property>
 	</bean>
-
-
-    <bean id="applyleaveDAO" class="com.model.ApplyleaveDAO">
-    	<property name="sessionFactory">
-    		<ref bean="sessionFactory" />
-    	</property>
-    </bean>
-      <bean id="myLeaveDAO" class="com.mydao.impl.myLeaveDAOImpl">
-	 	<property name="sessionFactory">
-	 		<ref bean="sessionFactory" />
-	 	</property>
-	 </bean>
-    	<bean id="leaveService" class="com.service.impl.LeaveServiceImpl">
-		<property name="applyleaveDAO">
-			<ref bean="applyleaveDAO"/>
-		</property>
-		<property name="myLeaveDAO">
-			<ref bean="myLeaveDAO"/>
-		</property>
-</bean>
-	 <bean id="addNewLeavingApply" class="com.action.addNewLeavingApply">
+ <bean id="addNewLeavingApply" class="com.action.addNewLeavingApply">
 		<property name="staffService">
 			<ref bean="staffService"/>
 		</property>
@@ -263,20 +289,9 @@
 			<ref bean="leaveService"/>
 		</property>
 	</bean>
-	<bean id="rewardandpunishDAO"
-		class="com.model.RewardandpunishDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-		<bean id="rePunService" class="com.service.impl.RePunServiceImpl">
-		<property name="rewardandpunishDAO">
-			<ref bean="rewardandpunishDAO"/>
-		</property>
-</bean>
-<bean id="addBounsPunish" class="com.action.addBounsPunish">
+	<bean id="addBounsPunish" class="com.action.addBounsPunish">
 		<property name="rePunService">
 			<ref bean="rePunService"/>
 		</property>
 	</bean>
-	</beans>
+    </beans>

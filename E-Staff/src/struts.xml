@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 <package name="estaff" extends="struts-default" namespace="/">
-		<!-- 用户登录Action配置 -->
+		<!-- 鐢ㄦ埛鐧诲綍Action閰嶇疆 -->
 		<action name="userLogin" class="com.action.userLogin">
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
@@ -109,3 +109,5 @@
 		</action>
 	</package>
 </struts>    
+   
+ 
