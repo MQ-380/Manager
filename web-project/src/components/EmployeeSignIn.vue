@@ -49,13 +49,7 @@
         showSuccess: false,
         showError: false,
         showHistory: true,
-        historyShowList: [
-          {
-            date: '2017-05-21',
-            signin: '23:45:01',
-            signout: '23:56:01'
-          }
-        ],
+        historyShowList: [],
         historyList: [],
         historyColumn: [
           {
@@ -200,12 +194,14 @@
           method: 'POST',
           params: {
             id: id,
-            st: this.timeOption[0],
-            et: this.timeOption[1]
+            st: this.timeOption[0].toLocaleDateString(),
+            et: this.timeOption[1].toLocaleDateString()
           }
         }).then((response) => {
           if (response.body.status) {
             this.historyList = response.body.data
+            this.dealWithDate()
+            this.historyShowList = this.getThisPage(0)
           } else {
             this.errorMsg = '无法获取签到数据'
             this.showError = true
@@ -213,6 +209,11 @@
         }, (response) => {
           this.errorMsg = '无法获取签到数据，请检查您的网络连接'
           this.showError = true
+        })
+      },
+      dealWithDate () {
+        this.historyList.forEach(function (item) {
+          item.date = new Date(item.date).toLocaleDateString()
         })
       },
       getThisPage (startData) {

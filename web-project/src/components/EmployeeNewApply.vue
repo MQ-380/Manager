@@ -1,7 +1,7 @@
 <template>
   <div id="NewApplyForm">
     <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
-    <notice v-if="showError" :infoname="errorMsg" @cancel="closeError"></notice>
+    <notice v-if="showError" :infoname="errorMsg" @closeModal="closeError"></notice>
     <Modal v-model="showApply" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
         <span>新建外出申请</span>
@@ -138,11 +138,11 @@
               url: 'http://localhost:8081/addNewLeavingApply',
               method: 'POST',
               params: {
-                'Applyleave.staid': this.applyInfo.staffId,
-                'Applyleave.type': this.applyInfo.type,
-                'Applyleave.stime': this.applyInfo.time[0].toLocaleDateString(),
-                'Applyleave.etime': this.applyInfo.time[1].toLocaleDateString(),
-                'Applyleave.description': this.applyInfo.detail === undefined ? '' : this.applyInfo.detail
+                'leave.staid': this.applyInfo.staffId,
+                'leave.type': this.applyInfo.type,
+                'leave.stime': this.applyInfo.time[0].toLocaleDateString(),
+                'leave.etime': this.applyInfo.time[1].toLocaleDateString(),
+                'leave.description': this.applyInfo.detail === undefined ? '' : this.applyInfo.detail
               }
             }).then((response) => {
               if (response.body.status) {
