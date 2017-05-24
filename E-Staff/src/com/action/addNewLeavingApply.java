@@ -43,6 +43,7 @@ public String execute() throws Exception {
 		  staffService.save(staff);
 		  String leaveid=staff.getStaid()+String.valueOf(leavenum);
 		  leave.setLeaveid(leaveid);
+		  leave.setIsconfirm(0);
 		  leaveService.save(leave);
 		  map.put("status", true);
 		  JSONUtils.toJson(ServletActionContext.getResponse(), map);

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.model.Applyleave;
 import com.model.Sign;
 import com.mydao.myLeaveDAO;
-import com.mydao.mySignDAO;
 @Repository  
 @SuppressWarnings("unchecked") 
 public class myLeaveDAOImpl implements myLeaveDAO{

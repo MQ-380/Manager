@@ -13,9 +13,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.action.*;
 import com.model.*;
 import com.mydao.myLeaveDAO;
-import com.mydao.mySignDAO;
+import com.mydao.myLoginDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
+import com.tool.DateStringConvert;
 import com.tool.timeTool;
 
 public class test {
@@ -25,12 +26,13 @@ public class test {
 	  */
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	myLeaveDAO dao =  (myLeaveDAO)ctx.getBean("myLeaveDAO");
-	    	
-	    	List<Applyleave>list=dao.consultAllApply("170010002", "002",3);
+	    	myLoginDAO dao =  (myLoginDAO)ctx.getBean("myLoginDAO");
+	    	Date st=DateStringConvert.convertStringToDate("2017-05-01");
+	    	Date et=DateStringConvert.convertStringToDate("2017-05-31");
+	    	List<Sign>list=dao.consultLogData("170010001",st,et);
 	    	System.out.println("********"+list.size());
 	    	for(int i=0;i<list.size();i++)
-	    	System.out.println("********#####"+list.get(i).getLeaveid());
+	    	System.out.println("********#####"+list.get(i).getStaid());
 	    }
 	 @Test  
 	 /*
@@ -47,10 +49,10 @@ public class test {
 	    public void testUserAction() throws Exception{  
 		
 		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 addBounsPunish ser = (addBounsPunish)ctx.getBean("addBounsPunish"); 
-		 Rewardandpunish repun=new  Rewardandpunish();
-		 repun.setAmount(12.1);
-		ser.setRepun(repun);
+		 consultLogData ser = (consultLogData)ctx.getBean("consultLogData"); 
+		ser.setId("170010001");
+		ser.setSt("2017-05-01");
+		ser.setEt("2017-05-30");
 	     ser.execute();
 	     
 	    }
