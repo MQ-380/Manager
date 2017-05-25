@@ -353,4 +353,9 @@
 			<ref bean="salaryService"/>
 		</property>
 	</bean>
+		<bean id="consultNameByStaid" class="com.action.consultNameByStaid">
+		<property name="staffService">
+			<ref bean="staffService"/>
+		</property>
+	</bean>
 </beans>

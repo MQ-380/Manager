@@ -111,6 +111,10 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+		<action name="consultNameByStaid" class="com.action.consultNameByStaid">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    
    

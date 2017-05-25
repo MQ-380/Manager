@@ -51,16 +51,16 @@ public class test {
 	  */
 	    public void testUserAction() throws Exception{  
 		
-	Thread.sleep(10000);
+			ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+consultNameByStaid ser =  (consultNameByStaid)ctx.getBean("consultNameByStaid");	 
 	
-	   
-	     
+	   ser.setStaid("170010001");
+	     //ser.execute();
 	    }
 	
 	 @Test
 	 public void test() throws InterruptedException, ParseException
 	 {
-	    MyTask ser=new MyTask();
-     	ser.calSignStatus();
+	
 	 }
 }
