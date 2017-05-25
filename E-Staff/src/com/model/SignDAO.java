@@ -111,7 +111,7 @@ public class SignDAO {
 	public List findByStaid(Object staid) {
 		return findByProperty(STAID, staid);
 	}
-
+ 
 	public List findByStatus(Object status) {
 		return findByProperty(STATUS, status);
 	}

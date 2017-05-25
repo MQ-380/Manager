@@ -64,12 +64,37 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<task:annotation-driven /> <!-- 定时器开关-->  
 
-    <bean id="myTask" class="com.task.MyTask"></bean>  
+    <bean id="myTask" class="com.task.MyTask">
+    <property name="signDAO">
+			<ref bean="signDAO"/>
+		</property>
+		<property name="myLeaveDAO">
+			<ref bean="myLeaveDAO"/>
+		</property>
+			<property name="staffDAO">
+			<ref bean="staffDAO"/>
+		</property>
+		<property name="rewardandpunishDAO">
+			<ref bean="rewardandpunishDAO"/>
+		</property>
+		<property name="myLoginDAO">
+			<ref bean="myLoginDAO"/>
+		</property>
+			<property name="salaryDAO">
+			<ref bean="salaryDAO"/>
+		</property>
+			<property name="mySalaryDAO">
+			<ref bean="mySalaryDAO"/>
+		</property>
+		<property name="fundamentalsalaryDAO">
+			<ref bean="fundamentalsalaryDAO"/>
+		</property>
+    </bean>  
 
     <task:scheduled-tasks>  
         <!-- 这里表示的是每隔五秒执行一次 -->  
-        <task:scheduled ref="myTask" method="show" cron="*/5 * * * * ?" />  
-        <task:scheduled ref="myTask" method="print" cron="*/10 * * * * ?"/>  
+        <task:scheduled ref="myTask" method="calSignStatus" cron="0 0 23 * * ?" />  
+        <task:scheduled ref="myTask" method="calSalary" cron="0 0 1 1 * ?"/>  
     </task:scheduled-tasks>  
 
     <!-- 自动扫描的包名 -->
@@ -328,4 +353,4 @@
 			<ref bean="salaryService"/>
 		</property>
 	</bean>
-	</beans>
+</beans>

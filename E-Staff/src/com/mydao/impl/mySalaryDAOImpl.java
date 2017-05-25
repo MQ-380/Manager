@@ -41,4 +41,32 @@ public class mySalaryDAOImpl implements mySalaryDAO{
 	     List<Rewardandpunish> list = query.list();  
 	     return list;
 	}
+	public double findRe(String id,Date st,Date et)
+	{
+		Query query = sessionFactory.getCurrentSession().createQuery("from Rewardandpunish r where r.date>=? and r.date<=? and r.staid=? and type=?");
+
+		 query.setParameter(0, st);  
+		 query.setParameter(1, et);  
+		 query.setParameter(2, id);
+		 query.setParameter(3, 1);
+	     List<Rewardandpunish> list = query.list();  
+	     double amount=0;
+	     for(int i=0;i<list.size();i++)
+	    	 amount+=list.get(i).getAmount();
+	     return amount;
+	}
+	public double findPun(String id,Date st,Date et)
+	{
+		Query query = sessionFactory.getCurrentSession().createQuery("from Rewardandpunish r where r.date>=? and r.date<=? and r.staid=? and type=?");
+
+		 query.setParameter(0, st);  
+		 query.setParameter(1, et);  
+		 query.setParameter(2, id);
+		 query.setParameter(3, 0);
+	     List<Rewardandpunish> list = query.list();  
+	     double amount=0;
+	     for(int i=0;i<list.size();i++)
+	    	 amount+=list.get(i).getAmount();
+	     return amount;
+	}
 }

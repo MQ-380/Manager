@@ -10,4 +10,6 @@ import com.model.Salary;
 public interface mySalaryDAO {
 	public List<Salary> consultSalary(String id,Date st,Date et);
 	public List<Rewardandpunish> consultRePunSalary(String id,Date st,Date et);
+	public double findPun(String id,Date st,Date et);
+	public double findRe(String id,Date st,Date et);
 }

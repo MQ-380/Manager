@@ -2,7 +2,7 @@ package com.mydao.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
-
+import java.util.Date;
 import javax.annotation.Resource;
 
 import org.hibernate.Query;
@@ -65,5 +65,19 @@ public class myLeaveDAOImpl implements myLeaveDAO{
             	 return list;
              }
 		 
+	}
+	public boolean isApply(String id,Date date)
+	{
+
+   	 Query query = sessionFactory.getCurrentSession().createQuery("from Applyleave a where a.staid=? and a.stime<=? and a.etime>=? and isconfirm = ?");
+		 query.setParameter(0,id);  
+		 query.setParameter(1,date);  
+		 query.setParameter(2,date);  
+		 query.setParameter(3,1);  
+	     List<Applyleave> list = query.list();  
+	     if(list.size()==0)
+	    	 return false;
+	    else
+		return true;
 	}
 }

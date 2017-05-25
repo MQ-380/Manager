@@ -51,7 +51,7 @@ public class RewardandpunishDAO {
 	public void save(Rewardandpunish transientInstance) {
 		log.debug("saving Rewardandpunish instance");
 		try {
-			getCurrentSession().save(transientInstance);
+			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);

@@ -18,6 +18,7 @@ import com.mydao.myLoginDAO;
 import com.mydao.mySalaryDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
+import com.task.MyTask;
 import com.tool.DateStringConvert;
 import com.tool.timeTool;
 
@@ -50,19 +51,16 @@ public class test {
 	  */
 	    public void testUserAction() throws Exception{  
 		
-		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 consultSalary ser = (consultSalary)ctx.getBean("consultSalary"); 
-		ser.setId("170010001");
-		ser.setSt("2017-05");
-		ser.setEt("2017-06");
-	     ser.execute();
+	Thread.sleep(10000);
+	
+	   
 	     
 	    }
 	
 	 @Test
 	 public void test() throws InterruptedException, ParseException
 	 {
-		 Date st=DateStringConvert.convertStringToDate("2017-05-01");
-		 System.out.println("年月格式"+st);
+	    MyTask ser=new MyTask();
+     	ser.calSignStatus();
 	 }
 }

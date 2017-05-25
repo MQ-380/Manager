@@ -23,11 +23,19 @@ public class myLoginDAOImpl implements myLoginDAO{
 	public List<Sign> consultLogData(String id,Date st,Date et)
 	{
 		Query query = sessionFactory.getCurrentSession().createQuery("from Sign s where s.date>=? and s.date<=? and s.staid=?");
-		System.out.println("here");
+		
 		 query.setParameter(0, st);  
 		 query.setParameter(1, et);  
 		 query.setParameter(2, id);
 	     List<Sign> list = query.list();  
 	     return list;  
+	}
+	public List<Sign> findByStaidDate(String staid,Date date)
+	{
+		Query query = sessionFactory.getCurrentSession().createQuery("from Sign s where s.date=? and s.staid=?");
+		 query.setParameter(0, date);  
+		 query.setParameter(1, staid); 
+	     List<Sign> list = query.list();  
+	     return list;
 	}
 }
