@@ -9,6 +9,10 @@ import Setting from '../components/EmployeeSetting.vue'
 import Sign from '../components/EmployeeSignIn.vue'
 import Salary from '../components/EmployeeSalary.vue'
 import Apply from '../components/EmployeeApply.vue'
+import Manager from '../components/Manager.vue'
+import Staff from '../components/ManagerStaff.vue'
+import StaffSalary from '../components/ManagerStaffSalary.vue'
+import ConfirmApply from '../components/ManagerConfirmApply.vue'
 
 Vue.use(Router)
 
@@ -54,6 +58,41 @@ export default new Router({
         {
           path: '/Salary',
           component: Salary
+        }
+      ]
+    },
+    {
+      path: '/Manager',
+      name: 'manager',
+      component: Manager,
+      children: [
+        {
+          path: '/mSetting',
+          component: Setting
+        },
+        {
+          path: '/mSign',
+          component: Sign
+        },
+        {
+          path: '/mApply',
+          component: Apply
+        },
+        {
+          path: '/mSalary',
+          component: Salary
+        },
+        {
+          path: '/mStaff',
+          component: Staff
+        },
+        {
+          path: '/mStaffSalary',
+          component: StaffSalary
+        },
+        {
+          path: '/mConfirmApply',
+          component: ConfirmApply
         }
       ]
     }

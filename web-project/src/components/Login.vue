@@ -117,6 +117,8 @@
                     })
                     if (this.type === 1) {
                       this.$router.push('/Employee')
+                    } else {
+                      this.$router.push('/Manager')
                     }
                   }
                 } else {

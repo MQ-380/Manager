@@ -49,29 +49,44 @@
 </style>
 <template>
   <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
-    <LogoutNotice v-if="showLogOut" @cancel="cancel"></LogoutNotice>
     <Row type="flex" class="layout-full">
       <i-col :span="spanLeft" class="layout-menu-left layout-full">
-        <Menu active-name="1" theme="dark" width="auto" @on-select="logout" class="layout-menu-left layout-full">
+        <Menu active-name="1" theme="dark" width="auto" @on-select="funcChoose" class="layout-menu-left layout-full">
           <div class="layout-logo-left">
           </div>
-          <Menu-item name="depart">
-            <Icon type="ios-people" :size="iconSize"></Icon>
-            <span class="layout-text">部门管理</span>
+          <Menu-item name="sign">
+            <Icon type="ios-time-outline"></Icon>
+            <span class="layout-text">签到/签离</span>
+          </Menu-item>
+          <Menu-item name="apply">
+            <Icon type="ios-people-outline" ></Icon>
+            <span class="layout-text">外出申请</span>
+          </Menu-item>
+          <Menu-item name="salary">
+            <Icon type="ios-information-outline" ></Icon>
+            <span class="layout-eye-outline">工资查看</span>
           </Menu-item>
           <Menu-item name="staff">
-            <Icon type="ios-person" :size="iconSize"></Icon>
-            <span class="layout-text">员工管理</span>
+            <Icon type="ios-gear-outline" ></Icon>
+            <span class="layout-text">员工信息</span>
           </Menu-item>
-          <Menu-item name="LogOut">
-            <Icon type="ios-information" :size="iconSize"></Icon>
-            <span class="layout-text">登出账户</span>
+          <Menu-item name="staffSalary">
+            <Icon type="ios-gear-outline" ></Icon>
+            <span class="layout-text">员工工资</span>
+          </Menu-item>
+          <Menu-item name="confirm">
+            <Icon type="ios-gear-outline" ></Icon>
+            <span class="layout-text">外出申请审批</span>
+          </Menu-item>
+          <Menu-item name="setting">
+            <Icon type="ios-gear-outline" ></Icon>
+            <span class="layout-text">个人设置/登出</span>
           </Menu-item>
         </Menu>
       </i-col>
       <i-col :span="spanRight">
         <div class="layout-content">
-          <div class="layout-content-main" >
+          <div class="layout-content-main">
             <router-view></router-view>
           </div>
         </div>
@@ -93,52 +108,46 @@
 </template>
 
 <script>
-  import Depart from './DepartmentManage'
-  import Notice from './Notice'
-  import Staff from './StaffManage'
-  import LogoutNotice from './LogoutNotice'
   export default {
-    name: 'admin',
     data () {
       return {
         notice: false,
         spanLeft: 5,
         spanRight: 19,
-        showLogOut: false
+        msg: '',
+        showError: false
       }
     },
     computed: {
-      iconSize () {
-        return this.spanLeft === 5 ? 14 : 24
-      },
       isLoginCorrect: function () {
         this.$store.commit('GETLOGIN')
-        return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType === '0')
+        return !(this.$store.state.LoginState.isLogin && this.$store.state.LoginState.loginType !== '1' && this.$store.state.LoginState.loginType !== '0')
       }
-    },
-    components: {
-      Staff,
-      Notice,
-      Depart,
-      LogoutNotice
     },
     methods: {
       toLogin () {
         this.$router.push('/')
       },
-      cancel () {
-        this.showLogOut = false
+      closeModal () {
+        this.showError = false
       },
-      logout (name) {
-        if (name === 'LogOut') {
-          this.showLogOut = true
-        } else if (name === 'depart') {
-          this.$router.push('/Depart')
+      funcChoose (name) {
+        if (name === 'sign') {
+          this.$router.push('/mSign')
+        } else if (name === 'apply') {
+          this.$router.push('/mApply')
+        } else if (name === 'salary') {
+          this.$router.push('/mSalary')
+        } else if (name === 'setting') {
+          this.$router.push('/mSetting')
         } else if (name === 'staff') {
-          this.$router.push('/Staff')
+          this.$router.push('/mStaff')
+        } else if (name === 'staffSalary') {
+          this.$router.push('/mStaffSalary')
+        } else if (name === 'confirm') {
+          this.$router.push('/mConfirmApply')
         }
       }
     }
   }
 </script>
-

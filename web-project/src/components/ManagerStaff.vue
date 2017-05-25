@@ -2,22 +2,19 @@
   <div id="staff">
     <notice v-if="showNotice" :infoname="noticeMsg" @closeModal="closeModal"></notice>
     <add v-if="showAdd" :Info="staffInfo" @closeModal="closeAndFresh" @cancel="closeModal"></add>
-    <delStaff v-if="showDelete" :deleteItem="deleteItem" @closeModal="closeAndFresh" @cancel="closeModal"></delStaff>
+    <sign v-if="showSign" :id="nowStaffId" @closeModal="closeModal"></sign>
+    <apply v-if="showApply" :id="nowStaffId" @closeModal="closeModal"></apply>
     <label class="left">请选择部门</label>
     <br><br>
     <Select v-model="department.selectDepartment" style="width:200px; float: left;">
       <Option v-for="item in departmentList" :value="item.deid" :key="item">{{item.name}}</Option>
     </Select>
     <div class="left">
-    <Button type="primary" @click="getStaff()">获得员工列表</Button>
-    <Button type="ghost" @click="getDepartmentList()">刷新部门列表</Button>
+      <Button type="primary" @click="getStaff()">获得员工列表</Button>
+      <Button type="ghost" @click="getDepartmentList()">刷新部门列表</Button>
     </div>
     <br><br>
     <div v-if="showStaff">
-      <div class='left'>
-        <Button type="primary" @click="toAdd">新增员工</Button>
-        <Button type="error" @click="toDelete">删除员工</Button>
-      </div>
       <div style="float: right">
         <Button type="primary" shape="circle" @click="getStaff()" icon="ios-refresh"></Button>
       </div>
@@ -25,7 +22,7 @@
       <Input v-model="searchKeyword"  :style="searchWidth" :icon="iconType" class="freshButton" @on-focus="startSearch()"
              @on-click="endSearch()" @on-change="startSearch()" :placeholder="holder"/>
       <br><br>
-      <Table :data="staffShowList" :columns="staffColumn" :height="523" @on-select="addDeleteItem" @on-select-all="addDeleteItem"
+      <Table :data="staffShowList" :columns="staffColumn" :height="523"
              stripe border></Table>
       <div style="margin: 10px;overflow: scroll">
         <div style="float: right;">
@@ -49,7 +46,8 @@
 <script>
   import notice from './Notice'
   import add from './StaffAddAndEdit'
-  import delStaff from './StaffDelete'
+  import sign from './ManagerConsultSign'
+  import apply from './ManagerConsultApply'
 
   export default {
     data () {
@@ -59,11 +57,6 @@
         },
         departmentList: this.getDepartmentList(),
         staffColumn: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'center'
-          },
           {
             title: '员工编号',
             key: 'staid',
@@ -100,19 +93,60 @@
                 }, '更新信息')
               ])
             }
+          },
+          {
+            title: '查看',
+            key: 'action',
+            width: 200,
+            align: 'center',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.nowStaffId = this.staffShowList[params.index].staid
+                      this.showSign = true
+                    }
+                  }
+                }, '签到记录'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.nowStaffId = this.staffShowList[params.index].staid
+                      this.showApply = true
+                    }
+                  }
+                }, '外出申请')
+              ])
+            }
           }
         ],
         staffList: [],
         staffShowList: [],
-        deleteItem: [],
         noticeMsg: '',
         nowPage: 1,
         number: 0,
+        nowStaffId: '',
         staffInfo: {},
         showNotice: false,
         showStaff: false,
+        showApply: false,
         showAdd: false,
-        showDelete: false,
+        showSign: false,
         showEdit: false,
         inSearch: false,
         searchResult: [],
@@ -125,7 +159,8 @@
     components: {
       notice,
       add,
-      delStaff
+      sign,
+      apply
     },
     methods: {
       getDepartmentList () {
@@ -174,13 +209,6 @@
       getStaffSize () {
         return this.staffList.length
       },
-      addDeleteItem (selected) {
-        let items = []
-        selected.forEach(function (item) {
-          items.push(item)
-        })
-        this.deleteItem = items
-      },
       getThisPageData (startData) {
         if (this.inSearch) {
           return this.searchResult.slice(startData * 10, (startData + 1) * 10)
@@ -200,26 +228,6 @@
           }
         })
         return selectedDepartment.name
-      },
-      toAdd () {
-        this.staffInfo = {
-          headname: '新增员工',
-          name: '',
-          sex: '',
-          email: '',
-          phone: '',
-          time: '',
-          rank: '',
-          deid: this.department.selectDepartment,
-          departmentname: this.getDepartmentName(),
-          training: '',
-          skill: '',
-          type: 'add'
-        }
-        this.showAdd = true
-      },
-      toDelete () {
-        this.showDelete = true
       },
       closeAndFresh () {
         this.$http({
@@ -249,9 +257,10 @@
       },
       closeModal () {
         this.showNotice = false
-        this.showDelete = false
+        this.showSign = false
         this.showEdit = false
         this.showAdd = false
+        this.showApply = false
       },
       startSearch () {
         this.searchWidth = 'width: 200px'

@@ -1,6 +1,6 @@
 <template>
-  <Modal v-model="notice" @on-ok="LogoutAction">
-    <p slot="header" style="color:#843534;text-align:left">
+  <Modal v-model="notice" @on-ok="LogoutAction" @on-cancel="cancel">
+    <p slot="header" style="color:#843534;text-align:left" :closable="false" :mask-closable="false">
       <span>注意</span>
     </p>
     <div style="text-align:center">
@@ -20,6 +20,9 @@
       LogoutAction () {
         this.$store.commit('LOGOUT')
         this.$router.push('/')
+      },
+      cancel () {
+        this.$emit('cancel')
       }
     }
   }

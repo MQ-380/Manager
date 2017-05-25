@@ -21,6 +21,14 @@
   </div>
 </template>
 
+<style>
+  .punish {
+    color: #ac2925;
+  }
+  .reward {
+    color: #5cb85c;
+  }
+</style>
 
 <script>
   import notice from './Notice'
@@ -71,8 +79,12 @@
                   },
                   on: {
                     click: () => {
-                      this.nowPunishDetail = this.salaryShowList[params.index].rePunSalary
-                      this.showPunish = true
+                      if (this.checkForThisMonth(this.salaryShowList[params.index])) {
+                        this.showPunish = true
+                      } else {
+                        this.errorMsg = '本月没有奖惩信息'
+                        this.showError = true
+                      }
                     }
                   }
                 }, '查看')
@@ -83,6 +95,7 @@
         nowPage: 1,
         number: 0,
         nowPunishDetail: [],
+        allPunish: [],
         startMonth: '',
         endMonth: '',
         showError: false,
@@ -106,6 +119,8 @@
           }).then((response) => {
             if (response.body.status) {
               this.salaryList = response.body.totalSalary
+              this.allPunish = response.body.rePunSalary
+              this.number = this.salaryList.length
               this.dealSalary(this.dealWithMonth, response.body.fundamental)
               this.getThisPageData(0)
               this.showSalary = true
@@ -121,6 +136,15 @@
           this.$Message.error('请检查日期选择，开始日期应早于结束日期')
         }
       },
+      checkForThisMonth (nowInfo) {
+        let thisMonth = new Date(nowInfo.date).getMonth() - 1
+        this.allPunish.forEach((item) => {
+          if (new Date(item.date).getMonth() === thisMonth) {
+            this.nowPunishDetail.push(item)
+          }
+        })
+        return this.nowPunishDetail.length !== 0
+      },
       isDateRight () {
         return this.startMonth <= this.endMonth
       },
@@ -129,6 +153,10 @@
           item.date = dealDate(item.date)
           item.punish = -item.punish
           item.fundamental = basic
+          item.cellClassName = {
+            punish: 'punish',
+            reward: 'reward'
+          }
         })
       },
       dealWithMonth (date) {
@@ -146,6 +174,7 @@
       },
       closePunish () {
         this.showPunish = false
+        this.nowPunishDetail = []
       }
     },
     components: {

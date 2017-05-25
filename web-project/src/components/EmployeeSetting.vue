@@ -1,7 +1,7 @@
 <template>
   <div id="PersonalSetting">
     <notice v-if="showError" :infoname="msg" @cancel="closeModal"></notice>
-    <logout v-if="showLogout"></logout>
+    <logout v-if="showLogout" @cancel="closeModal"></logout>
     <change v-if="showChangePass" :staffId="nowId" @closeModal="closeChange" @cancel="closeModal"></change>
     <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
     <Form ref="StaffInfoForm" :model="StaffInfoForm" :label-width="80" :rules="staffValidate">
@@ -174,6 +174,7 @@
       closeModal () {
         this.showError = false
         this.showChangePass = false
+        this.showLogOut = false
       },
       closeSuccess () {
         this.showSuccess = false

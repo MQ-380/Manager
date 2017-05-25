@@ -2,7 +2,7 @@
   <div id="changePassword">
     <success v-if="showSuccess" :msg="successMsg" @closeModal="closeSuccess"></success>
     <notice v-if="showError" :infoname="errorMsg" @closeModal="closeError"></notice>
-    <Modal v-model="showEdit">
+    <Modal v-model="showEdit" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
         <span>修改密码</span>
       </p>

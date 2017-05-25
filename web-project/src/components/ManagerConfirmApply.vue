@@ -1,37 +1,27 @@
 <template>
   <div id="apply">
-    <success v-if="showSuccess" :msg="successMsg" @closeModal="closeRepealSuccess"></success>
+    <success v-if="showSuccess" :msg="successMsg" @closeModal="closeConfirmSuccess"></success>
     <notice v-if="showError" :infoname="errorMsg" @closeModal="cancel"></notice>
-    <apply v-if="showApply" @closeSuccess="closeSuccess" @cancel="cancel"></apply>
-    <Button type="success" @click="newApply" style="float: left">新建外出申请</Button>
-    <br><br>
-    <Select v-model="consultType" style="width: 200px;float: left">
-      <Option value="1">根据开始时间查询</Option>
-      <Option value="2">根据结束时间查询</Option>
-    </Select>
-    <Date-picker type="daterange" :options="options2" v-model="searchTime" placeholder="选择起始日期"
-                 style="width: 200px;float: left"></Date-picker>
-    <Button style="float: left" type="success" @click="consultApplyData">查询所有外出申请</Button>
+    <Button type="success" @click="consultApplyData()" style="float: left">查询全部外出申请</Button>
     <br><br>
     <div v-if="showHistory">
-      <Table :data="historyShowList" :columns="columns" :height="523" stripe border></Table>
-      <div style="margin: 10px;overflow: scroll">
-        <div style="float: right;">
-          <Page :total="number" :current="nowPage" @on-change="changePage"></Page>
-        </div>
+    <Table :data="historyShowList" :columns="columns" :height="523" stripe border></Table>
+    <div style="margin: 10px;overflow: scroll">
+      <div style="float: right;">
+        <Page :total="number" :current="nowPage" @on-change="changePage"></Page>
       </div>
     </div>
-
-    <Modal v-model="showRepeal" :closable="false" :mask-closable="false">
+    </div>
+    <Modal v-model="showConfirm" :closable="false" :mask-closable="false">
       <p slot="header" style="color:#843534;text-align:left">
-        <span>撤销外出申请确认</span>
+        <span>外出申请确认</span>
       </p>
       <div style="text-align:center">
-        <span>您是否确定要撤销编号为{{nowId}}，时间从{{nowStart}}到{{nowEnd}}的外出申请？</span>
+        <span>您将要确认编号为{{nowId}}，时间从{{nowStart}}到{{nowEnd}}的外出申请？</span>
       </div>
       <div slot="footer">
-        <Button type="primary" @click="confirmToRepeal()">确定</Button>
-        <Button type="ghost" @click="cancelToRepeal">取消</Button>
+        <Button type="primary" @click="confirm()">确定</Button>
+        <Button type="ghost" @click="cancel()">取消</Button>
       </div>
     </Modal>
 
@@ -52,7 +42,6 @@
 </template>
 
 <script>
-  import apply from './EmployeeNewApply'
   import success from './Success'
   import notice from './Notice'
 
@@ -69,6 +58,7 @@
         searchTime: [],
         historyShowList: [],
         historyList: [],
+        staffInfo: {},
         columns: [
           {
             title: '操作',
@@ -88,10 +78,10 @@
                       this.nowId = this.historyShowList[params.index].leaveid
                       this.nowStart = this.historyShowList[params.index].stime
                       this.nowEnd = this.historyShowList[params.index].etime
-                      this.showRepeal = true
+                      this.showConfirm = true
                     }
                   }
-                }, '撤销')
+                }, '确认')
               ])
             }
           },
@@ -104,6 +94,16 @@
           {
             title: '申请单编号',
             key: 'leaveid',
+            align: 'center'
+          },
+          {
+            title: '员工编号',
+            key: 'staid',
+            align: 'center'
+          },
+          {
+            title: '姓名',
+            key: 'name',
             align: 'center'
           },
           {
@@ -141,115 +141,109 @@
                 }, '查看事由')
               ])
             }
-          },
-          {
-            title: '操作人',
-            key: 'operator',
-            align: 'center'
           }
         ],
-        options2: {
-          shortcuts: [
-            {
-              text: '最近一周',
-              value () {
-                const end = new Date()
-                const start = new Date()
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-                return [start, end]
-              }
-            },
-            {
-              text: '最近一个月',
-              value () {
-                const end = new Date()
-                const start = new Date()
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-                return [start, end]
-              }
-            },
-            {
-              text: '最近三个月',
-              value () {
-                const end = new Date()
-                const start = new Date()
-                start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-                return [start, end]
-              }
-            }
-          ]
-        },
         successMsg: '',
         errorMsg: '',
         showHistory: false,
-        showApply: false,
-        showRepeal: false,
+        showConfirm: false,
         showDetail: false,
         showSuccess: false,
         showError: false
       }
     },
+    created () {
+      this.getStaffInformation()
+    },
+    watch: {
+      'route': 'consultApplyData'
+    },
     methods: {
       newApply () {
         this.showApply = true
       },
-      confirmToRepeal () {
+      confirm () {
         this.$store.commit('GETLOGIN')
         this.$http({
-          url: 'http://localhost:8081/deleteApply',
+          url: 'http://localhost:8081/confirmApply',
           method: 'POST',
           params: {
+            id: this.$store.state.LoginState.loginId,
             leaveid: this.nowId
           }
         }).then((response) => {
           if (response.body.status) {
-            this.successMsg = '成功撤销申请'
+            this.successMsg = '成功确认申请'
             this.showSuccess = true
           } else {
-            this.errorMsg = '无法撤销申请，请稍后重试'
+            this.errorMsg = '无法确认申请，请稍后重试'
             this.showError = true
           }
         }, (response) => {
-          this.errorMsg = '无法撤销申请，请检查网络连接'
+          this.errorMsg = '无法确认申请，请检查网络连接'
           this.showError = true
         })
-      },
-      cancelToRepeal () {
-        this.showRepeal = false
       },
       consultApplyData () {
         this.$store.commit('GETLOGIN')
         let id = this.$store.state.LoginState.loginId
         this.$http({
-          url: this.consultType === '1' ? 'http://localhost:8081/consultPersonalAllApplyByST' : 'http://localhost:8081/consultPersonalAllApplyByET',
+          url: 'http://localhost:8081/consultAllApply',
           method: 'POST',
           params: {
             id: id,
-            stime: this.searchTime[0].toLocaleDateString(),
-            etime: this.searchTime[1].toLocaleDateString()
+            deid: this.staffInfo.deid,
+            rank: this.staffInfo.rank
           }
         }).then((response) => {
           if (response.body.status) {
+            this.dealTheData(this.getStaffName, response.body.data)
             this.historyList = response.body.data
             this.number = this.historyList.length
-            this.dealTheData()
             this.getThisPageData(0)
             this.showHistory = true
+            if (this.number === 0) {
+              this.errorMsg = '本部门暂无外出申请'
+              this.showError = true
+            }
           } else {
             this.errorMsg = '无法获取所有外出申请，请稍后重试'
-            this.showError = true
+            this.showError = false
           }
         }, (response) => {
           this.errorMsg = '无法获取所有外出申请，请检查网络连接'
-          this.showError = true
+          this.showError = false
         })
       },
-      dealTheData () {
-        this.historyList.forEach(function (item) {
+      dealTheData (getName, list) {
+        list.forEach(function (item) {
+          getName(item.staid, item)
           item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
           item.type = item.type === 1 ? '事假' : '公事外出'
           item.stime = new Date(item.stime).toLocaleDateString()
           item.etime = new Date(item.etime).toLocaleDateString()
+        })
+      },
+      getStaffName (staffId, item) {
+        console.log(staffId)
+        this.$http({
+          url: 'http://localhost:8081/consultNameByStaid',
+          method: 'POST',
+          params: {
+            staid: staffId
+          }
+        }).then((response) => {
+          item.name = response.body.name
+        })
+      },
+      getStaffInformation () {
+        this.$store.commit('GETLOGIN')
+        let id = this.$store.state.LoginState.loginId
+        this.$http({
+          url: 'http://localhost:8081/consultPersonalInformation?id=' + id,
+          method: 'POST'
+        }).then((response) => {
+          this.staffInfo = response.body.staff
         })
       },
       getThisPageData (page) {
@@ -258,23 +252,19 @@
       changePage () {
         this.getThisPageData(this.nowPage - 1)
       },
-      closeSuccess () {
-        this.showApply = false
-        this.consultApplyData()
-      },
-      closeRepealSuccess () {
+      closeConfirmSuccess () {
         this.showSuccess = false
         this.consultApplyData()
-        this.showRepeal = false
+        this.showConfirm = false
       },
       cancel () {
         this.showApply = false
         this.showError = false
         this.showDetail = false
+        this.showConfirm = false
       }
     },
     components: {
-      apply,
       success,
       notice
     }
