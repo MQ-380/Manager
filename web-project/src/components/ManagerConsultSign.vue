@@ -120,7 +120,7 @@
             if (this.number !== 0) {
               this.historyShowList = this.getThisPage(0)
             } else {
-              this.errorMsg = '该员工暂时没有签到记录'
+              this.errorMsg = '该员工在该时段没有签到记录'
               this.showError = true
             }
           } else {

@@ -13,15 +13,18 @@
                  style="width: 200px;float: left"></Date-picker>
     <Button style="float: left" type="success" @click="consultApplyData">查询所有外出申请</Button>
     <br><br>
+      <div v-if="showHistory">
       <Table :data="historyShowList" :columns="columns" :height="523" stripe border></Table>
       <div style="margin: 10px;overflow: scroll">
         <div style="float: right;">
           <Page :total="number" :current="nowPage" @on-change="changePage"></Page>
         </div>
     </div>
+      </div>
       <div slot="footer">
         <Button type="primary" @click="cancelThis()">确定</Button>
       </div>
+
     </Modal>
 
     <Modal v-model="showDetail" :closable="false" :mask-closable="false">
@@ -35,6 +38,7 @@
         <Button type="primary" @click="cancel">确定</Button>
       </div>
     </Modal>
+
 
 
   </div>
@@ -143,6 +147,7 @@
         },
         successMsg: '',
         errorMsg: '',
+        showHistory: false,
         showConsult: true,
         showDetail: false,
         showSuccess: false,
@@ -164,12 +169,12 @@
           if (response.body.status) {
             this.historyList = response.body.data
             this.number = this.historyList.length
-            this.dealTheData(this.getStaffName)
+            this.dealTheData()
             this.getThisPageData(0)
             if (this.number !== 0) {
               this.showHistory = true
             } else {
-              this.errorMsg = '该员工没有外出申请记录'
+              this.errorMsg = '该员工在该时段没有外出申请记录'
               this.showError = true
             }
           } else {
@@ -181,27 +186,23 @@
           this.showError = true
         })
       },
-      dealTheData (getName) {
+      dealTheData () {
+        let http = this.$http
         this.historyList.forEach(function (item) {
-          item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
-          item.type = item.type === 1 ? '事假' : '公事外出'
-          item.operator = getName(item.operator)
-          item.stime = new Date(item.stime).toLocaleDateString()
-          item.etime = new Date(item.etime).toLocaleDateString()
+          http({
+            url: 'http://localhost:8081/consultNameByStaid',
+            method: 'POST',
+            params: {
+              staid: item.operator
+            }
+          }).then((response) => {
+            item.operator = response.body.name
+            item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
+            item.type = item.type === 1 ? '事假' : '公事外出'
+            item.stime = new Date(item.stime).toLocaleDateString()
+            item.etime = new Date(item.etime).toLocaleDateString()
+          })
         })
-      },
-      getStaffName (staffId) {
-        let name
-        this.$http({
-          url: 'http://localhost:8081/consultNameByStaid',
-          method: 'POST',
-          params: {
-            staid: staffId
-          }
-        }).then((response) => {
-          name = response.body.name
-        })
-        return name
       },
       getThisPageData (page) {
         this.historyShowList = this.historyList.slice(page, (page + 1) * 10)

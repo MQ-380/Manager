@@ -197,7 +197,7 @@
           }
         }).then((response) => {
           if (response.body.status) {
-            this.dealTheData(this.getStaffName, response.body.data)
+            this.dealTheData(response.body.data)
             this.historyList = response.body.data
             this.number = this.historyList.length
             this.getThisPageData(0)
@@ -215,13 +215,22 @@
           this.showError = false
         })
       },
-      dealTheData (getName, list) {
+      dealTheData (list) {
+        let http = this.$http
         list.forEach(function (item) {
-          getName(item.staid, item)
-          item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
-          item.type = item.type === 1 ? '事假' : '公事外出'
-          item.stime = new Date(item.stime).toLocaleDateString()
-          item.etime = new Date(item.etime).toLocaleDateString()
+          http({
+            url: 'http://localhost:8081/consultNameByStaid',
+            method: 'POST',
+            params: {
+              staid: item.staid
+            }
+          }).then((response) => {
+            item.name = response.body.name
+            item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
+            item.type = item.type === 1 ? '事假' : '公事外出'
+            item.stime = new Date(item.stime).toLocaleDateString()
+            item.etime = new Date(item.etime).toLocaleDateString()
+          })
         })
       },
       getStaffName (staffId, item) {

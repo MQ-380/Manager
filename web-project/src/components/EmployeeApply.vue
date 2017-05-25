@@ -245,11 +245,21 @@
         })
       },
       dealTheData () {
+        let http = this.$http
         this.historyList.forEach(function (item) {
-          item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
-          item.type = item.type === 1 ? '事假' : '公事外出'
-          item.stime = new Date(item.stime).toLocaleDateString()
-          item.etime = new Date(item.etime).toLocaleDateString()
+          http({
+            url: 'http://localhost:8081/consultNameByStaid',
+            method: 'POST',
+            params: {
+              staid: item.operator
+            }
+          }).then((response) => {
+            item.operator = response.body.name
+            item.confirm = item.isconfirm === 0 ? '待确认' : '已确认'
+            item.type = item.type === 1 ? '事假' : '公事外出'
+            item.stime = new Date(item.stime).toLocaleDateString()
+            item.etime = new Date(item.etime).toLocaleDateString()
+          })
         })
       },
       getThisPageData (page) {
