@@ -1,6 +1,5 @@
 package com.model;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.LockOptions;
@@ -14,22 +13,27 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A data access object (DAO) providing persistence and search support for Sign
- * entities. Transaction control of the save(), update() and delete() operations
- * can directly support Spring container-managed transactions or they can be
- * augmented to handle user-managed Spring transactions. Each of these methods
- * provides additional information for how to configure it for the desired type
- * of transaction control.
+ * A data access object (DAO) providing persistence and search support for
+ * Applyleave entities. Transaction control of the save(), update() and delete()
+ * operations can directly support Spring container-managed transactions or they
+ * can be augmented to handle user-managed Spring transactions. Each of these
+ * methods provides additional information for how to configure it for the
+ * desired type of transaction control.
  * 
- * @see com.model.Sign
+ * @see com.model.Applyleave
  * @author MyEclipse Persistence Tools
  */
 @Transactional
-public class SignDAO {
-	private static final Logger log = LoggerFactory.getLogger(SignDAO.class);
+public class ApplyleaveDAO {
+	private static final Logger log = LoggerFactory
+			.getLogger(ApplyleaveDAO.class);
 	// property constants
+	public static final String LEAVEID = "leaveid";
 	public static final String STAID = "staid";
-	public static final String STATUS = "status";
+	public static final String TYPE = "type";
+	public static final String DESCRIPTION = "description";
+	public static final String ISCONFIRM = "isconfirm";
+	public static final String OPERATOR = "operator";
 
 	private SessionFactory sessionFactory;
 
@@ -45,8 +49,8 @@ public class SignDAO {
 		// do nothing
 	}
 
-	public void save(Sign transientInstance) {
-		log.debug("saving Sign instance");
+	public void save(Applyleave transientInstance) {
+		log.debug("saving Applyleave instance");
 		try {
 			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
@@ -56,8 +60,8 @@ public class SignDAO {
 		}
 	}
 
-	public void delete(Sign persistentInstance) {
-		log.debug("deleting Sign instance");
+	public void delete(Applyleave persistentInstance) {
+		log.debug("deleting Applyleave instance");
 		try {
 			getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -67,11 +71,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign findById(java.lang.Integer id) {
-		log.debug("getting Sign instance with id: " + id);
+	public Applyleave findById(java.lang.Integer id) {
+		log.debug("getting Applyleave instance with id: " + id);
 		try {
-			Sign instance = (Sign) getCurrentSession()
-					.get("com.model.Sign", id);
+			Applyleave instance = (Applyleave) getCurrentSession().get(
+					"com.model.Applyleave", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -79,10 +83,11 @@ public class SignDAO {
 		}
 	}
 
-	public List findByExample(Sign instance) {
-		log.debug("finding Sign instance by example");
+	public List findByExample(Applyleave instance) {
+		log.debug("finding Applyleave instance by example");
 		try {
-			List results = getCurrentSession().createCriteria("com.model.Sign")
+			List results = getCurrentSession()
+					.createCriteria("com.model.Applyleave")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -94,10 +99,10 @@ public class SignDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Sign instance with property: " + propertyName
+		log.debug("finding Applyleave instance with property: " + propertyName
 				+ ", value: " + value);
 		try {
-			String queryString = "from Sign as model where model."
+			String queryString = "from Applyleave as model where model."
 					+ propertyName + "= ?";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
@@ -108,18 +113,34 @@ public class SignDAO {
 		}
 	}
 
+	public List findByLeaveid(Object leaveid) {
+		return findByProperty(LEAVEID, leaveid);
+	}
+
 	public List findByStaid(Object staid) {
 		return findByProperty(STAID, staid);
 	}
- 
-	public List findByStatus(Object status) {
-		return findByProperty(STATUS, status);
+
+	public List findByType(Object type) {
+		return findByProperty(TYPE, type);
+	}
+
+	public List findByDescription(Object description) {
+		return findByProperty(DESCRIPTION, description);
+	}
+
+	public List findByIsconfirm(Object isconfirm) {
+		return findByProperty(ISCONFIRM, isconfirm);
+	}
+
+	public List findByOperator(Object operator) {
+		return findByProperty(OPERATOR, operator);
 	}
 
 	public List findAll() {
-		log.debug("finding all Sign instances");
+		log.debug("finding all Applyleave instances");
 		try {
-			String queryString = "from Sign";
+			String queryString = "from Applyleave";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -128,10 +149,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign merge(Sign detachedInstance) {
-		log.debug("merging Sign instance");
+	public Applyleave merge(Applyleave detachedInstance) {
+		log.debug("merging Applyleave instance");
 		try {
-			Sign result = (Sign) getCurrentSession().merge(detachedInstance);
+			Applyleave result = (Applyleave) getCurrentSession().merge(
+					detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -140,8 +162,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachDirty(Sign instance) {
-		log.debug("attaching dirty Sign instance");
+	public void attachDirty(Applyleave instance) {
+		log.debug("attaching dirty Applyleave instance");
 		try {
 			getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -151,8 +173,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachClean(Sign instance) {
-		log.debug("attaching clean Sign instance");
+	public void attachClean(Applyleave instance) {
+		log.debug("attaching clean Applyleave instance");
 		try {
 			getCurrentSession().buildLockRequest(LockOptions.NONE).lock(
 					instance);
@@ -163,7 +185,7 @@ public class SignDAO {
 		}
 	}
 
-	public static SignDAO getFromApplicationContext(ApplicationContext ctx) {
-		return (SignDAO) ctx.getBean("SignDAO");
+	public static ApplyleaveDAO getFromApplicationContext(ApplicationContext ctx) {
+		return (ApplyleaveDAO) ctx.getBean("ApplyleaveDAO");
 	}
 }

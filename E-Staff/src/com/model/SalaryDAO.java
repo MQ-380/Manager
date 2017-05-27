@@ -1,6 +1,5 @@
 package com.model;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.LockOptions;
@@ -14,22 +13,24 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A data access object (DAO) providing persistence and search support for Sign
- * entities. Transaction control of the save(), update() and delete() operations
- * can directly support Spring container-managed transactions or they can be
- * augmented to handle user-managed Spring transactions. Each of these methods
- * provides additional information for how to configure it for the desired type
- * of transaction control.
+ * A data access object (DAO) providing persistence and search support for
+ * Salary entities. Transaction control of the save(), update() and delete()
+ * operations can directly support Spring container-managed transactions or they
+ * can be augmented to handle user-managed Spring transactions. Each of these
+ * methods provides additional information for how to configure it for the
+ * desired type of transaction control.
  * 
- * @see com.model.Sign
+ * @see com.model.Salary
  * @author MyEclipse Persistence Tools
  */
 @Transactional
-public class SignDAO {
-	private static final Logger log = LoggerFactory.getLogger(SignDAO.class);
+public class SalaryDAO {
+	private static final Logger log = LoggerFactory.getLogger(SalaryDAO.class);
 	// property constants
 	public static final String STAID = "staid";
-	public static final String STATUS = "status";
+	public static final String TOTAL = "total";
+	public static final String PUNISH = "punish";
+	public static final String REWARD = "reward";
 
 	private SessionFactory sessionFactory;
 
@@ -45,8 +46,8 @@ public class SignDAO {
 		// do nothing
 	}
 
-	public void save(Sign transientInstance) {
-		log.debug("saving Sign instance");
+	public void save(Salary transientInstance) {
+		log.debug("saving Salary instance");
 		try {
 			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
@@ -56,8 +57,8 @@ public class SignDAO {
 		}
 	}
 
-	public void delete(Sign persistentInstance) {
-		log.debug("deleting Sign instance");
+	public void delete(Salary persistentInstance) {
+		log.debug("deleting Salary instance");
 		try {
 			getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -67,11 +68,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign findById(java.lang.Integer id) {
-		log.debug("getting Sign instance with id: " + id);
+	public Salary findById(java.lang.Integer id) {
+		log.debug("getting Salary instance with id: " + id);
 		try {
-			Sign instance = (Sign) getCurrentSession()
-					.get("com.model.Sign", id);
+			Salary instance = (Salary) getCurrentSession().get(
+					"com.model.Salary", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -79,10 +80,11 @@ public class SignDAO {
 		}
 	}
 
-	public List findByExample(Sign instance) {
-		log.debug("finding Sign instance by example");
+	public List findByExample(Salary instance) {
+		log.debug("finding Salary instance by example");
 		try {
-			List results = getCurrentSession().createCriteria("com.model.Sign")
+			List results = getCurrentSession()
+					.createCriteria("com.model.Salary")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -94,10 +96,10 @@ public class SignDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Sign instance with property: " + propertyName
+		log.debug("finding Salary instance with property: " + propertyName
 				+ ", value: " + value);
 		try {
-			String queryString = "from Sign as model where model."
+			String queryString = "from Salary as model where model."
 					+ propertyName + "= ?";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
@@ -111,15 +113,23 @@ public class SignDAO {
 	public List findByStaid(Object staid) {
 		return findByProperty(STAID, staid);
 	}
- 
-	public List findByStatus(Object status) {
-		return findByProperty(STATUS, status);
+
+	public List findByTotal(Object total) {
+		return findByProperty(TOTAL, total);
+	}
+
+	public List findByPunish(Object punish) {
+		return findByProperty(PUNISH, punish);
+	}
+
+	public List findByReward(Object reward) {
+		return findByProperty(REWARD, reward);
 	}
 
 	public List findAll() {
-		log.debug("finding all Sign instances");
+		log.debug("finding all Salary instances");
 		try {
-			String queryString = "from Sign";
+			String queryString = "from Salary";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -128,10 +138,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign merge(Sign detachedInstance) {
-		log.debug("merging Sign instance");
+	public Salary merge(Salary detachedInstance) {
+		log.debug("merging Salary instance");
 		try {
-			Sign result = (Sign) getCurrentSession().merge(detachedInstance);
+			Salary result = (Salary) getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -140,8 +151,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachDirty(Sign instance) {
-		log.debug("attaching dirty Sign instance");
+	public void attachDirty(Salary instance) {
+		log.debug("attaching dirty Salary instance");
 		try {
 			getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -151,8 +162,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachClean(Sign instance) {
-		log.debug("attaching clean Sign instance");
+	public void attachClean(Salary instance) {
+		log.debug("attaching clean Salary instance");
 		try {
 			getCurrentSession().buildLockRequest(LockOptions.NONE).lock(
 					instance);
@@ -163,7 +174,7 @@ public class SignDAO {
 		}
 	}
 
-	public static SignDAO getFromApplicationContext(ApplicationContext ctx) {
-		return (SignDAO) ctx.getBean("SignDAO");
+	public static SalaryDAO getFromApplicationContext(ApplicationContext ctx) {
+		return (SalaryDAO) ctx.getBean("SalaryDAO");
 	}
 }

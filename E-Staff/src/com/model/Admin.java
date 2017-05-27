@@ -1,73 +1,87 @@
 package com.model;
 
+
+
 /**
  * Admin entity. @author MyEclipse Persistence Tools
  */
 
-public class Admin implements java.io.Serializable {
+public class Admin  implements java.io.Serializable {
 
-	// Fields
 
-	private Integer id;
-	private String adid;
-	private String adpwd;
-	private Integer adpro;
-	private Integer denum;
+    // Fields    
 
-	// Constructors
+     private Integer id;
+     private String adid;
+     private String adpwd;
+     private Integer adpro;
+     private Integer denum;
 
-	/** default constructor */
-	public Admin() {
-	}
 
-	/** full constructor */
-	public Admin(String adid, String adpwd, Integer adpro, Integer denum) {
-		this.adid = adid;
-		this.adpwd = adpwd;
-		this.adpro = adpro;
-		this.denum = denum;
-	}
+    // Constructors
 
-	// Property accessors
+    /** default constructor */
+    public Admin() {
+    }
 
-	public Integer getId() {
-		return this.id;
-	}
+    
+    /** full constructor */
+    public Admin(String adid, String adpwd, Integer adpro, Integer denum) {
+        this.adid = adid;
+        this.adpwd = adpwd;
+        this.adpro = adpro;
+        this.denum = denum;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+   
+    // Property accessors
 
-	public String getAdid() {
-		return this.adid;
-	}
+    public Integer getId() {
+        return this.id;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setAdid(String adid) {
-		this.adid = adid;
-	}
+    public String getAdid() {
+        return this.adid;
+    }
+    
+    public void setAdid(String adid) {
+        this.adid = adid;
+    }
 
-	public String getAdpwd() {
-		return this.adpwd;
-	}
+    public String getAdpwd() {
+        return this.adpwd;
+    }
+    
+    public void setAdpwd(String adpwd) {
+        this.adpwd = adpwd;
+    }
 
-	public void setAdpwd(String adpwd) {
-		this.adpwd = adpwd;
-	}
+    public Integer getAdpro() {
+        return this.adpro;
+    }
+    
+    public void setAdpro(Integer adpro) {
+        this.adpro = adpro;
+    }
 
-	public Integer getAdpro() {
-		return this.adpro;
-	}
+    public Integer getDenum() {
+        return this.denum;
+    }
+    
+    public void setDenum(Integer denum) {
+        this.denum = denum;
+    }
+   
 
-	public void setAdpro(Integer adpro) {
-		this.adpro = adpro;
-	}
 
-	public Integer getDenum() {
-		return this.denum;
-	}
 
-	public void setDenum(Integer denum) {
-		this.denum = denum;
-	}
+
+
+
+
 
 }

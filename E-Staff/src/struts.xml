@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 <package name="estaff" extends="struts-default" namespace="/">
-		<!-- 用户登录Action配置 -->
+		<!-- 鐢ㄦ埛鐧诲綍Action閰嶇疆 -->
 		<action name="userLogin" class="com.action.userLogin">
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
@@ -79,5 +79,43 @@
 			<result name="success">/Success.jsp</result>
 			<result name="error">/index.jsp</result>
 		</action>
+			<action name="addNewLeavingApply" class="com.action.addNewLeavingApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="deleteApply" class="com.action.deleteApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultPersonalAllApplyByST" class="com.action.consultPersonalAllApplyByST">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultPersonalAllApplyByET" class="com.action.consultPersonalAllApplyByET">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+			<action name="consultAllApply" class="com.action.consultAllApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="confirmApply" class="com.action.confirmApply">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="addBounsPunish" class="com.action.addBounsPunish">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+				<action name="consultSalary" class="com.action.consultSalary">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="consultNameByStaid" class="com.action.consultNameByStaid">
+			<result name="success">/Success.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
 	</package>
 </struts>    
+   
+ 

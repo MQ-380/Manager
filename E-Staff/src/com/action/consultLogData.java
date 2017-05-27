@@ -10,33 +10,37 @@ import org.apache.struts2.ServletActionContext;
 import com.model.Sign;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.SignService;
+import com.tool.DateStringConvert;
 import com.tool.JSONUtils;
 
 public class consultLogData extends ActionSupport{
 	private String id;
-	private Date st;
-	public Date getSt() {
+	private String st;
+
+	private String et;
+	
+	public String getSt() {
 		return st;
 	}
-	public void setSt(Date st) {
+	public void setSt(String st) {
 		this.st = st;
 	}
-	public Date getEt() {
+	public String getEt() {
 		return et;
 	}
-	public void setEt(Date et) {
+	public void setEt(String et) {
 		this.et = et;
 	}
 
-	private Date et;
 	private SignService signService;
 	@SuppressWarnings("unchecked")
 	public String execute() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			  List<Sign> list=signService.consultLogData(st,et);
-		        //for(int i=0;i<list.size();i++)
-		       //	 System.out.println(list.get(i).getStaid());
+		try {System.out.println(DateStringConvert.convertStringToDate(st));
+		System.out.println(DateStringConvert.convertStringToDate(et));
+			  List<Sign> list=signService.consultLogData(id,DateStringConvert.convertStringToDate(st),DateStringConvert.convertStringToDate(et));
+		        for(int i=0;i<list.size();i++)
+		       	 System.out.println("********"+list.get(i).getStaid());
 			  map.put("data",list);
 	          map.put("status", true);
 	    	  JSONUtils.toJson(ServletActionContext.getResponse(), map);

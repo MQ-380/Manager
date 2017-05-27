@@ -16,6 +16,7 @@ public class Sign implements java.io.Serializable {
 	private Time signin;
 	private Time signout;
 	private Date date;
+	private String status;
 
 	// Constructors
 
@@ -24,11 +25,13 @@ public class Sign implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Sign(String staid, Time signin, Time signout, Date date) {
+	public Sign(String staid, Time signin, Time signout, Date date,
+			String status) {
 		this.staid = staid;
 		this.signin = signin;
 		this.signout = signout;
 		this.date = date;
+		this.status = status;
 	}
 
 	// Property accessors
@@ -71,6 +74,14 @@ public class Sign implements java.io.Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

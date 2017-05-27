@@ -25,9 +25,10 @@ public String execute() throws Exception {
 	    sign.setDate(date);
 	    sign.setStaid(id);
 	    List<Sign> signList=signService.findByExample(sign);
-	    if(signList!=null)
+	    if(signList.size()!=0)
 	    {//System.out.println(signList.get(0).getStaid()+"*********************");
-	    	map.put("in",false);}else
+	    	map.put("in",false);
+	    }else
 		  {//System.out.println("test1***********************");
 	    	map.put("in",true);
 		  }

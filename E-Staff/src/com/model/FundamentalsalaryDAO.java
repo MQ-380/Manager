@@ -1,7 +1,5 @@
 package com.model;
 
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
@@ -14,22 +12,23 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A data access object (DAO) providing persistence and search support for Sign
- * entities. Transaction control of the save(), update() and delete() operations
- * can directly support Spring container-managed transactions or they can be
- * augmented to handle user-managed Spring transactions. Each of these methods
- * provides additional information for how to configure it for the desired type
- * of transaction control.
+ * A data access object (DAO) providing persistence and search support for
+ * Fundamentalsalary entities. Transaction control of the save(), update() and
+ * delete() operations can directly support Spring container-managed
+ * transactions or they can be augmented to handle user-managed Spring
+ * transactions. Each of these methods provides additional information for how
+ * to configure it for the desired type of transaction control.
  * 
- * @see com.model.Sign
+ * @see com.model.Fundamentalsalary
  * @author MyEclipse Persistence Tools
  */
 @Transactional
-public class SignDAO {
-	private static final Logger log = LoggerFactory.getLogger(SignDAO.class);
+public class FundamentalsalaryDAO {
+	private static final Logger log = LoggerFactory
+			.getLogger(FundamentalsalaryDAO.class);
 	// property constants
-	public static final String STAID = "staid";
-	public static final String STATUS = "status";
+	public static final String RANK = "rank";
+	public static final String AMOUNT = "amount";
 
 	private SessionFactory sessionFactory;
 
@@ -45,8 +44,8 @@ public class SignDAO {
 		// do nothing
 	}
 
-	public void save(Sign transientInstance) {
-		log.debug("saving Sign instance");
+	public void save(Fundamentalsalary transientInstance) {
+		log.debug("saving Fundamentalsalary instance");
 		try {
 			getCurrentSession().saveOrUpdate(transientInstance);
 			log.debug("save successful");
@@ -56,8 +55,8 @@ public class SignDAO {
 		}
 	}
 
-	public void delete(Sign persistentInstance) {
-		log.debug("deleting Sign instance");
+	public void delete(Fundamentalsalary persistentInstance) {
+		log.debug("deleting Fundamentalsalary instance");
 		try {
 			getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -67,11 +66,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign findById(java.lang.Integer id) {
-		log.debug("getting Sign instance with id: " + id);
+	public Fundamentalsalary findById(java.lang.Integer id) {
+		log.debug("getting Fundamentalsalary instance with id: " + id);
 		try {
-			Sign instance = (Sign) getCurrentSession()
-					.get("com.model.Sign", id);
+			Fundamentalsalary instance = (Fundamentalsalary) getCurrentSession()
+					.get("com.model.Fundamentalsalary", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -79,10 +78,11 @@ public class SignDAO {
 		}
 	}
 
-	public List findByExample(Sign instance) {
-		log.debug("finding Sign instance by example");
+	public List findByExample(Fundamentalsalary instance) {
+		log.debug("finding Fundamentalsalary instance by example");
 		try {
-			List results = getCurrentSession().createCriteria("com.model.Sign")
+			List results = getCurrentSession()
+					.createCriteria("com.model.Fundamentalsalary")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -94,10 +94,10 @@ public class SignDAO {
 	}
 
 	public List findByProperty(String propertyName, Object value) {
-		log.debug("finding Sign instance with property: " + propertyName
-				+ ", value: " + value);
+		log.debug("finding Fundamentalsalary instance with property: "
+				+ propertyName + ", value: " + value);
 		try {
-			String queryString = "from Sign as model where model."
+			String queryString = "from Fundamentalsalary as model where model."
 					+ propertyName + "= ?";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
@@ -108,18 +108,18 @@ public class SignDAO {
 		}
 	}
 
-	public List findByStaid(Object staid) {
-		return findByProperty(STAID, staid);
+	public List findByRank(Object rank) {
+		return findByProperty(RANK, rank);
 	}
- 
-	public List findByStatus(Object status) {
-		return findByProperty(STATUS, status);
+
+	public List findByAmount(Object amount) {
+		return findByProperty(AMOUNT, amount);
 	}
 
 	public List findAll() {
-		log.debug("finding all Sign instances");
+		log.debug("finding all Fundamentalsalary instances");
 		try {
-			String queryString = "from Sign";
+			String queryString = "from Fundamentalsalary";
 			Query queryObject = getCurrentSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -128,10 +128,11 @@ public class SignDAO {
 		}
 	}
 
-	public Sign merge(Sign detachedInstance) {
-		log.debug("merging Sign instance");
+	public Fundamentalsalary merge(Fundamentalsalary detachedInstance) {
+		log.debug("merging Fundamentalsalary instance");
 		try {
-			Sign result = (Sign) getCurrentSession().merge(detachedInstance);
+			Fundamentalsalary result = (Fundamentalsalary) getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -140,8 +141,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachDirty(Sign instance) {
-		log.debug("attaching dirty Sign instance");
+	public void attachDirty(Fundamentalsalary instance) {
+		log.debug("attaching dirty Fundamentalsalary instance");
 		try {
 			getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -151,8 +152,8 @@ public class SignDAO {
 		}
 	}
 
-	public void attachClean(Sign instance) {
-		log.debug("attaching clean Sign instance");
+	public void attachClean(Fundamentalsalary instance) {
+		log.debug("attaching clean Fundamentalsalary instance");
 		try {
 			getCurrentSession().buildLockRequest(LockOptions.NONE).lock(
 					instance);
@@ -163,7 +164,8 @@ public class SignDAO {
 		}
 	}
 
-	public static SignDAO getFromApplicationContext(ApplicationContext ctx) {
-		return (SignDAO) ctx.getBean("SignDAO");
+	public static FundamentalsalaryDAO getFromApplicationContext(
+			ApplicationContext ctx) {
+		return (FundamentalsalaryDAO) ctx.getBean("FundamentalsalaryDAO");
 	}
 }

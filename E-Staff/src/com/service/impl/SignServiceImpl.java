@@ -9,12 +9,12 @@ import com.service.SignService;
 import com.mydao.*;
 public class SignServiceImpl implements SignService{
 	private SignDAO signDAO;
-	private mySignDAO mySignDAO;
-	public mySignDAO getMySignDAO() {
-		return mySignDAO;
+	private myLoginDAO myLoginDAO;
+	public myLoginDAO getMyLoginDAO() {
+		return myLoginDAO;
 	}
-	public void setMySignDAO(mySignDAO mySignDAO) {
-		this.mySignDAO = mySignDAO;
+	public void setMyLoginDAO(myLoginDAO myLoginDAO) {
+		this.myLoginDAO = myLoginDAO;
 	}
 	public List findByExample(Sign sign)
 	{
@@ -24,9 +24,9 @@ public class SignServiceImpl implements SignService{
 	{
 		signDAO.save(sign);
 	}
-	public List<Sign> consultLogData(Date st,Date et)
+	public List<Sign> consultLogData(String id,Date st,Date et)
 	{
-		return mySignDAO.consultLogData(st, et);
+		return myLoginDAO.consultLogData(id,st, et);
 	}
 	public SignDAO getSignDAO() {
 		return signDAO;

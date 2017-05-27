@@ -1,4 +1,6 @@
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,54 +13,54 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.action.*;
 import com.model.*;
-import com.mydao.mySignDAO;
+import com.mydao.myLeaveDAO;
+import com.mydao.myLoginDAO;
+import com.mydao.mySalaryDAO;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.*;
+import com.task.MyTask;
+import com.tool.DateStringConvert;
 import com.tool.timeTool;
 
-
-
-
 public class test {
-	
-	
 	 @Test  
 	 /*
 	  * ≤‚ ‘DAO≤„
 	  */
 	    public void testUserDao() throws Exception{  
 	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	mySignDAO dao =  (mySignDAO)ctx.getBean("mySignDAO");
-	    	Date st=timeTool.GetNowDate();
-	    	Date et=timeTool.GetNowDate();
-	        List<Sign>list=dao.consultLogData(st, et);
-	    	 System.out.println("dao"+list.get(0).getStaid());
+	    	mySalaryDAO dao =  (mySalaryDAO)ctx.getBean("mySalaryDAO");
+	    	Date st=DateStringConvert.convertStringToDate("2017-05-01");
+	    	Date et=DateStringConvert.convertStringToDate("2017-05-31");
+	    	List<Salary>list=dao.consultSalary("170010001",st,et);
+	    	System.out.println("********"+list.size());
+	    	for(int i=0;i<list.size();i++)
+	    	System.out.println("********#####"+list.get(i).getStaid());
 	    }
 	 @Test  
 	 /*
 	  * ≤‚ ‘Service≤„
 	  */
 	    public void testUserService() throws Exception{  
-	    	ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-	    	 	SignService ser =  (SignService)ctx.getBean("signService");	    	 
-	    	 	Date st=timeTool.GetNowDate();
-		    	Date et=timeTool.GetNowDate();
-		        List<Sign>list=ser.consultLogData(st, et);
-		    	 System.out.println("ser"+list.get(0).getStaid());
+	    	//ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+	    	// 	LeaveService ser =  (LeaveService)ctx.getBean("leaveService");	    	 
 	    }
 	 @Test  
 	 /*
-	  * ≤‚ ‘action
+	  * ≤‚action
 	  */
 	    public void testUserAction() throws Exception{  
 		
-		 ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
-		 consultLogData ser = (consultLogData)ctx.getBean("consultLogData"); 
-         ser.setId("170010001");
-         ser.setSt(timeTool.GetNowDate());
-         ser.setEt(timeTool.GetNowDate());
-	   ser.execute();
+			ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+consultNameByStaid ser =  (consultNameByStaid)ctx.getBean("consultNameByStaid");	 
+	
+	   ser.setStaid("170010001");
+	     //ser.execute();
 	    }
 	
-	 
+	 @Test
+	 public void test() throws InterruptedException, ParseException
+	 {
+	
+	 }
 }
