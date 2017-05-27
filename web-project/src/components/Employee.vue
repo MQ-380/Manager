@@ -64,10 +64,10 @@
             </Menu-item>
             <Menu-item name="salary">
               <Icon type="ios-information-outline" ></Icon>
-              <span class="layout-eye-outline">工资查看</span>
+              <span class="layout-eye-outline">工资查询</span>
             </Menu-item>
             <Menu-item name="setting">
-              <Icon type="ios-gear-outline" ></Icon>
+              <Icon type="ios-settings-strong" ></Icon>
               <span class="layout-text">个人设置/登出</span>
             </Menu-item>
           </Menu>

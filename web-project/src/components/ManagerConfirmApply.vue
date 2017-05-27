@@ -233,18 +233,6 @@
           })
         })
       },
-      getStaffName (staffId, item) {
-        console.log(staffId)
-        this.$http({
-          url: 'http://localhost:8081/consultNameByStaid',
-          method: 'POST',
-          params: {
-            staid: staffId
-          }
-        }).then((response) => {
-          item.name = response.body.name
-        })
-      },
       getStaffInformation () {
         this.$store.commit('GETLOGIN')
         let id = this.$store.state.LoginState.loginId

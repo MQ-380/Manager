@@ -63,23 +63,23 @@
             <span class="layout-text">外出申请</span>
           </Menu-item>
           <Menu-item name="salary">
-            <Icon type="ios-information-outline" ></Icon>
-            <span class="layout-eye-outline">工资查看</span>
+            <Icon type="ios-search-strong" ></Icon>
+            <span class="layout-eye-outline">工资查询</span>
           </Menu-item>
           <Menu-item name="staff">
-            <Icon type="ios-gear-outline" ></Icon>
+            <Icon type="ios-list-outline" ></Icon>
             <span class="layout-text">员工信息</span>
           </Menu-item>
           <Menu-item name="staffSalary">
-            <Icon type="ios-gear-outline" ></Icon>
+            <Icon type="ios-information-outline" ></Icon>
             <span class="layout-text">员工工资</span>
           </Menu-item>
           <Menu-item name="confirm">
-            <Icon type="ios-gear-outline" ></Icon>
+            <Icon type="ios-checkmark-outline" ></Icon>
             <span class="layout-text">外出申请审批</span>
           </Menu-item>
           <Menu-item name="setting">
-            <Icon type="ios-gear-outline" ></Icon>
+            <Icon type="ios-settings-strong" ></Icon>
             <span class="layout-text">个人设置/登出</span>
           </Menu-item>
         </Menu>
